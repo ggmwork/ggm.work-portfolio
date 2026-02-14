@@ -1,0 +1,15 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../content/site";
+
+const title = `About — ${site.name}`;
+---
+
+<Base
+  title={title}
+  description={`About ${site.name}`}
+  canonicalPath="/about"
+>
+  <meta http-equiv="refresh" content="0; url=/#about" />
+  <p>Redirecting to <a href="/#about">About</a></p>
+</Base>

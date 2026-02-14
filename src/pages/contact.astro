@@ -1,0 +1,16 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../content/site";
+
+const title = `Contact — ${site.name}`;
+---
+
+<Base
+  title={title}
+  description={`Contact ${site.name}`}
+  canonicalPath="/contact"
+  mainCentered
+>
+  <meta http-equiv="refresh" content="0; url=/#contact" />
+  <p>Redirecting to <a href="/#contact">Contact</a></p>
+</Base>

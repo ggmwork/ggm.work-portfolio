@@ -1,0 +1,29 @@
+---
+// FeatureBlock.astro
+// Minimal, accessible feature block used for the homepage.
+// Props:
+// - title: string
+// - text: string
+// - image: string | { src, alt }
+// - reverse?: boolean (if true, image and text swap positions on desktop)
+import Image from './ui/Image.astro';
+interface Props {
+  title: string;
+  text: string;
+  image: string | { src: string; alt?: string };
+  reverse?: boolean;
+}
+const { title, text, image, reverse } = Astro.props as Props;
+const imgSrc = typeof image === 'string' ? image : image.src;
+const imgAlt = typeof image === 'object' ? image.alt ?? title : title;
+---
+
+<section class={`feature ${reverse ? 'feature--reverse' : ''}`} aria-labelledby={`feature-${title.replace(/\s+/g,'-').toLowerCase()}`}>
+  <div class="feature__image">
+    <Image src={imgSrc} alt={imgAlt} />
+  </div>
+  <div class="feature__content">
+    <h3 id={`feature-${title.replace(/\s+/g,'-').toLowerCase()}`} class="feature__title">{title}</h3>
+    <p class="feature__text">{text}</p>
+  </div>
+</section>

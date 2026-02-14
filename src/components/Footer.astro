@@ -1,0 +1,38 @@
+---
+import { site, type SiteConfig } from "../content/site";
+
+type Author = SiteConfig["author"];
+
+const { author = site.author } = Astro.props as { author?: Author };
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="footer__inner">
+    <!-- Footer column grid (content-driven from src/content/site.ts) -->
+    {site.footer?.columns && (
+      <div class="footer__grid" role="list">
+        {site.footer.columns.map((col) => (
+          <div class="footer__col" role="listitem">
+            {/* Use h3 here — keeping semantic headings without introducing another H1 */}
+            <h3 class="footer__col-title">{col.title}</h3>
+            <p class="footer__col-text">{col.text}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="footer__meta-row">
+      <p class="footer__meta">
+        © {year} {author.url ? <a href={author.url}>{author.name}</a> : author.name}
+      </p>
+
+      <div class="footer__links">
+        {author.email && <a class="footer__link" href={`mailto:${author.email}`}>Email</a>}
+        {author.socials?.github && <a class="footer__link" href={author.socials.github} target="_blank" rel="noopener">GitHub</a>}
+        {author.socials?.x && <a class="footer__link" href={author.socials.x} target="_blank" rel="noopener">X</a>}
+        {author.socials?.linkedin && <a class="footer__link" href={author.socials.linkedin} target="_blank" rel="noopener">LinkedIn</a>}
+      </div>
+    </div>
+  </div>
+</footer>

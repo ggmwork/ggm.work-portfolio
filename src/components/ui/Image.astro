@@ -1,0 +1,56 @@
+---
+// Image wrapper: prefers the `@astrojs/image` Image component when available
+// and falls back to a native <img> with lazy-loading. Keeps semantics only—no styling.
+// Notes:
+// - `@astrojs/image` requires either width/height or local image metadata. Remote
+//   string URLs without sizes will cause a build-time error. To stay safe in a
+//   content-first project, the wrapper uses the optimized Image component only
+//   when sufficient sizing data is available; otherwise it falls back to a
+//   standard <img>.
+interface Props {
+  src: string | { src: string; alt?: string; width?: number; height?: number };
+  alt?: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  class?: string;
+  priority?: boolean;
+}
+const props = Astro.props as Props;
+const srcVal = typeof props.src === 'string' ? props.src : props.src?.src ?? '';
+const altVal = props.alt ?? (typeof props.src === 'object' ? props.src.alt ?? '' : '');
+const widthVal = props.width ?? (typeof props.src === 'object' ? props.src.width : undefined);
+const heightVal = props.height ?? (typeof props.src === 'object' ? props.src.height : undefined);
+let AstroImage: any = null;
+let shouldUseAstroImage = false;
+
+// Only attempt to import the Astro Image component when we actually have
+// sizing data (width or height). Importing the components entry can cause
+// ESM subpath resolution behavior that leads to runtime errors when the
+// component is rendered with underspecified props; avoid importing unless
+// we will definitely render it.
+if (widthVal != null || heightVal != null) {
+  try {
+    const mod = await import('@astrojs/image/components');
+    AstroImage = (mod && (mod.Image ?? mod.default)) ?? null;
+    shouldUseAstroImage = Boolean(AstroImage);
+  } catch (e) {
+    AstroImage = null;
+    shouldUseAstroImage = false;
+  }
+}
+---
+
+{shouldUseAstroImage ? (
+  <AstroImage
+    src={srcVal}
+    alt={altVal}
+    width={widthVal}
+    height={heightVal}
+    sizes={props.sizes}
+    loading={props.priority ? 'eager' : 'lazy'}
+    class={props.class}
+  />
+) : (
+  <img src={srcVal} alt={altVal} width={widthVal} height={heightVal} loading={props.priority ? 'eager' : 'lazy'} class={props.class} />
+)}

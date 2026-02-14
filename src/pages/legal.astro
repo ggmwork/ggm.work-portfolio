@@ -1,0 +1,15 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../content/site";
+
+const title = `Legal — ${site.name}`;
+---
+
+<Base
+  title={title}
+  description={`Legal information for ${site.name}`}
+  canonicalPath="/legal"
+>
+  <meta http-equiv="refresh" content="0; url=/#legal" />
+  <p>Redirecting to <a href="/#legal">Legal</a></p>
+</Base>

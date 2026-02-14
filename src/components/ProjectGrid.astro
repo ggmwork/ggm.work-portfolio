@@ -1,0 +1,95 @@
+---
+// ProjectGrid: renders project cards and progressively-enhanced modals.
+// Accepts optional props:
+//  - include: string[] (slugs to include in this grid)
+//  - tag: string (filter by tag)
+
+import { getCollection } from 'astro:content';
+import Modal from './Modal.astro';
+import Image from './ui/Image.astro';
+import { marked } from 'marked';
+
+const projects = await getCollection('projects');
+const { include = undefined, tag = undefined } = Astro.props;
+
+const filtered = projects
+  .filter(p => {
+    if (include && Array.isArray(include) && include.length) {
+      return include.includes(p.slug);
+    }
+    if (tag) {
+      return (p.data.tags || []).includes(tag);
+    }
+    return true;
+  });
+---
+
+<div class="project-grid" role="list">
+  {filtered.map(project => {
+    // Support multiple frontmatter shapes: images[], cover, or image (single object)
+    const firstImage = (project.data.images && project.data.images[0]) || project.data.cover || project.data.image;
+    const imageSrc = typeof firstImage === 'string' ? firstImage : (firstImage?.src ?? '');
+    const imageAlt = typeof firstImage === 'object' ? firstImage.alt ?? project.data.title : project.data.title;
+
+    return (
+      <article class="project-card" role="listitem" data-category={project.data.category?.toLowerCase()}>
+        <button class="project-button" data-modal-target={`${project.slug}-modal`} aria-controls={`${project.slug}-modal`} aria-expanded="false">
+          <Image src={imageSrc} alt={imageAlt} />
+          <h3 id={`${project.slug}-title`}>{project.data.title}</h3>
+          <p>{project.data.description}</p>
+        </button>
+
+        <Modal id={`${project.slug}-modal`} aria-labelledby={`${project.slug}-title`}>
+          <div slot="header">
+            <h3 id={`${project.slug}-title`}>{project.data.title}</h3>
+          </div>
+
+          <div class="modal-panel">
+            <div class="modal-desc">
+              <div class="prose" set:html={marked(project.body)} />
+            </div>
+
+            <div class="modal-slideshow">
+              <div class="slideshow" role="region" aria-label={`${project.data.title} slideshow`}>
+                {(project.data.images ?? (project.data.image ? [project.data.image] : []) ).map((img, i) => {
+                  const src = typeof img === 'string' ? img : img.src;
+                  const alt = typeof img === 'object' ? img.alt ?? project.data.title : project.data.title;
+                  return (
+                    <div class="slide" data-index={i} data-active={i === 0}>
+                      <Image src={src} alt={alt} />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div class="slideshow-controls">
+                <button data-slide-prev aria-label="Previous slide">‹</button>
+                <button data-slide-next aria-label="Next slide">›</button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      </article>
+    );
+  })}
+</div>
+
+<script is:inline>
+  (() => {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest?.('[data-modal-target]');
+      if (btn) {
+        const id = btn.getAttribute('data-modal-target');
+        const dlg = document.getElementById(id);
+        if (dlg && typeof dlg.showModal === 'function') {
+          dlg.showModal();
+          btn.setAttribute('aria-expanded','true');
+        }
+      }
+      if (e.target.matches?.('[data-dialog-close]')) {
+        const dlg = e.target.closest?.('dialog');
+        dlg?.close();
+      }
+    });
+  })();
+</script>
