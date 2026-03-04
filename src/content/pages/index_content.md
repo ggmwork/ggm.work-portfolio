@@ -8,8 +8,11 @@ sections:
         primary: "Designer merging visual creativity and problem solving into impactful digital solutions."
         secondary: "Based in Porto, Portugal · Currently open to new roles · The website is a work in progress "
         btn1Label: "Download CV (PDF)"
+        btn1Href: "/files/PDF_TestPage.pdf"
         btn2Label: "Get in Touch"
+        btn2Href: "#contact"
         btn3Label: "Explore My Work"
+        btn3Href: "#highlighted-projects"
 
   - component: "AboutSection"
     props:
@@ -152,7 +155,9 @@ sections:
       cardProps:
         text: "If anything resonated, don't hesitate to reach out. I'd genuinely love to hear from you."
         btn1Label: "Email"
+        btn1Href: "mailto:ggm.work22@gmail.com"
         btn2Label: "LinkedIn"
+        btn2Href: "https://www.linkedin.com/in/ggmwork/"
   - component: "HeadingCardSection"
     props:
       heading: "Heading Card"
