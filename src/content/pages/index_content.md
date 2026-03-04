@@ -8,7 +8,7 @@ sections:
         primary: "Designer merging visual creativity and problem solving into impactful digital solutions."
         secondary: "Based in Porto, Portugal · Currently open to new roles · The website is a work in progress "
         btn1Label: "Download CV (PDF)"
-        btn1Href: "/files/PDF_TestPage.pdf"
+        btn1Href: "/files/CV_Gonçalo_Mendonça.pdf"
         btn2Label: "Get in Touch"
         btn2Href: "#contact"
         btn3Label: "Explore My Work"

@@ -53,7 +53,7 @@ const { component, props = {} } = block;
 )}
 
 {component === 'HighlightedProjectsSection' && (
-  <section class="pt-24 pb-20 w-full flex flex-col gap-16" aria-label="ORGANISM: Highlighted Projects">
+  <section id="highlighted-projects" class="pt-24 pb-20 w-full flex flex-col gap-16" aria-label="ORGANISM: Highlighted Projects">
     <h2 class="font-heading font-bold text-4xl text-black pl-15 leading-tight tracking-tight">
       {props.heading}
     </h2>
@@ -111,7 +111,7 @@ const { component, props = {} } = block;
 )}
 
 {component === 'ContactSection' && (
-  <section class="pt-12 pb-20 w-full" aria-label="ORGANISM: Contact">
+  <section id="contact" class="pt-12 pb-20 w-full" aria-label="ORGANISM: Contact">
     <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[35vw] leading-tight tracking-tight">
       {props.heading}
     </h2>

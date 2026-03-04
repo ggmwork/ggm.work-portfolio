@@ -25,14 +25,14 @@ const { label = 'Button', href } = Astro.props;
 {href ? (
   <a
     href={href}
-    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-white"
+    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-[var(--color-white)]"
   >
     {label}
   </a>
 ) : (
   <button
     type="button"
-    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-white"
+    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-[var(--color-white)]"
   >
     {label}
   </button>
