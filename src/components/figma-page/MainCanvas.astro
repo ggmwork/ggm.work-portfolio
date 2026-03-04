@@ -1,0 +1,105 @@
+---
+/**
+ * MainCanvas.astro
+ * ─────────────────────────────────────────────────────────────────
+ * The root container of the Figma sandbox.
+ *
+ * Matches the Figma frame spec:
+ *   • Fill       → bg-brand (#5F46E7)
+ *   • Stroke     → border-2 border-grey (2px, #E6E7F2)
+ *   • Radius     → rounded-canvas (40px via --radius-canvas)
+ *   • Gutters    → mx-canvas (45px) + mt-canvas (48px)
+ *
+ * Figma effects (bottom → top):
+ *   1. Drop Shadow  X:0 Y:5 Blur:10 Spread:0 Color:--color-black   → canvas-shadow
+ *   2. Gaussian Blur 0.9                                             → canvas-backdrop-blur
+ *   3. Noise  size:1  density:30%  monochromatic                     → SVG filter + canvas-noise-overlay
+ * ─────────────────────────────────────────────────────────────────
+ */
+---
+
+<!--
+  Hidden SVG filter definitions.
+  • width/height = 0 → takes up no layout space
+  • feTurbulence fractalNoise → organic film-grain quality
+  • baseFrequency 0.65 → fine grain (maps to Figma "size: 1")
+  • numOctaves 1 → single layer of noise (matches Figma default)
+  • stitchTiles stitch → seamless tiling across the canvas
+  • feColorMatrix saturate=0 → force monochromatic output
+-->
+<svg
+  width="0"
+  height="0"
+  class="absolute overflow-hidden"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <filter
+      id="canvas-noise-filter"
+      x="0%"
+      y="0%"
+      width="100%"
+      height="100%"
+      color-interpolation-filters="sRGB"
+    >
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="1"
+        stitchTiles="stitch"
+        result="noiseOut"
+      />
+      <feColorMatrix
+        in="noiseOut"
+        type="saturate"
+        values="0"
+        result="monoNoise"
+      />
+    </filter>
+  </defs>
+</svg>
+
+<!-- Outer shell: white artboard (matches Figma canvas outside the card) -->
+<div class="min-h-screen w-full relative z-10">
+
+  <!--
+    MainCanvas card
+    ─── Classes:
+        mx-canvas          → 45px side gutters  (--spacing-canvas-x)
+        mt-canvas          → 48px top gutter    (--spacing-canvas-top)
+        rounded-canvas     → 40px radius        (--radius-canvas)
+        bg-brand           → #5F46E7 fill
+        border-2 border-grey → 2px #E6E7F2 stroke
+        canvas-shadow      → box-shadow 0 5px 10px 0 --color-black
+        canvas-backdrop-blur → backdrop-filter blur(0.9px)
+        min-h-canvas       → calc(100vh - --spacing-canvas-top)
+        relative overflow-hidden → isolates the absolute noise overlay
+  -->
+  <main
+    id="figma-canvas"
+    class="mx-canvas mt-canvas rounded-canvas canvas-gradient border-2 border-grey canvas-shadow canvas-backdrop-blur min-h-canvas relative overflow-hidden"
+    role="main"
+    aria-label="Figma component sandbox canvas"
+  >
+
+    <!--
+      Noise texture overlay
+      ─── Absolutely fills the card (inset-0)
+      ─── z-0: above bg colour, below all slot content
+      ─── Styled entirely via canvas-noise-overlay utility in global.css:
+              background: white → feTurbulence maps its pixels to grayscale noise
+              filter: url(#canvas-noise-filter) → SVG monochromatic fractal noise
+              opacity: 0.3 → 30% density
+              mix-blend-mode: overlay → blends naturally with the brand purple
+    -->
+    <div class="canvas-noise-overlay" aria-hidden="true"></div>
+
+    <!-- All future components slot here — sits above the noise (z-10) -->
+    <div class="relative z-10">
+      <slot />
+    </div>
+
+  </main>
+
+</div>

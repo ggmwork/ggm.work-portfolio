@@ -1,4 +1,318 @@
+@import "tailwindcss";
+
+@theme {
+  --color-white: #FDFDF9;
+  --color-black: #0E0E0E;
+  --color-brand: #5F46E7;
+  --color-brand-light: #C9C3FF;
+  --color-grey: #E6E7F2;
+  --font-heading: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* ─── Canvas / Sandbox tokens (Figma spec @ 1728px) ─── */
+  --radius-canvas: 40px;
+  /* corner radius of the main app shell */
+  --spacing-canvas-x: 45px;
+  /* horizontal gutter from viewport edge */
+  --spacing-canvas-top: 48px;
+  /* top gutter from viewport edge */
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black font-body;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+}
+
+@utility pl-edge-grid {
+  padding-left: max(1.5rem, calc(50% - 720px + 3rem));
+}
+
+@utility pr-edge-grid {
+  padding-right: max(1.5rem, calc(50% - 720px + 3rem));
+}
+
+/* ─── Sandbox page background grid ─── */
+@utility sandbox-grid-bg {
+  /*
+    Fixed full-viewport layer that sits behind all page content.
+    The ::before pseudo holds the actual grid so we can apply
+    transform: skewX(-20deg) to it independently — the parent
+    clips the overflowing pseudo back to the viewport.
+  */
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    /*
+      Oversized by 40% on every side so the shear transform never
+      reveals a white gap at the viewport edges.
+    */
+    inset: -40%;
+    /* Grid global opacity: 75% */
+    opacity: 0.75;
+    background-image:
+      repeating-linear-gradient(0deg,
+        transparent 0,
+        transparent 52px,
+        var(--color-grey) 52px,
+        var(--color-grey) 54px),
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 82px,
+        var(--color-grey) 82px,
+        var(--color-grey) 84px);
+    filter:
+      /* Gaussian blur 3px — softens the grid lines */
+      blur(3px)
+      /* Outer glow shadow: offset 4.7px, radius 0.3px, brand-light @ 73% */
+      drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
+    transform: skewX(-25deg);
+  }
+}
+
+/* ─── Base card effect utilities ─── */
+@utility base-card-shadow {
+  /*
+    Figma effects:
+    1. Inner shadow  → x:-10  y:-10  blur:25  spread:1  #0E0E0E @25%
+    2. Drop shadow   → x: 10  y: 10  blur:25  spread:2  #0E0E0E @25%
+    Combined in a single box-shadow declaration (CSS renders both).
+  */
+  box-shadow:
+    inset -10px -10px 25px 1px color-mix(in srgb, var(--color-black) 25%, transparent),
+    10px 10px 25px 2px color-mix(in srgb, var(--color-black) 25%, transparent);
+}
+
+@utility base-card-blur {
+  /* Figma: Gaussian Blur 0.5px — applied to the whole card */
+  filter: blur(0.5px);
+}
+
+/* ─── Button effect utilities ─── */
+@utility btn-effects {
+  /*
+    Scaled-down version of base-card-shadow for button proportions.
+    Card: inset -10/-10/25/1  and  10/10/25/2
+    Button (≈ ¼ card): inset -3/-3/6/0  and  3/3/6/1
+  */
+  box-shadow:
+    inset -3px -3px 6px 0px color-mix(in srgb, var(--color-black) 20%, transparent),
+    3px 3px 6px 1px color-mix(in srgb, var(--color-black) 20%, transparent);
+}
+
+@utility btn-blur {
+  /* Matches card: Gaussian Blur 0.5px */
+  filter: blur(0.5px);
+}
+
+/* ─── Image shadow utility ─── */
+@utility img-drop-shadow {
+  /*
+    Drop shadow only (no inset) — matches the card's Figma drop shadow spec:
+    x:10  y:10  blur:25  spread:2  #0E0E0E @25%
+    Applied as box-shadow so it respects the image's border-radius.
+  */
+  box-shadow:
+    10px 10px 25px 2px color-mix(in srgb, var(--color-black) 25%, transparent);
+}
+
+/* ─── Label effect utilities ─── */
+@utility label-effects {
+  /*
+    Scaled further down for label proportions (71 × 28px ≈ 60% of button).
+    Button: inset -3/-3/6/0  →  Label: inset -2/-2/4/0
+    Button: 3/3/6/1          →  Label: 2/2/4/1
+    Opacity reduced to 15% (vs button's 20%) for subtlety.
+  */
+  box-shadow:
+    inset -2px -2px 4px 0px color-mix(in srgb, var(--color-black) 15%, transparent),
+    2px 2px 4px 1px color-mix(in srgb, var(--color-black) 15%, transparent);
+  filter: blur(0.5px);
+}
+
+@utility base-card-grid {
+  /*
+    Replicates the sandbox background grid inside the card.
+    Performance strategy: pure CSS ::before pseudo-element — zero extra
+    DOM nodes, zero HTTP requests, GPU-accelerated paint. The same
+    repeating-linear-gradient + skewX formula is reused so the browser
+    can optimise both surfaces from the same paint primitive.
+
+    overflow: hidden clips the oversized pseudo to the card's
+    rounded shape without affecting the outer ring (box-shadow).
+  */
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    /* Oversized so skewX(-25deg) never exposes a gap at the card edges */
+    inset: -40%;
+    pointer-events: none;
+    z-index: 0;
+    /* Matches sandbox-grid-bg::before exactly */
+    opacity: 0.65;
+    background-image:
+      repeating-linear-gradient(0deg,
+        transparent 0,
+        transparent 52px,
+        var(--color-grey) 52px,
+        var(--color-grey) 54px),
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 82px,
+        var(--color-grey) 82px,
+        var(--color-grey) 84px);
+    filter:
+      blur(3px) drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
+    transform: skewX(-25deg);
+  }
+}
+
+/* ─── Canvas positioning utilities (maps Figma gutter tokens) ─── */
+@utility mx-canvas {
+  margin-left: var(--spacing-canvas-x);
+  margin-right: var(--spacing-canvas-x);
+}
+
+@utility mt-canvas {
+  margin-top: var(--spacing-canvas-top);
+}
+
+@utility rounded-canvas {
+  border-radius: var(--radius-canvas);
+}
+
+/* ─── Canvas effect utilities ─── */
+@utility canvas-shadow {
+  /* Figma: Drop Shadow X:0 Y:5 Blur:10 Spread:0 Color: --color-black */
+  box-shadow: 0 5px 10px 0 var(--color-black);
+}
+
+@utility canvas-backdrop-blur {
+  /* Figma: Gaussian Blur 0.9 — applied as backdrop so slot children stay sharp */
+  backdrop-filter: blur(0.9px);
+}
+
+@utility canvas-gradient {
+  /*
+    Figma: Linear gradient, start outside frame (upper-left), end bottom-right corner.
+    Stops → brand (0%) · grey (50%) · brand-light (100%)
+    CSS `to bottom right` faithfully replicates the diagonal direction.
+  */
+  background-image: linear-gradient(to bottom right,
+      var(--color-brand) 0%,
+      var(--color-grey) 50%,
+      var(--color-brand-light) 100%);
+}
+
+@utility min-h-canvas {
+  /* Full viewport height minus the top gutter */
+  min-height: calc(100vh - var(--spacing-canvas-top));
+}
+
+@utility canvas-noise-overlay {
+  /* Figma: Noise — monochromatic, density 30%, overlay blend */
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-color: white;
+  filter: url(#canvas-noise-filter);
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+/* Card grid background — applies a brand-secondary square grid behind card content */
+@utility card-grid {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image:
+      repeating-linear-gradient(transparent,
+        transparent calc(64px - 1px),
+        color-mix(in srgb, var(--color-brand-light) 40%, transparent) 64px),
+      repeating-linear-gradient(90deg,
+        transparent,
+        transparent calc(64px - 1px),
+        color-mix(in srgb, var(--color-brand-light) 40%, transparent) 64px);
+    background-size: 64px 64px;
+  }
+}
+
 @import "./partials/tokens.css";
+
+@layer components {
+
+  /* Markdown Typography Styling inside Modals */
+  .prose {
+    @apply text-black/80 leading-relaxed text-[15px] max-w-none;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-bold font-heading text-black mb-6 mt-8 border-b-2 border-brand inline-block pb-2 tracking-tight;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-bold font-heading text-brand mt-12 mb-4 tracking-tight;
+  }
+
+  .prose h3 {
+    @apply text-lg font-bold font-heading text-black mt-8 mb-3;
+  }
+
+  .prose p {
+    @apply mb-4;
+  }
+
+  .prose p:last-child {
+    @apply mb-0;
+  }
+
+  .prose ul {
+    @apply list-none pl-0 mb-6 space-y-2;
+  }
+
+  .prose li {
+    @apply relative pl-5;
+  }
+
+  .prose li::before {
+    content: "•";
+    @apply absolute left-0 text-brand font-bold;
+  }
+
+  .prose strong {
+    @apply font-bold text-black;
+  }
+
+  .prose hr {
+    @apply border-black/10 my-8;
+  }
+}
+
 @import "./partials/reset.css";
 @import "./partials/fonts.css";
 @import "./partials/structure.css";

@@ -1,0 +1,39 @@
+---
+/**
+ * ButtonPrimary.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ATOM — Primary action button.
+ *
+ * Visual spec (Figma):
+ *   Fill    → bg-brand  (#7B68EE via --color-brand)
+ *   Stroke  → ring-1 ring-grey  (1px outside, #E6E7F2)
+ *   Radius  → rounded-[8px]  (Figma spec: 8px corner radius)
+ *   Text    → Plus Jakarta Sans Semibold 16px — font-body font-semibold text-base text-white
+ *   Effects → btn-effects (scaled inner + drop shadow) + btn-blur (0.5px)
+ *
+ * Arbitrary value justification:
+ *   [8px]  Figma frame radius spec.
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  label?: string;
+  href?: string;
+}
+const { label = 'Button', href } = Astro.props;
+---
+
+{href ? (
+  <a
+    href={href}
+    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-white"
+  >
+    {label}
+  </a>
+) : (
+  <button
+    type="button"
+    class="btn-effects btn-blur inline-flex items-center justify-center bg-brand ring-1 ring-grey rounded-[8px] px-6 py-3 font-body font-semibold text-base text-white"
+  >
+    {label}
+  </button>
+)}

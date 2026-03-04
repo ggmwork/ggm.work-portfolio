@@ -1,0 +1,59 @@
+---
+/**
+ * TextBlock.astro — Variant 1
+ * ─────────────────────────────────────────────────────────────────
+ * MOLECULE — Two-line text block on a frosted white panel.
+ *
+ * Visual spec (Figma):
+ *   Panel   → bg-white  rounded-[19px]  backdrop-blur-[20px]
+ *             White rounded square (19px radius) with Gaussian blur 20px
+ *             behind the text, layered over the card grid.
+ *   Line 1  → Plus Jakarta Medium 18px  → font-body font-medium text-lg
+ *   Line 2  → Plus Jakarta Light  16px  → font-body font-light  text-base
+ *   Color   → text-black
+ *
+ * Props:
+ *   primary   — bold/medium headline line (defaults to placeholder)
+ *   secondary — light subline              (defaults to placeholder)
+ *
+ * Arbitrary value justifications:
+ *   [19px]   Figma panel border-radius spec
+ *   [20px]   Figma Gaussian Blur spec on the panel
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  primary?: string;
+  secondary?: string;
+}
+const {
+  primary   = 'Primary text line goes here',
+  secondary = 'Secondary text line · supporting information',
+} = Astro.props;
+---
+
+<!--
+  Relative wrapper so the absolute frosted panel stays scoped.
+  inline-block keeps it sized to its content rather than full-width.
+-->
+<div class="relative">
+  <!--
+    Frosted white panel:
+      rounded-[19px]      — Figma border-radius spec
+      bg-white            — solid white fill
+      backdrop-blur-[20px]— Gaussian Blur 20px blurring the grid behind
+  -->
+  <div
+    class="absolute inset-0 rounded-[19px] bg-white/85 blur-[20px]"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Text — relative z-10 sits above the panel layer -->
+  <div class="relative z-10 px-5 py-4 flex flex-col gap-1">
+    <p class="font-body font-medium text-lg text-black leading-snug">
+      {primary}
+    </p>
+    <p class="font-body font-light text-base text-black leading-snug">
+      {secondary}
+    </p>
+  </div>
+</div>

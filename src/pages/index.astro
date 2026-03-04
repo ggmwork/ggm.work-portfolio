@@ -1,113 +1,46 @@
 ---
-import Base from "../layouts/Base.astro";
-import { site } from "../content/site";
-import Filter from "../components/Filter.astro";
-import ProjectGrid from "../components/ProjectGrid.astro";
-import FeatureBlock from "../components/FeatureBlock.astro";
+/**
+ * index.astro
+ * ─────────────────────────────────────────────────────────────────
+ * Main portfolio page driven by index_content.md.
+ * Route: /
+ * ─────────────────────────────────────────────────────────────────
+ */
+import MainCanvas from '../components/figma-page/MainCanvas.astro';
+import SandboxBlock from '../components/figma-page/Test-Block.astro';
+import '../styles/global.css';
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: site.name,
-  url: site.url,
-  inLanguage: site.locale,
-};
+import { getEntry } from 'astro:content';
+const sandboxEntry = await getEntry('pages', 'index_content');
+const sections = sandboxEntry?.data.sections || [];
 ---
 
-<Base
-  title={site.name}
-  description={site.description}
-  canonicalPath="/"
-  jsonLd={jsonLd}
->
-  <article class="prose">
-    <!-- Main section heading — demoted to H2 because the hero contains the H1 -->
-    <h2 class="prose__title">{site.tagline}</h2>
-    <p class="lead">{site.description}</p>
-  </article>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gonçalo Mendonça - Portfolio</title>
 
-  <section id="projects" class="block">
-    <h2>Projetos Tecit</h2>
-    <Filter />
+    <!-- Fonts: same stack as production -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <h3>Featured</h3>
-    <ProjectGrid include={["project-one","project-two","project-three","project-four","project-five","project-six"]} />
+  <body class="bg-white font-body text-black">
 
-    <h3>Pessoais</h3>
-    <ProjectGrid include={["project-seven","project-eight","project-nine"]} />
+    <!-- Grid background — fixed behind all content, aria-hidden so screen readers skip it -->
+    <div class="sandbox-grid-bg" aria-hidden="true"></div>
 
-    <h3>Projetos Velhos</h3>
-    <ProjectGrid include={["project-ten"]} />
-  </section>
+    <MainCanvas>
+      {sections.map((block: any) => (
+        <SandboxBlock block={block} />
+      ))}
+    </MainCanvas>
 
-  <!-- Feature blocks following the project grid; content-driven from site.features -->
-  {site.features?.map(feature => (
-    <FeatureBlock title={feature.title} text={feature.text} image={feature.image} reverse={feature.reverse} />
-  ))}
-
-  <section id="about" class="block" aria-labelledby="about-title">
-    <h2 id="about-title">About</h2>
-    <article class="prose">
-      <p class="lead">
-        {site.name} is a minimal Porta focused on structure, clarity, and
-        build-time decisions.
-      </p>
-
-      <p>
-        This starter intentionally avoids UI kits, heavy abstractions, and runtime
-        JavaScript. It provides a solid foundation for websites that value
-        performance, accessibility, and long-term maintainability.
-      </p>
-
-      <p>
-        You are expected to adapt it, extend it, and make it your own.
-      </p>
-    </article>
-  </section>
-
-  <section id="contact" class="block" aria-labelledby="contact-title">
-    <h2 id="contact-title">Contact</h2>
-    <article class="prose">
-      <p class="lead">This site does not include a contact form by default.</p>
-
-      <p>
-        If you need to get in touch, you can reach us by email:
-      </p>
-
-      {site.author.email && (
-        <p>
-          <a href={`mailto:${site.author.email}`}>
-            {site.author.email}
-          </a>
-        </p>
-      )}
-
-      <p>
-        This keeps the baseline simple and avoids unnecessary JavaScript.
-      </p>
-    </article>
-  </section>
-
-  <section id="legal" class="block" aria-labelledby="legal-title">
-    <h2 id="legal-title">Legal</h2>
-    <article class="prose">
-      <p>
-        This website is provided as-is, without any guarantee or warranty.
-      </p>
-
-      <p>
-        Content published on this site may be modified or removed at any time.
-      </p>
-
-      <p>
-        If you have any legal concerns, please contact the site owner.
-      </p>
-
-      {site.author.email && (
-        <p>
-          Contact: <a href={`mailto:${site.author.email}`}>{site.author.email}</a>
-        </p>
-      )}
-    </article>
-  </section>
-</Base>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+/**
+ * AboutImageBlock.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ORGANISM — Image card sitting on the right side of the canvas (About section).
+ * Derived from ImageBlockLeft but sized down to 300x300.
+ *
+ * Visual spec:
+ *   Card    → bg-white, rounded-l-[2rem] md:rounded-l-[2.5rem], flush-right.
+ *   Image   → 300 × 300px, rounded-[40px], img-drop-shadow, ring-2 ring-grey.
+ *   Padding → Reduced right padding so the image sits closer to the flat
+ *             right edge of the card.
+ *
+ * Props:
+ *   src  — image source path
+ *   alt  — image alt text
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+}
+
+const {
+  src = '/images/projects/project-six/storm_shots/storm_shots%20(1).webp',
+  alt = 'About image block',
+} = Astro.props;
+---
+
+<article
+  class="bg-white ring-[5px] ring-grey rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none w-[fit-content] md:w-auto base-card-shadow base-card-blur base-card-grid relative overflow-hidden shrink-0"
+  aria-label="About Image block"
+>
+  <!-- 
+    justify-start: Image pushed left against the rounded corner.
+    pr-3: Reduced padding on the right (from pr-6).
+    py-4: Vertical padding to frame the 300x300 image.
+  -->
+  <div class="relative z-10 flex justify-start pl-4 py-4 pr-3">
+    <img
+      src={src}
+      alt={alt}
+      width="300"
+      height="300"
+      class="img-drop-shadow w-[300px] h-[300px] rounded-[40px] object-cover block ring-2 ring-grey"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</article>

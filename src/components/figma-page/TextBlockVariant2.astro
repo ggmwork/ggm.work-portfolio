@@ -1,0 +1,53 @@
+---
+/**
+ * TextBlockVariant2.astro — Variant 2
+ * ─────────────────────────────────────────────────────────────────
+ * MOLECULE — Single-weight long-form text block on a frosted white panel.
+ *
+ * Difference from Variant 1:
+ *   • Two full paragraphs instead of a short headline + subline
+ *   • No secondary light-weight line — medium weight only throughout
+ *   • Designed for longer copy (About / Bio sections)
+ *
+ * Visual spec (Figma):
+ *   Panel   → bg-white/55  rounded-[19px]  backdrop-blur-[40px]
+ *   Text    → Plus Jakarta Sans Medium 18px black
+ *             font-body font-medium text-lg text-black
+ *
+ * Props:
+ *   paragraph1  — first paragraph
+ *   paragraph2  — second paragraph
+ *
+ * Arbitrary value justifications:
+ *   [19px]   Figma panel border-radius spec
+ *   [40px]   Figma Gaussian Blur spec on the panel
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  paragraph1?: string;
+  paragraph2?: string;
+}
+
+const {
+  paragraph1 = 'First paragraph goes here.',
+  paragraph2 = 'Second paragraph goes here.',
+} = Astro.props;
+---
+
+<div class="relative">
+  <!-- Frosted white panel — same spec as Variant 1 -->
+  <div
+    class="absolute inset-0 rounded-[19px] bg-white/55 backdrop-blur-[40px]"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Text content — two medium-weight paragraphs -->
+  <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
+    <p class="font-body font-medium text-lg text-black leading-relaxed">
+      {paragraph1}
+    </p>
+    <p class="font-body font-medium text-lg text-black leading-relaxed">
+      {paragraph2}
+    </p>
+  </div>
+</div>

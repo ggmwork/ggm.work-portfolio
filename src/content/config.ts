@@ -11,6 +11,13 @@ const ImageOrString = z.union([
   })
 ]);
 
+const sectionSchema = z.object({
+  layout: z.enum(['text-left', 'text-right', 'full-width']),
+  title: z.string().optional(),
+  text: z.string().optional(),
+  media: ImageOrString.optional()
+});
+
 const projectSchema = z.object({
   title: z.string(),
   description: z.string(),
@@ -22,6 +29,7 @@ const projectSchema = z.object({
   externalUrl: z.string().url().optional(),
   repoUrl: z.string().url().optional(),
   publishDate: z.date().optional(),
+  sections: z.array(sectionSchema).optional(),
 });
 
 const projectCollection = defineCollection({
@@ -29,8 +37,24 @@ const projectCollection = defineCollection({
   schema: projectSchema,
 });
 
+const blockSchema = z.object({
+  component: z.string(),
+  props: z.record(z.any()).optional(),
+});
+
+const pageSchema = z.object({
+  title: z.string(),
+  sections: z.array(blockSchema).optional(),
+});
+
+const pageCollection = defineCollection({
+  type: 'content',
+  schema: pageSchema,
+});
+
 export type Project = z.infer<typeof projectSchema>;
 
 export const collections = {
   'projects': projectCollection,
+  'pages': pageCollection,
 };

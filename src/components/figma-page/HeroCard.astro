@@ -1,0 +1,36 @@
+---
+/**
+ * HeroCard.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ORGANISM — Hero / Header section card.
+ * Based on BaseCard — same visual spec, specific to the hero section.
+ *
+ * Visual spec (Figma):
+ *   Size    → 913 × 274px (max-w / min-h)
+ *   Fill    → bg-white (#FDFDF9, --color-white) — no grid texture shown
+ *             base-card-grid applies the matching inner grid overlay
+ *   Stroke  → ring-[5px] ring-grey  (5px outside, #E6E7F2)
+ *   Radius  → rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none
+ *             Left edge flush with canvas left boundary.
+ *   Shadow  → base-card-shadow (inner + drop)
+ *   Blur    → base-card-blur (0.5px)
+ *   Grid    → base-card-grid (matching inner skewed grid)
+ *
+ * Arbitrary value justifications:
+ *   [913px]  Figma frame width
+ *   [274px]  Figma frame height
+ *   [2rem]/[2.5rem]  Consistent with canvas card radius language
+ *   [5px]    User-specified stroke width
+ * ─────────────────────────────────────────────────────────────────
+ */
+---
+
+<article
+  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[913px] w-full md:w-[56%] min-h-[274px] base-card-shadow base-card-blur base-card-grid relative"
+  aria-label="Hero section card"
+>
+  <!-- Slot content — visually above the grid ::before layer (z-10) -->
+  <div class="relative z-10 h-full p-6">
+    <slot />
+  </div>
+</article>

@@ -1,0 +1,64 @@
+---
+/**
+ * ImageBlock.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ORGANISM — Card with a single square image.
+ * Duplicates the HeroCard shell and fills it with one image.
+ *
+ * Visual spec (Figma):
+ *   Card    → same as HeroCard (white, grid, ring-[5px] grey, rounded-right, flush-left)
+ *   Image   → 500 × 500px  (w-[500px] h-[500px])  — Figma spec
+ *             rounded-[40px]  — Figma spec
+ *             object-cover
+ *  Alignment → left edge of image flush with card left edge  (pl-0)
+ *              padding on top / right / bottom  (pt-6 pr-6 pb-6)
+ *   Shadow  → img-drop-shadow  (card drop shadow: 10/10/25/2 black@25%)
+ *
+ * Props:
+ *   src  — image source path  (default: project-six photo)
+ *   alt  — image alt text
+ *
+ * Arbitrary value justifications:
+ *   [500px]  Figma frame size
+ *   [40px]   Figma image border-radius
+ *   [5px]    Card ring spec (inherited from card language)
+ *   [2rem]/[2.5rem]  Card rounded-right (inherited from card language)
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+}
+
+const {
+  src = '/images/projects/project-six/storm_shots/storm_shots%20(1).webp',
+  alt = 'Image block',
+} = Astro.props;
+---
+
+<!--
+  Card shell — same spec as HeroCard.
+  overflow: hidden (from base-card-grid) clips image if it bleeds
+  beyond the card's right/top/bottom edges.
+-->
+<article
+  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[913px] w-full md:w-[56%] base-card-shadow base-card-blur base-card-grid relative"
+  aria-label="Image block card"
+>
+  <!-- Content layer above the inner grid pseudo-element -->
+  <div class="relative z-10 flex justify-end pl-6">
+    <!--
+      Image: 500×500, rounded-[40px] all sides, flush-left (pl-0 on parent).
+      img-drop-shadow matches the card's Figma drop shadow.
+    -->
+    <img
+      src={src}
+      alt={alt}
+      width="500"
+      height="500"
+      class="img-drop-shadow w-[500px] h-[500px] rounded-[40px] object-cover block ring-2 ring-grey"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</article>

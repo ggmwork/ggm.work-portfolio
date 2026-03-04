@@ -1,0 +1,41 @@
+---
+/**
+ * HeroInfoCard.astro
+ * ─────────────────────────────────────────────────────────────────
+ * Figma spec: 913 × 274px
+ *
+ * Visual anatomy:
+ *   Fill    → bg-white (#FDFDF9 via --color-white)
+ *   Stroke  → ring-2 ring-grey  (2px outside, #E6E7F2)
+ *             ring = box-shadow, so it sits OUTSIDE the box without
+ *             affecting layout — matching Figma's "Outside" stroke.
+ *   Radius  → rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none
+ *             Left edge is flush with the canvas left boundary (no
+ *             rounding, no left margin). Arbitrary values justified
+ *             by Figma spec and consistent with existing card language.
+ *   Texture → card-grid utility (::before square grid overlay)
+ *   Width   → max-w-[913px] (Figma px spec) + proportional md:w-[56%]
+ *   Height  → min-h-[274px] (Figma px spec; min so content can grow)
+ * ─────────────────────────────────────────────────────────────────
+ */
+---
+
+<!--
+  card-grid  → square grid texture via ::before (z-0)
+  bg-white   → #FDFDF9 fill (--color-white token)
+  ring-2 ring-grey → 2px outside stroke (#E6E7F2, no layout impact)
+  rounded-r-[2rem] rounded-l-none → flush left, rounded right
+  max-w-[913px]   → Figma frame width cap
+  md:w-[56%]      → proportional canvas width (913 / 1638 ≈ 55.7%)
+  min-h-[274px]   → Figma frame height floor
+  relative        → stacking context for slot content above ::before
+-->
+<article
+  class="card-grid bg-white ring-2 ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[913px] w-full md:w-[56%] min-h-[274px] relative"
+  aria-label="Hero information card"
+>
+  <!-- Slot content sits above the card-grid ::before layer (z-10) -->
+  <div class="relative z-10 h-full">
+    <slot />
+  </div>
+</article>

@@ -1,0 +1,35 @@
+---
+/**
+ * BaseCard.astro
+ * ─────────────────────────────────────────────────────────────────
+ * Generic white card base — the structural template from which all
+ * section cards (HeroInfoCard, ContactCard, FooterCard, etc.) are derived.
+ *
+ * Visual spec (Figma):
+ *   Size    → 913 × 274px (max-w / min-h)
+ *   Fill    → bg-white (#FDFDF9, --color-white) — no grid texture
+ *   Stroke  → ring-2 ring-grey  (2px outside, #E6E7F2)
+ *   Radius  → rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none
+ *             Left edge flush with the canvas left boundary.
+ *   Shadow  → base-card-shadow:
+ *               inner  x:-10 y:-10 blur:25 spread:1 black@25%
+ *               drop   x: 10 y: 10 blur:25 spread:2 black@25%
+ *   Blur    → base-card-blur: filter blur(1px) over entire card
+ *
+ * Arbitrary value justifications:
+ *   [913px]   Figma frame width
+ *   [274px]   Figma frame height
+ *   [2rem] / [2.5rem]  Matches existing canvas card radius language
+ * ─────────────────────────────────────────────────────────────────
+ */
+---
+
+<article
+  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[913px] w-full md:w-[56%] min-h-[274px] base-card-shadow base-card-blur base-card-grid relative"
+  aria-label="Content card"
+>
+  <!-- Slot content — visually above the card surface -->
+  <div class="relative z-10 h-full">
+    <slot />
+  </div>
+</article>

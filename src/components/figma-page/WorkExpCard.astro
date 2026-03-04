@@ -1,0 +1,73 @@
+---
+/**
+ * WorkExpCard.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ORGANISM — Contains rows of work experience content.
+ * Duplicates the HeaderCard shell per user request.
+ *
+ * Visual spec (Figma reference):
+ *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
+ *             ring-[5px] ring-grey, rounded-r-[2rem] md:rounded-r-[2.5rem], rounded-l-none.
+ *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
+ *   Content → Flex col container holding rows of experience.
+ *     Row   → Top div: Title, Company, Date (Left) | Labels (Right).
+ *             Bottom: Description text block spanning below the top div.
+ * ─────────────────────────────────────────────────────────────────
+ */
+import Label from './Label.astro';
+
+interface Experience {
+  title: string;
+  company: string;
+  date: string;
+  description: string;
+  labels: string[];
+}
+
+interface Props {
+  experiences?: Experience[];
+}
+
+const { experiences = [] } = Astro.props;
+---
+
+<article
+  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
+  aria-label="Work experience card"
+>
+  <!-- Content wrapper inside the card grid -->
+  <div class="relative z-10 w-full p-8 md:px-15 md:py-12 flex flex-col gap-12">
+    
+    {experiences.map((exp: any) => (
+      <div class="flex flex-col gap-5">
+        
+        <!-- Job Header Row -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <!-- Left: Title, Company, Date -->
+          <div class="flex flex-col gap-3">
+            <h3 class="font-body font-semibold text-xl text-black leading-snug">
+              {exp.title}
+            </h3>
+            <div class="flex items-center gap-6 font-body font-medium text-base text-grey-dark">
+              <span>{exp.company}</span>
+              <span>{exp.date}</span>
+            </div>
+          </div>
+          
+          <!-- Right: Labels -->
+          <div class="flex flex-row flex-wrap gap-3">
+            {exp.labels && exp.labels.map((label: string) => (
+              <Label label={label} />
+            ))}
+          </div>
+        </div>
+        
+        <!-- Job Description -->
+        <p class="font-body font-medium text-base md:text-lg text-black leading-relaxed">
+          {exp.description}
+        </p>
+      </div>
+    ))}
+
+  </div>
+</article>

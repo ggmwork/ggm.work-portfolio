@@ -1,0 +1,34 @@
+---
+/**
+ * Label.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ATOM — Category / tag label.
+ *
+ * Visual spec (Figma):
+ *   Size    → 71 × 28px  →  w-[71px] h-[28px]
+ *   Fill    → bg-brand-light  (--color-brand-light, lavender #C9C3FF)
+ *   Radius  → rounded-[10px]  (Figma spec)
+ *   Text    → Plus Jakarta Sans Medium 14px black
+ *             font-body font-medium text-sm text-black
+ *   Effects → label-effects  (inner shadow inset -2/-2/4 + drop 2/2/4 @ 15% + blur 0.5px)
+ *
+ * Props:
+ *   label  — text content (default: 'Label')
+ *
+ * Arbitrary value justifications:
+ *   [71px]   Figma frame width
+ *   [28px]   Figma frame height
+ *   [10px]   Figma border-radius spec
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface Props {
+  label?: string;
+}
+const { label = 'Label' } = Astro.props;
+---
+
+<span
+  class="label-effects inline-flex items-center justify-center bg-brand-light rounded-[10px] w-[71px] h-[28px] font-body font-medium text-sm text-black"
+>
+  {label}
+</span>

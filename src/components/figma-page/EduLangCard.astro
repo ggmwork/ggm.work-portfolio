@@ -1,0 +1,68 @@
+---
+/**
+ * EduLangCard.astro
+ * ─────────────────────────────────────────────────────────────────
+ * ORGANISM — Education and Languages card section.
+ * Designed to sit flush on the left side of the canvas (like WorkExpCard).
+ *
+ * Visual spec (Figma reference):
+ *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
+ *             ring-[5px] ring-grey, rounded-r-[2rem] md:rounded-r-[2.5rem], rounded-l-none.
+ *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
+ *   Content → Flex col container holding rows of dual information.
+ *             Left side of row: Degree and University/Date
+ *             Right side of row: Language and Proficiency Level
+ * ─────────────────────────────────────────────────────────────────
+ */
+interface EducationRow {
+  leftTitle: string;
+  leftSubtitle: string;
+  leftDate: string;
+  rightTitle: string;
+  rightSubtitle: string;
+}
+
+interface Props {
+  rows?: EducationRow[];
+}
+
+const { rows = [] } = Astro.props;
+---
+
+<article
+  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
+  aria-label="Education and languages card"
+>
+  <!-- Content wrapper inside the card grid -->
+  <!-- Using py-16 gap-14 to match the very airy spacing found in the reference image -->
+  <div class="relative z-10 w-full p-8 md:pl-20 md:pr-12 md:py-16 flex flex-col gap-12">
+    
+    {rows.map((row: any) => (
+      <div class="flex flex-col md:flex-row md:items-start justify-start gap-8 md:gap-32">
+        
+        <!-- Left: Degree Information -->
+        <div class="flex flex-col gap-3 flex-1">
+          <h3 class="font-body font-medium text-lg text-black leading-snug">
+            {row.leftTitle}
+          </h3>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 font-body font-medium text-base text-grey-dark">
+            <span>{row.leftSubtitle}</span>
+            <span>{row.leftDate}</span>
+          </div>
+        </div>
+        
+        <!-- Right: Language Information -->
+        <div class="flex flex-col gap-3 min-w-[200px]">
+          <h3 class="font-body font-medium text-lg text-black leading-snug">
+            {row.rightTitle}
+          </h3>
+          <span class="font-body font-medium text-base text-grey-dark">
+            {row.rightSubtitle}
+          </span>
+        </div>
+
+      </div>
+    ))}
+
+  </div>
+</article>
