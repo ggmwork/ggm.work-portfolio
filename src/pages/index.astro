@@ -8,11 +8,44 @@
  */
 import MainCanvas from '../components/figma-page/MainCanvas.astro';
 import SandboxBlock from '../components/figma-page/Test-Block.astro';
+import ProjOverlay from '../components/figma-page/proj_overlay.astro';
 import '../styles/global.css';
 
 import { getEntry } from 'astro:content';
 const sandboxEntry = await getEntry('pages', 'index_content');
 const sections = sandboxEntry?.data.sections || [];
+
+const highlightedSection = sections.find((section: any) => section.component === 'HighlightedProjectsSection');
+const overlayProjectSlug = highlightedSection?.props?.projectList?.find(
+  (project: any) => typeof project?.projectSlug === 'string' && project.projectSlug.trim().length > 0
+)?.projectSlug?.trim();
+
+const overlayProjectEntry = overlayProjectSlug ? await getEntry('projects', overlayProjectSlug) : null;
+const overlayBlocks = (() => {
+  if (!overlayProjectEntry) return [];
+
+  const validOverlayComponents = new Set([
+    'ProjTextCardLeft',
+    'ProjTextCardRight',
+    'ProjTextCardWideImage',
+  ]);
+
+  const sectionsData = overlayProjectEntry.data.sections ?? [];
+  const mappedBlocks = sectionsData
+    .filter((section: any) =>
+      section &&
+      typeof section === 'object' &&
+      'component' in section &&
+      typeof section.component === 'string' &&
+      validOverlayComponents.has(section.component)
+    )
+    .map((section: any) => ({
+      component: section.component,
+      props: section.props ?? {},
+    }));
+
+  return mappedBlocks;
+})();
 ---
 
 <!doctype html>
@@ -41,6 +74,11 @@ const sections = sandboxEntry?.data.sections || [];
         <SandboxBlock block={block} />
       ))}
     </MainCanvas>
+
+    <ProjOverlay
+      projectSlug={overlayProjectSlug}
+      overlayBlocks={overlayBlocks}
+    />
 
   </body>
 </html>

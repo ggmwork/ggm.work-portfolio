@@ -11,12 +11,22 @@ const ImageOrString = z.union([
   })
 ]);
 
-const sectionSchema = z.object({
+const legacyProjectSectionSchema = z.object({
   layout: z.enum(['text-left', 'text-right', 'full-width']),
   title: z.string().optional(),
   text: z.string().optional(),
   media: ImageOrString.optional()
 });
+
+const projectBlockSectionSchema = z.object({
+  component: z.string(),
+  props: z.record(z.any()).optional(),
+});
+
+const projectSectionSchema = z.union([
+  legacyProjectSectionSchema,
+  projectBlockSectionSchema,
+]);
 
 const projectSchema = z.object({
   title: z.string(),
@@ -29,7 +39,7 @@ const projectSchema = z.object({
   externalUrl: z.string().url().optional(),
   repoUrl: z.string().url().optional(),
   publishDate: z.date().optional(),
-  sections: z.array(sectionSchema).optional(),
+  sections: z.array(projectSectionSchema).optional(),
 });
 
 const projectCollection = defineCollection({

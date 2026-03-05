@@ -1,0 +1,150 @@
+---
+/**
+ * proj_overlay.astro
+ * About-only project overlay for the homepage.
+ */
+import MainCanvas from './MainCanvas.astro';
+import ProjTextCard from './Proj_Text_Card.astro';
+
+interface OverlayBlockData {
+  component: string;
+  props?: Record<string, any>;
+}
+
+interface Props {
+  projectSlug?: string;
+  overlayBlocks?: OverlayBlockData[];
+}
+
+const {
+  projectSlug = '',
+  overlayBlocks = [],
+} = Astro.props;
+
+const variantByComponent: Record<string, 'left' | 'right' | 'wide-image-end'> = {
+  ProjTextCardLeft: 'left',
+  ProjTextCardRight: 'right',
+  ProjTextCardWideImage: 'wide-image-end',
+};
+
+const resolvedOverlayBlocks = overlayBlocks
+  .map((block) => {
+    const variant = variantByComponent[block.component];
+    if (!variant) return null;
+
+    return {
+      variant,
+      props: block.props ?? {},
+    };
+  })
+  .filter((block): block is { variant: 'left' | 'right' | 'wide-image-end'; props: Record<string, any> } => Boolean(block));
+---
+
+{resolvedOverlayBlocks.length > 0 && (
+  <div
+    id="project-overlay"
+    data-project-overlay
+    data-project-overlay-slug={projectSlug}
+    class="fixed inset-0 z-50 hidden overflow-y-auto"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="project-overlay-title"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <button
+      type="button"
+      class="absolute inset-0 bg-black/45"
+      data-project-overlay-close
+      aria-label="Close project overlay"
+    ></button>
+
+    <div class="relative z-10 pb-16">
+      <MainCanvas>
+        <div class="w-full flex justify-end pt-8 px-6 md:px-15">
+          <button
+            type="button"
+            data-project-overlay-close
+            data-project-overlay-close-button
+            class="btn-effects btn-blur inline-flex items-center justify-center bg-white ring-1 ring-grey rounded-lg px-6 py-3 font-body font-semibold text-base text-black"
+          >
+            Close Project
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-10">
+          {resolvedOverlayBlocks.map((block, index) => (
+            <ProjTextCard
+              headingId={index === 0 ? 'project-overlay-title' : undefined}
+              variant={block.variant}
+              {...block.props}
+            />
+          ))}
+        </div>
+      </MainCanvas>
+    </div>
+  </div>
+)}
+
+<script is:inline>
+  (() => {
+    const overlay = document.querySelector('[data-project-overlay]');
+    if (!(overlay instanceof HTMLElement)) return;
+
+    const overlaySlug = overlay.getAttribute('data-project-overlay-slug');
+    const triggers = Array.from(document.querySelectorAll('[data-project-overlay-trigger]')).filter((node) => node instanceof HTMLElement);
+    let lastTrigger = null;
+
+    const closeOverlay = () => {
+      overlay.classList.add('hidden');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('project-overlay-open');
+
+      if (lastTrigger instanceof HTMLElement) {
+        lastTrigger.focus();
+      }
+    };
+
+    const openOverlay = (trigger) => {
+      overlay.classList.remove('hidden');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('project-overlay-open');
+      lastTrigger = trigger;
+
+      const closeButton = overlay.querySelector('[data-project-overlay-close-button]');
+      if (closeButton instanceof HTMLElement) {
+        closeButton.focus();
+        return;
+      }
+
+      overlay.focus();
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        const triggerSlug = trigger.getAttribute('data-project-overlay-trigger');
+        if (!overlaySlug || triggerSlug !== overlaySlug) return;
+
+        event.preventDefault();
+        openOverlay(trigger);
+      });
+    });
+
+    const closeControls = overlay.querySelectorAll('[data-project-overlay-close]');
+    closeControls.forEach((control) => {
+      if (!(control instanceof HTMLElement)) return;
+
+      control.addEventListener('click', (event) => {
+        event.preventDefault();
+        closeOverlay();
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') {
+        event.preventDefault();
+        closeOverlay();
+      }
+    });
+  })();
+</script>

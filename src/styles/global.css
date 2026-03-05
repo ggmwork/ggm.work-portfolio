@@ -23,6 +23,10 @@
     @apply bg-white text-black font-body;
   }
 
+  body.project-overlay-open {
+    overflow: hidden;
+  }
+
   h1,
   h2,
   h3,

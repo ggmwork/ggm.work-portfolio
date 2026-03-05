@@ -24,6 +24,7 @@ interface Props {
   imageSrc?: string;
   imageAlt?: string;
   labels?: string[];
+  projectSlug?: string;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   imageSrc = '/images/projects/project-six/storm_shots/storm_shots%20(1).webp',
   imageAlt = 'Highlighted Project',
   labels = ['Design', 'Design', 'Design'],
+  projectSlug,
 } = Astro.props;
 ---
 
@@ -71,18 +73,39 @@ const {
   </div>
 
   <!-- 
-    Right Side: Image
-    Matches the prompt requested "just image not the card"
+  Right Side: Image
+  Matches the prompt requested "just image not the card"
   -->
   <div class="relative z-10 w-full md:w-auto p-6 flex items-center justify-center shrink-0">
-    <img
-      src={imageSrc}
-      alt={imageAlt}
-      width="240"
-      height="240"
-      class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-      loading="lazy"
-      decoding="async"
-    />
+    {projectSlug ? (
+      <button
+        type="button"
+        data-project-overlay-trigger={projectSlug}
+        aria-controls="project-overlay"
+        aria-haspopup="dialog"
+        aria-label={`Open project details for ${title}`}
+        class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+      >
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          width="240"
+          height="240"
+          class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
+          loading="lazy"
+          decoding="async"
+        />
+      </button>
+    ) : (
+      <img
+        src={imageSrc}
+        alt={imageAlt}
+        width="240"
+        height="240"
+        class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
+        loading="lazy"
+        decoding="async"
+      />
+    )}
   </div>
 </article>

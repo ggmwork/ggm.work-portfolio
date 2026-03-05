@@ -35,6 +35,7 @@ sections:
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project"
           labels: ["Design", "UX/UI", "Design"]
+          projectSlug: "rebranding-nexled-ui-system"
           alignRight: false
         - title: "Amazon Store: Creation, Design & Management"
           description: "I built NexLed's Amazon store from the ground up and designed the full content system that presents the brand and converts the buyer."
