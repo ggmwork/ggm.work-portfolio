@@ -21,6 +21,9 @@ const {
   overlayBlocks = [],
 } = Astro.props;
 
+const normalizedProjectSlug = typeof projectSlug === 'string' ? projectSlug.trim() : '';
+const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSlug}` : 'project-overlay';
+
 const variantByComponent: Record<string, 'left' | 'right' | 'wide-image-end'> = {
   ProjTextCardLeft: 'left',
   ProjTextCardRight: 'right',
@@ -42,13 +45,13 @@ const resolvedOverlayBlocks = overlayBlocks
 
 {resolvedOverlayBlocks.length > 0 && (
   <div
-    id="project-overlay"
+    id={overlayId}
     data-project-overlay
-    data-project-overlay-slug={projectSlug}
+    data-project-overlay-slug={normalizedProjectSlug}
     class="fixed inset-0 z-50 hidden overflow-y-auto"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="project-overlay-title"
+    aria-label="Project overlay"
     aria-hidden="true"
     tabindex="-1"
   >
@@ -75,7 +78,7 @@ const resolvedOverlayBlocks = overlayBlocks
         <div class="flex flex-col gap-10">
           {resolvedOverlayBlocks.map((block, index) => (
             <ProjTextCard
-              headingId={index === 0 ? 'project-overlay-title' : undefined}
+              headingId={index === 0 && block.variant !== 'right' ? `${overlayId}-title` : undefined}
               variant={block.variant}
               {...block.props}
             />
@@ -88,63 +91,114 @@ const resolvedOverlayBlocks = overlayBlocks
 
 <script is:inline>
   (() => {
-    const overlay = document.querySelector('[data-project-overlay]');
-    if (!(overlay instanceof HTMLElement)) return;
+    if (window.__projectOverlayBindingsInitialized) return;
+    window.__projectOverlayBindingsInitialized = true;
 
-    const overlaySlug = overlay.getAttribute('data-project-overlay-slug');
-    const triggers = Array.from(document.querySelectorAll('[data-project-overlay-trigger]')).filter((node) => node instanceof HTMLElement);
-    let lastTrigger = null;
+    const initProjectOverlays = () => {
+      const overlays = Array.from(document.querySelectorAll('[data-project-overlay]')).filter(
+        (node) => node instanceof HTMLElement
+      );
+      if (overlays.length === 0) return;
 
-    const closeOverlay = () => {
-      overlay.classList.add('hidden');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('project-overlay-open');
+      const overlayBySlug = new Map();
+      overlays.forEach((overlay) => {
+        const slug = overlay.getAttribute('data-project-overlay-slug');
+        if (slug) {
+          overlayBySlug.set(slug, overlay);
+        }
+      });
 
-      if (lastTrigger instanceof HTMLElement) {
-        lastTrigger.focus();
-      }
+      const triggers = Array.from(document.querySelectorAll('[data-project-overlay-trigger]')).filter(
+        (node) => node instanceof HTMLElement
+      );
+
+      let activeOverlay = null;
+      let lastTrigger = null;
+
+      const syncBodyScrollLock = () => {
+        const hasOpenOverlay = overlays.some((overlay) => overlay.getAttribute('aria-hidden') === 'false');
+        if (hasOpenOverlay) {
+          document.body.classList.add('project-overlay-open');
+        } else {
+          document.body.classList.remove('project-overlay-open');
+        }
+      };
+
+      const closeOverlay = (overlay, restoreFocus = true) => {
+        overlay.classList.add('hidden');
+        overlay.setAttribute('aria-hidden', 'true');
+
+        if (activeOverlay === overlay) {
+          activeOverlay = null;
+        }
+
+        syncBodyScrollLock();
+
+        if (restoreFocus && lastTrigger instanceof HTMLElement) {
+          lastTrigger.focus();
+          lastTrigger = null;
+        }
+      };
+
+      const openOverlay = (overlay, trigger) => {
+        if (activeOverlay && activeOverlay !== overlay) {
+          closeOverlay(activeOverlay, false);
+        }
+
+        overlay.classList.remove('hidden');
+        overlay.setAttribute('aria-hidden', 'false');
+        activeOverlay = overlay;
+        lastTrigger = trigger;
+        syncBodyScrollLock();
+
+        const closeButton = overlay.querySelector('[data-project-overlay-close-button]');
+        if (closeButton instanceof HTMLElement) {
+          closeButton.focus();
+          return;
+        }
+
+        overlay.focus();
+      };
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+          const triggerSlug = trigger.getAttribute('data-project-overlay-trigger');
+          if (!triggerSlug) return;
+
+          const targetOverlay = overlayBySlug.get(triggerSlug);
+          if (!(targetOverlay instanceof HTMLElement)) return;
+
+          event.preventDefault();
+          openOverlay(targetOverlay, trigger);
+        });
+      });
+
+      overlays.forEach((overlay) => {
+        const closeControls = overlay.querySelectorAll('[data-project-overlay-close]');
+        closeControls.forEach((control) => {
+          if (!(control instanceof HTMLElement)) return;
+
+          control.addEventListener('click', (event) => {
+            event.preventDefault();
+            closeOverlay(overlay);
+          });
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        if (!(activeOverlay instanceof HTMLElement)) return;
+        if (activeOverlay.getAttribute('aria-hidden') !== 'false') return;
+
+        event.preventDefault();
+        closeOverlay(activeOverlay);
+      });
     };
 
-    const openOverlay = (trigger) => {
-      overlay.classList.remove('hidden');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('project-overlay-open');
-      lastTrigger = trigger;
-
-      const closeButton = overlay.querySelector('[data-project-overlay-close-button]');
-      if (closeButton instanceof HTMLElement) {
-        closeButton.focus();
-        return;
-      }
-
-      overlay.focus();
-    };
-
-    triggers.forEach((trigger) => {
-      trigger.addEventListener('click', (event) => {
-        const triggerSlug = trigger.getAttribute('data-project-overlay-trigger');
-        if (!overlaySlug || triggerSlug !== overlaySlug) return;
-
-        event.preventDefault();
-        openOverlay(trigger);
-      });
-    });
-
-    const closeControls = overlay.querySelectorAll('[data-project-overlay-close]');
-    closeControls.forEach((control) => {
-      if (!(control instanceof HTMLElement)) return;
-
-      control.addEventListener('click', (event) => {
-        event.preventDefault();
-        closeOverlay();
-      });
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') {
-        event.preventDefault();
-        closeOverlay();
-      }
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProjectOverlays, { once: true });
+    } else {
+      initProjectOverlays();
+    }
   })();
 </script>

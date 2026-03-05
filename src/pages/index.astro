@@ -16,36 +16,52 @@ const sandboxEntry = await getEntry('pages', 'index_content');
 const sections = sandboxEntry?.data.sections || [];
 
 const highlightedSection = sections.find((section: any) => section.component === 'HighlightedProjectsSection');
-const overlayProjectSlug = highlightedSection?.props?.projectList?.find(
-  (project: any) => typeof project?.projectSlug === 'string' && project.projectSlug.trim().length > 0
-)?.projectSlug?.trim();
+const highlightedProjects = Array.isArray(highlightedSection?.props?.projectList)
+  ? highlightedSection.props.projectList
+  : [];
 
-const overlayProjectEntry = overlayProjectSlug ? await getEntry('projects', overlayProjectSlug) : null;
-const overlayBlocks = (() => {
-  if (!overlayProjectEntry) return [];
+const overlayProjectSlugs = highlightedProjects
+  .map((project: any) => (typeof project?.projectSlug === 'string' ? project.projectSlug.trim() : ''))
+  .filter((slug: string, index: number, slugs: string[]) => slug.length > 0 && slugs.indexOf(slug) === index);
 
-  const validOverlayComponents = new Set([
-    'ProjTextCardLeft',
-    'ProjTextCardRight',
-    'ProjTextCardWideImage',
-  ]);
+const validOverlayComponents = new Set([
+  'ProjTextCardLeft',
+  'ProjTextCardRight',
+  'ProjTextCardWideImage',
+]);
 
-  const sectionsData = overlayProjectEntry.data.sections ?? [];
-  const mappedBlocks = sectionsData
-    .filter((section: any) =>
-      section &&
-      typeof section === 'object' &&
-      'component' in section &&
-      typeof section.component === 'string' &&
-      validOverlayComponents.has(section.component)
-    )
-    .map((section: any) => ({
-      component: section.component,
-      props: section.props ?? {},
-    }));
+const overlayProjects = (
+  await Promise.all(
+    overlayProjectSlugs.map(async (projectSlug: string) => {
+      const overlayProjectEntry = await getEntry('projects', projectSlug);
+      if (!overlayProjectEntry) return null;
 
-  return mappedBlocks;
-})();
+      const sectionsData = overlayProjectEntry.data.sections ?? [];
+      const overlayBlocks = sectionsData
+        .filter((section: any) =>
+          section &&
+          typeof section === 'object' &&
+          'component' in section &&
+          typeof section.component === 'string' &&
+          validOverlayComponents.has(section.component)
+        )
+        .map((section: any) => ({
+          component: section.component,
+          props: section.props ?? {},
+        }));
+
+      if (overlayBlocks.length === 0) return null;
+
+      return {
+        projectSlug,
+        overlayBlocks,
+      };
+    })
+  )
+).filter(
+  (project): project is { projectSlug: string; overlayBlocks: Array<{ component: string; props: Record<string, any> }> } =>
+    Boolean(project)
+);
 ---
 
 <!doctype html>
@@ -75,10 +91,12 @@ const overlayBlocks = (() => {
       ))}
     </MainCanvas>
 
-    <ProjOverlay
-      projectSlug={overlayProjectSlug}
-      overlayBlocks={overlayBlocks}
-    />
+    {overlayProjects.map((project) => (
+      <ProjOverlay
+        projectSlug={project.projectSlug}
+        overlayBlocks={project.overlayBlocks}
+      />
+    ))}
 
   </body>
 </html>

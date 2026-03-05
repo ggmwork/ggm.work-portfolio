@@ -42,30 +42,35 @@ sections:
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["E-Commerce", "Content Design", "Brand Compliance"]
+          projectSlug: "amazon-store-creation-design-management"
           alignRight: true
         - title: "NexLed Store: Design & Implementation"
           description: "I redesigned NexLed's online store from scratch and built the design system that makes it ready to grow into a full e-commerce experience."
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Left"
           labels: ["E-Commerce", "UX/UI", "Frontend"]
+          projectSlug: "nexled-store-design-implementation"
           alignRight: false
         - title: "NexLed Support Platform"
           description: "I designed and built a dedicated support platform for NexLed, solving an EU compliance requirement while creating a better experience for every customer that needs help."
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["Design", "Design", "Design"]
+          projectSlug: "nexled-support-platform"
           alignRight: true
         - title: "EPREL Internal Tool"
           description: "I designed and built an internal tool that automates EU compliance uploads, replacing a slow manual process with something the whole team can use."
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Left"
           labels: ["Internal Tooling", "UX/UI", "Frontend"]
+          projectSlug: "eprel-internal-tool"
           alignRight: false
         - title: "Project Storm"
           description: "I led the artistic direction of Project Storm, producing 3D models, textures, and in-game visual effects while keeping the entire team's output visually consistent."
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["3D Art", "VFX", "Art Direction"]
+          projectSlug: "project-storm"
           alignRight: true
 
   - component: "MoreProjectsSection"
