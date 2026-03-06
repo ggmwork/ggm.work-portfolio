@@ -63,7 +63,7 @@ sections:
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Left"
           labels: ["Internal Tooling", "UX/UI", "Frontend"]
-          projectSlug: "eprel-internal-tool"
+          projectSlug: "eprel"
           alignRight: false
         - title: "Project Storm"
           description: "I led the artistic direction of Project Storm, producing 3D models, textures, and in-game visual effects while keeping the entire team's output visually consistent."
