@@ -56,7 +56,7 @@ sections:
           imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["Design", "Design", "Design"]
-          projectSlug: "nexled-support-platform"
+          projectSlug: "support"
           alignRight: true
         - title: "EPREL Internal Tool"
           description: "I designed and built an internal tool that automates EU compliance uploads, replacing a slow manual process with something the whole team can use."

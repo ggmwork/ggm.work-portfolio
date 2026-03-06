@@ -11,6 +11,8 @@
  * - rounded-[19px]: inner frosted panel radius from existing text blocks
  * - blur-[20px]: frosted panel blur intensity from existing text blocks
  */
+import { marked } from 'marked';
+
 interface Props {
   headingId?: string;
   heading?: string;
@@ -25,7 +27,7 @@ interface Props {
 
 const {
   headingId,
-  heading = 'About Me',
+  heading = '',
   paragraph1 = '',
   paragraph2 = '',
   imageSrc = '/images/headshot.png',
@@ -39,6 +41,11 @@ const isRight = variant === 'right';
 const isWideImageEnd = variant === 'wide-image-end';
 const trailingImageSrc = wideImageSrc ?? imageSrc;
 const trailingImageAlt = wideImageAlt ?? imageAlt;
+const hasHeading = !isRight && heading.trim().length > 0;
+const hasParagraph1 = paragraph1.trim().length > 0;
+const hasParagraph2 = paragraph2.trim().length > 0;
+const paragraph1Html = hasParagraph1 ? await marked.parseInline(paragraph1) : '';
+const paragraph2Html = hasParagraph2 ? await marked.parseInline(paragraph2) : '';
 
 const textCardShellClass = isRight
   ? 'ml-auto bg-white ring-[5px] ring-grey rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none max-w-[1100px] w-full md:w-[63%] min-h-[350px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden flex flex-col justify-center'
@@ -51,7 +58,7 @@ const textCardContentClass = isRight
 
 <section class="pt-20 pb-20 flex flex-col gap-8 w-full" aria-label="Project overlay text card section">
   <div class="w-full">
-    {!isRight && (
+    {hasHeading && (
       <h2 id={headingId} class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
         {heading}
       </h2>
@@ -65,12 +72,12 @@ const textCardContentClass = isRight
             aria-hidden="true"
           ></div>
           <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
-            <p class="font-body font-medium text-lg text-black leading-relaxed">
-              {paragraph1}
-            </p>
-            <p class="font-body font-medium text-lg text-black leading-relaxed">
-              {paragraph2}
-            </p>
+            {hasParagraph1 && (
+              <p class="font-body font-medium text-lg text-black leading-relaxed" set:html={paragraph1Html}></p>
+            )}
+            {hasParagraph2 && (
+              <p class="font-body font-medium text-lg text-black leading-relaxed" set:html={paragraph2Html}></p>
+            )}
           </div>
         </div>
       </div>
