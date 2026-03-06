@@ -21,6 +21,7 @@ interface ProjectThumbnail {
   src: string;
   alt: string;
   caption: string;
+  projectSlug?: string;
 }
 
 interface Props {
@@ -53,22 +54,47 @@ const {
       gap-y-12 spaces the rows vertically
     -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10 w-full">
-      {projects.map((project: any, index: number) => (
-        <div class="flex flex-col items-center gap-4">
-          <!-- Image -->
-          <img
-            src={project.src}
-            alt={`${project.alt} ${index + 1}`}
-            class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
-          <!-- Caption -->
-          <p class="font-body font-medium text-sm md:text-base text-black text-center">
-            {project.caption}
-          </p>
-        </div>
-      ))}
+      {projects.map((project: ProjectThumbnail, index: number) => {
+        const normalizedProjectSlug = typeof project.projectSlug === 'string' ? project.projectSlug.trim() : '';
+        const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSlug}` : undefined;
+        const imageAlt = `${project.alt} ${index + 1}`;
+        const caption = project.caption;
+
+        return normalizedProjectSlug ? (
+          <button
+            type="button"
+            data-project-overlay-trigger={normalizedProjectSlug}
+            aria-controls={overlayId}
+            aria-haspopup="dialog"
+            aria-label={`Open project details for ${caption.trim()}`}
+            class="flex flex-col items-center gap-4 w-full rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+          >
+            <img
+              src={project.src}
+              alt={imageAlt}
+              class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+            <p class="font-body font-medium text-sm md:text-base text-black text-center">
+              {caption}
+            </p>
+          </button>
+        ) : (
+          <div class="flex flex-col items-center gap-4 w-full">
+            <img
+              src={project.src}
+              alt={imageAlt}
+              class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+            <p class="font-body font-medium text-sm md:text-base text-black text-center">
+              {caption}
+            </p>
+          </div>
+        );
+      })}
     </div>
 
   </div>

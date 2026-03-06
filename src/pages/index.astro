@@ -20,7 +20,12 @@ const highlightedProjects = Array.isArray(highlightedSection?.props?.projectList
   ? highlightedSection.props.projectList
   : [];
 
-const overlayProjectSlugs = highlightedProjects
+const moreProjectsSection = sections.find((section: any) => section.component === 'MoreProjectsSection');
+const moreProjects = Array.isArray(moreProjectsSection?.props?.cardProps?.projects)
+  ? moreProjectsSection.props.cardProps.projects
+  : [];
+
+const overlayProjectSlugs = [...highlightedProjects, ...moreProjects]
   .map((project: any) => (typeof project?.projectSlug === 'string' ? project.projectSlug.trim() : ''))
   .filter((slug: string, index: number, slugs: string[]) => slug.length > 0 && slugs.indexOf(slug) === index);
 
