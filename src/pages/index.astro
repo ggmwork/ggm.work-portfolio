@@ -6,49 +6,63 @@
  * Route: /
  * ─────────────────────────────────────────────────────────────────
  */
-import MainCanvas from '../components/figma-page/MainCanvas.astro';
-import SandboxBlock from '../components/figma-page/Test-Block.astro';
-import ProjOverlay from '../components/figma-page/proj_overlay.astro';
-import '../styles/global.css';
+import MainCanvas from "../components/figma-page/MainCanvas.astro";
+import SandboxBlock from "../components/figma-page/Test-Block.astro";
+import ProjOverlay from "../components/figma-page/proj_overlay.astro";
+import "../styles/global.css";
 
-import { getEntry } from 'astro:content';
-const sandboxEntry = await getEntry('pages', 'index_content');
+import { getEntry } from "astro:content";
+const sandboxEntry = await getEntry("pages", "index_content");
 const sections = sandboxEntry?.data.sections || [];
 
-const highlightedSection = sections.find((section: any) => section.component === 'HighlightedProjectsSection');
-const highlightedProjects = Array.isArray(highlightedSection?.props?.projectList)
+const highlightedSection = sections.find(
+  (section: any) => section.component === "HighlightedProjectsSection",
+);
+const highlightedProjects = Array.isArray(
+  highlightedSection?.props?.projectList,
+)
   ? highlightedSection.props.projectList
   : [];
 
-const moreProjectsSection = sections.find((section: any) => section.component === 'MoreProjectsSection');
-const moreProjects = Array.isArray(moreProjectsSection?.props?.cardProps?.projects)
+const moreProjectsSection = sections.find(
+  (section: any) => section.component === "MoreProjectsSection",
+);
+const moreProjects = Array.isArray(
+  moreProjectsSection?.props?.cardProps?.projects,
+)
   ? moreProjectsSection.props.cardProps.projects
   : [];
 
 const overlayProjectSlugs = [...highlightedProjects, ...moreProjects]
-  .map((project: any) => (typeof project?.projectSlug === 'string' ? project.projectSlug.trim() : ''))
-  .filter((slug: string, index: number, slugs: string[]) => slug.length > 0 && slugs.indexOf(slug) === index);
+  .map((project: any) =>
+    typeof project?.projectSlug === "string" ? project.projectSlug.trim() : "",
+  )
+  .filter(
+    (slug: string, index: number, slugs: string[]) =>
+      slug.length > 0 && slugs.indexOf(slug) === index,
+  );
 
 const validOverlayComponents = new Set([
-  'ProjTextCardLeft',
-  'ProjTextCardRight',
-  'ProjTextCardWideImage',
+  "ProjTextCardLeft",
+  "ProjTextCardRight",
+  "ProjTextCardWideImage",
 ]);
 
 const overlayProjects = (
   await Promise.all(
     overlayProjectSlugs.map(async (projectSlug: string) => {
-      const overlayProjectEntry = await getEntry('projects', projectSlug);
+      const overlayProjectEntry = await getEntry("projects", projectSlug);
       if (!overlayProjectEntry) return null;
 
       const sectionsData = overlayProjectEntry.data.sections ?? [];
       const overlayBlocks = sectionsData
-        .filter((section: any) =>
-          section &&
-          typeof section === 'object' &&
-          'component' in section &&
-          typeof section.component === 'string' &&
-          validOverlayComponents.has(section.component)
+        .filter(
+          (section: any) =>
+            section &&
+            typeof section === "object" &&
+            "component" in section &&
+            typeof section.component === "string" &&
+            validOverlayComponents.has(section.component),
         )
         .map((section: any) => ({
           component: section.component,
@@ -61,11 +75,15 @@ const overlayProjects = (
         projectSlug,
         overlayBlocks,
       };
-    })
+    }),
   )
 ).filter(
-  (project): project is { projectSlug: string; overlayBlocks: Array<{ component: string; props: Record<string, any> }> } =>
-    Boolean(project)
+  (
+    project,
+  ): project is {
+    projectSlug: string;
+    overlayBlocks: Array<{ component: string; props: Record<string, any> }>;
+  } => Boolean(project),
 );
 ---
 
@@ -76,32 +94,38 @@ const overlayProjects = (
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gonçalo Mendonça - Portfolio</title>
 
-    <!-- Fonts: same stack as production -->
+    <!-- Fonts: non-blocking async load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
   </head>
 
   <body class="bg-white font-body text-black">
-
     <!-- Grid background — fixed behind all content, aria-hidden so screen readers skip it -->
     <div class="sandbox-grid-bg" aria-hidden="true"></div>
 
     <MainCanvas>
-      {sections.map((block: any) => (
-        <SandboxBlock block={block} />
-      ))}
+      {sections.map((block: any) => <SandboxBlock block={block} />)}
     </MainCanvas>
 
-    {overlayProjects.map((project) => (
-      <ProjOverlay
-        projectSlug={project.projectSlug}
-        overlayBlocks={project.overlayBlocks}
-      />
-    ))}
-
+    {
+      overlayProjects.map((project) => (
+        <ProjOverlay
+          projectSlug={project.projectSlug}
+          overlayBlocks={project.overlayBlocks}
+        />
+      ))
+    }
   </body>
 </html>

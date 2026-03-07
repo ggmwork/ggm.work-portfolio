@@ -7,13 +7,12 @@
  * Route: /figma-sandbox
  * ─────────────────────────────────────────────────────────────────
  */
-import MainCanvas from '../components/figma-page/MainCanvas.astro';
-import MainCanvas from '../components/figma-page/MainCanvas.astro';
-import SandboxBlock from '../components/figma-page/SandboxBlock.astro';
-import '../styles/global.css';
+import MainCanvas from "../components/figma-page/MainCanvas.astro";
+import SandboxBlock from "../components/figma-page/SandboxBlock.astro";
+import "../styles/global.css";
 
-import { getEntry } from 'astro:content';
-const sandboxEntry = await getEntry('pages', 'figma-sandbox');
+import { getEntry } from "astro:content";
+const sandboxEntry = await getEntry("pages", "figma-sandbox");
 const sections = sandboxEntry?.data.sections || [];
 ---
 
@@ -27,25 +26,29 @@ const sections = sandboxEntry?.data.sections || [];
     <!-- Instruct crawlers to skip this dev-only page -->
     <meta name="robots" content="noindex, nofollow" />
 
-    <!-- Fonts: same stack as production -->
+    <!-- Fonts: non-blocking async load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
   </head>
 
   <body class="bg-white font-body text-black">
-
     <!-- Grid background — fixed behind all content, aria-hidden so screen readers skip it -->
     <div class="sandbox-grid-bg" aria-hidden="true"></div>
 
     <MainCanvas>
-      {sections.map((block: any) => (
-        <SandboxBlock block={block} />
-      ))}
+      {sections.map((block: any) => <SandboxBlock block={block} />)}
     </MainCanvas>
-
   </body>
 </html>

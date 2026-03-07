@@ -11,11 +11,11 @@
  *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
  *   Content → Flex col container.
  *     Top   → FilterButtons block, centered horizontally.
- *     Grid  → 3 columns x 2 rows (md:grid-cols-3). 
+ *     Grid  → 3 columns x 2 rows (md:grid-cols-3).
  *     Item  → Square rounded image + descriptive text below it.
  * ─────────────────────────────────────────────────────────────────
  */
-import FilterButtons from './FilterButtons.astro';
+import FilterButtons from "./FilterButtons.astro";
 
 interface ProjectThumbnail {
   src: string;
@@ -30,10 +30,10 @@ interface Props {
   projects?: ProjectThumbnail[];
 }
 
-const { 
+const {
   filters = ["Design", "UX/UI", "3D", "Motion", "Design", "Design"],
   activeFilter = 0,
-  projects = [] 
+  projects = [],
 } = Astro.props;
 ---
 
@@ -41,8 +41,9 @@ const {
   class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
   aria-label="More projects card"
 >
-  <div class="relative z-10 w-full h-full p-8 md:p-12 flex flex-col items-center">
-    
+  <div
+    class="relative z-10 w-full h-full p-8 md:p-12 flex flex-col items-center"
+  >
     <!-- Top Center: Filter Buttons -->
     <div class="mb-12">
       <FilterButtons filters={filters} active={activeFilter} />
@@ -54,48 +55,58 @@ const {
       gap-y-12 spaces the rows vertically
     -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10 w-full">
-      {projects.map((project: ProjectThumbnail, index: number) => {
-        const normalizedProjectSlug = typeof project.projectSlug === 'string' ? project.projectSlug.trim() : '';
-        const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSlug}` : undefined;
-        const imageAlt = `${project.alt} ${index + 1}`;
-        const caption = project.caption;
+      {
+        projects.map((project: ProjectThumbnail, index: number) => {
+          const normalizedProjectSlug =
+            typeof project.projectSlug === "string"
+              ? project.projectSlug.trim()
+              : "";
+          const overlayId = normalizedProjectSlug
+            ? `project-overlay-${normalizedProjectSlug}`
+            : undefined;
+          const imageAlt = `${project.alt} ${index + 1}`;
+          const caption = project.caption;
 
-        return normalizedProjectSlug ? (
-          <button
-            type="button"
-            data-project-overlay-trigger={normalizedProjectSlug}
-            aria-controls={overlayId}
-            aria-haspopup="dialog"
-            aria-label={`Open project details for ${caption.trim()}`}
-            class="flex flex-col items-center gap-4 w-full rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
-          >
-            <img
-              src={project.src}
-              alt={imageAlt}
-              class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
-              loading="lazy"
-              decoding="async"
-            />
-            <p class="font-body font-medium text-sm md:text-base text-black text-center">
-              {caption}
-            </p>
-          </button>
-        ) : (
-          <div class="flex flex-col items-center gap-4 w-full">
-            <img
-              src={project.src}
-              alt={imageAlt}
-              class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
-              loading="lazy"
-              decoding="async"
-            />
-            <p class="font-body font-medium text-sm md:text-base text-black text-center">
-              {caption}
-            </p>
-          </div>
-        );
-      })}
+          return normalizedProjectSlug ? (
+            <button
+              type="button"
+              data-project-overlay-trigger={normalizedProjectSlug}
+              aria-controls={overlayId}
+              aria-haspopup="dialog"
+              aria-label={`Open project details for ${caption.trim()}`}
+              class="flex flex-col items-center gap-4 w-full rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+            >
+              <img
+                src={project.src}
+                alt={imageAlt}
+                width="300"
+                height="300"
+                class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+              <p class="font-body font-medium text-sm md:text-base text-black text-center">
+                {caption}
+              </p>
+            </button>
+          ) : (
+            <div class="flex flex-col items-center gap-4 w-full">
+              <img
+                src={project.src}
+                alt={imageAlt}
+                width="300"
+                height="300"
+                class="img-drop-shadow w-full aspect-square rounded-[2rem] object-cover block ring-1 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+              <p class="font-body font-medium text-sm md:text-base text-black text-center">
+                {caption}
+              </p>
+            </div>
+          );
+        })
+      }
     </div>
-
   </div>
 </article>

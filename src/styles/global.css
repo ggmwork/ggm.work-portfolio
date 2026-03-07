@@ -266,7 +266,7 @@
   }
 }
 
-@import "./partials/tokens.css";
+
 
 @layer components {
 
@@ -317,7 +317,4 @@
   }
 }
 
-@import "./partials/reset.css";
-@import "./partials/fonts.css";
-@import "./partials/structure.css";
 @import "./partials/behaviors.css";
