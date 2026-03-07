@@ -10,17 +10,22 @@
   --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* ─── Canvas / Sandbox tokens (Figma spec @ 1728px) ─── */
-  --radius-canvas: 40px;
-  /* corner radius of the main app shell */
-  --spacing-canvas-x: 45px;
-  /* horizontal gutter from viewport edge */
-  --spacing-canvas-top: 48px;
-  /* top gutter from viewport edge */
+  /* Fluid: 20px @ 375px → 40px @ 1280px */
+  --radius-canvas: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
+  /* Fluid: 16px @ 375px → 45px @ 1280px */
+  --spacing-canvas-x: clamp(1rem, 0.25rem + 3vw, 2.8125rem);
+  /* Fluid: 20px @ 375px → 48px @ 1280px */
+  --spacing-canvas-top: clamp(1.25rem, 0.5rem + 3vw, 3rem);
 }
 
 @layer base {
   body {
     @apply bg-white text-black font-body;
+  }
+
+  html {
+    /* Fluid base: 14px @ 375px → 16px @ 1280px */
+    font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
   }
 
   body.project-overlay-open {
@@ -274,11 +279,11 @@
   }
 
   .prose h1 {
-    @apply text-3xl font-bold font-heading text-black mb-6 mt-8 border-b-2 border-brand inline-block pb-2 tracking-tight;
+    @apply text-2xl md:text-3xl font-bold font-heading text-black mb-6 mt-8 border-b-2 border-brand inline-block pb-2 tracking-tight;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold font-heading text-brand mt-12 mb-4 tracking-tight;
+    @apply text-xl md:text-2xl font-bold font-heading text-brand mt-12 mb-4 tracking-tight;
   }
 
   .prose h3 {

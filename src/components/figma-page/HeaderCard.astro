@@ -41,16 +41,16 @@ interface Props {
   btn3Href?: string;
 }
 
-import TextBlock from './TextBlock.astro';
-import ButtonSecondary from './ButtonSecondary.astro';
-import ButtonPrimary from './ButtonPrimary.astro';
+import TextBlock from "./TextBlock.astro";
+import ButtonSecondary from "./ButtonSecondary.astro";
+import ButtonPrimary from "./ButtonPrimary.astro";
 
 const {
-  primary   = 'Designer merging visual creativity and problem solving into impactful digital solutions.',
-  secondary = 'Based in Porto, Portugal · Currently open to new roles',
-  btn1Label = 'Download CV (PDF)',
-  btn2Label = 'Get in Touch',
-  btn3Label = 'Explore My Work',
+  primary = "Designer merging visual creativity and problem solving into impactful digital solutions.",
+  secondary = "Based in Porto, Portugal · Currently open to new roles",
+  btn1Label = "Download CV (PDF)",
+  btn2Label = "Get in Touch",
+  btn3Label = "Explore My Work",
   btn1Href,
   btn2Href,
   btn3Href,
@@ -66,17 +66,19 @@ const {
   aria-label="Header card"
 >
   <!-- Content layer above the inner grid pseudo-element -->
-  <div class="relative z-10 pt-6 pr-6 pb-6 pl-15 flex flex-col justify-start gap-6">
-
+  <div
+    class="relative z-10 pt-6 pr-6 pb-6 pl-4 md:pl-15 flex flex-col justify-start gap-6"
+  >
     <!-- TOP: TextBlock — primary headline + secondary sub-line -->
     <TextBlock primary={primary} secondary={secondary} />
 
     <!-- BOTTOM: Button row — 2 × secondary, 1 × primary -->
-    <div class="flex flex-row flex-wrap gap-[55px] pl-20 pr-10">
+    <div
+      class="flex flex-row flex-wrap gap-4 md:gap-[55px] pl-0 md:pl-20 pr-0 md:pr-10"
+    >
       <ButtonSecondary label={btn1Label} href={btn1Href} />
       <ButtonSecondary label={btn2Label} href={btn2Href} />
-      <ButtonPrimary   label={btn3Label} href={btn3Href} />
+      <ButtonPrimary label={btn3Label} href={btn3Href} />
     </div>
-
   </div>
 </article>

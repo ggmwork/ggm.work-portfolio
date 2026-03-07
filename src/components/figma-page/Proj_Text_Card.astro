@@ -64,7 +64,7 @@ const textCardContentClass = isRight
 ---
 
 <section
-  class="pt-20 pb-20 flex flex-col gap-8 w-full"
+  class="pt-10 pb-10 md:pt-20 md:pb-20 flex flex-col gap-4 md:gap-8 w-full"
   aria-label="Project overlay text card section"
 >
   <div class="w-full">
@@ -72,7 +72,7 @@ const textCardContentClass = isRight
       hasHeading && (
         <h2
           id={headingId}
-          class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight"
+          class="font-heading font-bold text-2xl md:text-4xl text-black mb-6 pl-4 md:pl-15 leading-tight tracking-tight"
         >
           {heading}
         </h2>
@@ -91,7 +91,7 @@ const textCardContentClass = isRight
             {
               hasParagraph1 && (
                 <p
-                  class="font-body font-medium text-lg text-black leading-relaxed"
+                  class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
                   set:html={paragraph1Html}
                 />
               )
@@ -99,7 +99,7 @@ const textCardContentClass = isRight
             {
               hasParagraph2 && (
                 <p
-                  class="font-body font-medium text-lg text-black leading-relaxed"
+                  class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
                   set:html={paragraph2Html}
                 />
               )

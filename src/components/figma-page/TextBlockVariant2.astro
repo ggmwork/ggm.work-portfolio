@@ -29,8 +29,8 @@ interface Props {
 }
 
 const {
-  paragraph1 = 'First paragraph goes here.',
-  paragraph2 = 'Second paragraph goes here.',
+  paragraph1 = "First paragraph goes here.",
+  paragraph2 = "Second paragraph goes here.",
 } = Astro.props;
 ---
 
@@ -39,14 +39,19 @@ const {
   <div
     class="absolute inset-0 rounded-[19px] bg-white/55 backdrop-blur-[40px]"
     aria-hidden="true"
-  ></div>
+  >
+  </div>
 
   <!-- Text content — two medium-weight paragraphs -->
   <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
-    <p class="font-body font-medium text-lg text-black leading-relaxed">
+    <p
+      class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+    >
       {paragraph1}
     </p>
-    <p class="font-body font-medium text-lg text-black leading-relaxed">
+    <p
+      class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+    >
       {paragraph2}
     </p>
   </div>

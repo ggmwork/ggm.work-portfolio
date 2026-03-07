@@ -19,7 +19,7 @@
  *   btn2Href  — Optional href for second button
  * ─────────────────────────────────────────────────────────────────
  */
-import ButtonSecondary from './ButtonSecondary.astro';
+import ButtonSecondary from "./ButtonSecondary.astro";
 
 interface Props {
   text?: string;
@@ -30,9 +30,9 @@ interface Props {
 }
 
 const {
-  text = 'If you liked my work give me a call or send me a email',
-  btn1Label = 'Download CV (PDF)',
-  btn2Label = 'Get in Touch',
+  text = "If you liked my work give me a call or send me a email",
+  btn1Label = "Download CV (PDF)",
+  btn2Label = "Get in Touch",
   btn1Href,
   btn2Href,
 } = Astro.props;
@@ -44,19 +44,22 @@ const {
 >
   <!-- Content wrapper inside the card grid -->
   <!-- Note: PR-12 to push button boundaries in, matching visual -->
-  <div class="relative z-10 w-full h-full p-8 md:pl-20 md:pr-24 md:py-16 flex flex-col justify-center gap-10 min-h-[278px]">
-    
+  <div
+    class="relative z-10 w-full h-full p-8 md:pl-20 md:pr-24 md:py-16 flex flex-col justify-center gap-10 min-h-[278px]"
+  >
     <!-- Text Area -->
-    <p class="font-body font-medium text-lg text-black leading-relaxed">
+    <p
+      class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+    >
       {text}
     </p>
 
     <!-- Actions Area (Aligned right side of the inner container) -->
-    <div class="flex flex-col sm:flex-row items-center justify-end gap-6 w-full">
+    <div
+      class="flex flex-col sm:flex-row items-center justify-end gap-6 w-full"
+    >
       <ButtonSecondary label={btn1Label} href={btn1Href} />
       <ButtonSecondary label={btn2Label} href={btn2Href} />
     </div>
-
   </div>
 </article>
-
