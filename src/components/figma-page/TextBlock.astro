@@ -26,8 +26,8 @@ interface Props {
   secondary?: string;
 }
 const {
-  primary   = 'Primary text line goes here',
-  secondary = 'Secondary text line · supporting information',
+  primary = "Primary text line goes here",
+  secondary = "Secondary text line · supporting information",
 } = Astro.props;
 ---
 
@@ -43,9 +43,10 @@ const {
       backdrop-blur-[20px]— Gaussian Blur 20px blurring the grid behind
   -->
   <div
-    class="absolute inset-0 rounded-[19px] bg-white/85 blur-[20px]"
+    class="absolute inset-0 rounded-[19px] bg-white/60 backdrop-blur-[20px]"
     aria-hidden="true"
-  ></div>
+  >
+  </div>
 
   <!-- Text — relative z-10 sits above the panel layer -->
   <div class="relative z-10 px-5 py-4 flex flex-col gap-1">

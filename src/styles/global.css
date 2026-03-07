@@ -86,6 +86,8 @@
       /* Outer glow shadow: offset 4.7px, radius 0.3px, brand-light @ 73% */
       drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
     transform: skewX(-25deg);
+    /* GPU: promote to own compositing layer — rasterise once, reuse texture */
+    will-change: transform;
   }
 }
 
@@ -102,27 +104,18 @@
     10px 10px 25px 2px color-mix(in srgb, var(--color-black) 25%, transparent);
 }
 
+/*
+  base-card-blur: Originally filter: blur(0.5px) — removed because 0.5px is
+  below the aliasing threshold, yet forced 15 cards into GPU-rasterised layers.
+  The class is still referenced by components, so we keep it as a no-op.
+*/
 @utility base-card-blur {
-  /* Figma: Gaussian Blur 0.5px — applied to the whole card */
-  filter: blur(0.5px);
+  /* no-op — intentionally empty, kept for class reference compatibility */
+  --_noop: ;
 }
 
 /* ─── Button effect utilities ─── */
-@utility btn-effects {
-  /*
-    Scaled-down version of base-card-shadow for button proportions.
-    Card: inset -10/-10/25/1  and  10/10/25/2
-    Button (≈ ¼ card): inset -3/-3/6/0  and  3/3/6/1
-  */
-  box-shadow:
-    inset -3px -3px 6px 0px color-mix(in srgb, var(--color-black) 20%, transparent),
-    3px 3px 6px 1px color-mix(in srgb, var(--color-black) 20%, transparent);
-}
-
-@utility btn-blur {
-  /* Matches card: Gaussian Blur 0.5px */
-  filter: blur(0.5px);
-}
+/* btn-effects and btn-blur removed — no component references either utility */
 
 /* ─── Image shadow utility ─── */
 @utility img-drop-shadow {
@@ -142,11 +135,11 @@
     Button: inset -3/-3/6/0  →  Label: inset -2/-2/4/0
     Button: 3/3/6/1          →  Label: 2/2/4/1
     Opacity reduced to 15% (vs button's 20%) for subtlety.
+    filter: blur(0.5px) removed — imperceptible, saves GPU rasterisation.
   */
   box-shadow:
     inset -2px -2px 4px 0px color-mix(in srgb, var(--color-black) 15%, transparent),
     2px 2px 4px 1px color-mix(in srgb, var(--color-black) 15%, transparent);
-  filter: blur(0.5px);
 }
 
 @utility base-card-grid {
@@ -185,6 +178,8 @@
     filter:
       blur(3px) drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
     transform: skewX(-25deg);
+    /* GPU: promote to own compositing layer — rasterise once, reuse texture */
+    will-change: transform;
   }
 }
 
@@ -241,6 +236,9 @@
   opacity: 0.3;
   mix-blend-mode: overlay;
   z-index: 0;
+  /* GPU: contain the blend to this element only — prevents the parent
+     from compositing all child cards through the blend mode */
+  isolation: isolate;
 }
 
 /* Card grid background — applies a brand-secondary square grid behind card content */
