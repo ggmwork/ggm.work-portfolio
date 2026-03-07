@@ -2,20 +2,16 @@
 /**
  * CTATextCard.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM — CTA Text Card
+ * ORGANISM — CTA Text Card.
  * Left-aligned card containing two paragraphs of descriptive text.
- *
- * Visual spec (Figma reference):
- *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
- *             ring-[5px] ring-grey, rounded-r-[2rem] md:rounded-r-[2.5rem], rounded-l-none.
- *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
- *   Content → Flex col container holding two paragraphs of text.
  *
  * Props:
  *   paragraph1 — First paragraph text
  *   paragraph2 — Second paragraph text
  * ─────────────────────────────────────────────────────────────────
  */
+import BaseCard from "./BaseCard.astro";
+
 interface Props {
   paragraph1?: string;
   paragraph2?: string;
@@ -27,12 +23,12 @@ const {
 } = Astro.props;
 ---
 
-<article
-  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
-  aria-label="CTA text card"
+<BaseCard
+  class="max-w-[1100px] md:w-[63%] min-h-[278px] overflow-hidden"
+  ariaLabel="CTA text card"
 >
   <div
-    class="relative z-10 w-full p-8 md:pl-20 md:pr-16 md:py-16 flex flex-col gap-6 justify-center min-h-[278px]"
+    class="w-full p-8 md:pl-20 md:pr-16 md:py-16 flex flex-col gap-6 justify-center min-h-[278px]"
   >
     <p
       class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
@@ -46,4 +42,4 @@ const {
       {paragraph2}
     </p>
   </div>
-</article>
+</BaseCard>

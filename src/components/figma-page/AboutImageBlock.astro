@@ -3,21 +3,17 @@
  * AboutImageBlock.astro
  * ─────────────────────────────────────────────────────────────────
  * ORGANISM — Image card sitting on the right side of the canvas (About section).
- * Derived from ImageBlockLeft but sized down to 300x300.
- *
- * Visual spec:
- *   Card    → bg-white, rounded-l-[2rem] md:rounded-l-[2.5rem], flush-right.
- *   Image   → 300 × 300px, rounded-[40px], img-drop-shadow, ring-2 ring-grey.
- *   Padding → Reduced right padding so the image sits closer to the flat
- *             right edge of the card.
+ * Sized down to 300x300. Flush-right, fit-content width.
  *
  * Props:
- *   src  — image source path
- *   alt  — image alt text
+ *   src — Image source path
+ *   alt — Image alt text
  * ─────────────────────────────────────────────────────────────────
  */
 import { Image } from "astro:assets";
 import { resolveImage } from "../../lib/resolve-image";
+import BaseCard from "./BaseCard.astro";
+
 interface Props {
   src?: string;
   alt?: string;
@@ -31,16 +27,17 @@ const {
 const resolvedImage = resolveImage(src);
 ---
 
-<article
-  class="bg-white ring-[5px] ring-grey rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none w-[fit-content] md:w-auto base-card-shadow base-card-blur base-card-grid relative overflow-hidden shrink-0"
-  aria-label="About Image block"
+<BaseCard
+  align="right"
+  class="overflow-hidden shrink-0 !w-fit md:!w-auto !max-w-none"
+  ariaLabel="About Image block"
 >
   <!-- 
     justify-start: Image pushed left against the rounded corner.
     pr-3: Reduced padding on the right (from pr-6).
     py-4: Vertical padding to frame the 300x300 image.
   -->
-  <div class="relative z-10 flex justify-start pl-4 py-4 pr-3">
+  <div class="flex justify-start pl-4 py-4 pr-3">
     {
       resolvedImage ? (
         <Image
@@ -65,4 +62,4 @@ const resolvedImage = resolveImage(src);
       )
     }
   </div>
-</article>
+</BaseCard>

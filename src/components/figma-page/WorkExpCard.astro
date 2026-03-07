@@ -3,17 +3,12 @@
  * WorkExpCard.astro
  * ─────────────────────────────────────────────────────────────────
  * ORGANISM — Contains rows of work experience content.
- * Duplicates the HeaderCard shell per user request.
  *
- * Visual spec (Figma reference):
- *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
- *             ring-[5px] ring-grey, rounded-r-[2rem] md:rounded-r-[2.5rem], rounded-l-none.
- *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
- *   Content → Flex col container holding rows of experience.
- *     Row   → Top div: Title, Company, Date (Left) | Labels (Right).
- *             Bottom: Description text block spanning below the top div.
+ * Props:
+ *   experiences — Array of { title, company, date, description, labels }
  * ─────────────────────────────────────────────────────────────────
  */
+import BaseCard from "./BaseCard.astro";
 import Label from './Label.astro';
 
 interface Experience {
@@ -31,12 +26,11 @@ interface Props {
 const { experiences = [] } = Astro.props;
 ---
 
-<article
-  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
-  aria-label="Work experience card"
+<BaseCard
+  class="max-w-[1100px] md:w-[63%] min-h-[278px] overflow-hidden"
+  ariaLabel="Work experience card"
 >
-  <!-- Content wrapper inside the card grid -->
-  <div class="relative z-10 w-full p-8 md:px-15 md:py-12 flex flex-col gap-12">
+  <div class="w-full p-8 md:px-15 md:py-12 flex flex-col gap-12">
     
     {experiences.map((exp: any) => (
       <div class="flex flex-col gap-5">
@@ -70,4 +64,4 @@ const { experiences = [] } = Astro.props;
     ))}
 
   </div>
-</article>
+</BaseCard>

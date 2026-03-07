@@ -3,21 +3,27 @@
  * HighlightedProjCard.astro
  * ─────────────────────────────────────────────────────────────────
  * ORGANISM — Highlighted Project Card.
- * Duplicates the HeaderCard shell but replaces the contents:
- *   - Left: TextBlock primary headline + 3 Labels + TextBlock secondary text
- *   - Right: Square image
+ * Supports both left (image right) and right (image left) alignment.
  *
- * Visual spec (Figma reference):
- *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
- *             ring-[5px] ring-grey, rounded-r-[2rem], rounded-l-none.
- *             Width md:w-[63%] (matching Header).
- *   Content → Flex row container.
- *     Left  → Frosted panel holding a title, a row of 3 labels, and a paragraph.
- *     Right → 280x280 (or similar) image, rounded-[40px], img-drop-shadow.
+ * Props:
+ *   title       — Project title
+ *   description — Project description paragraph
+ *   imageSrc    — Project image path
+ *   imageAlt    — Project image alt text
+ *   labels      — Array of label strings
+ *   projectSlug — Slug for overlay trigger (optional)
+ *   align       — "left" (default, image right) or "right" (image left)
+ *   alignRight  — Legacy alias for align="right" (from markdown pipeline)
+ *
+ * Arbitrary value justifications:
+ *   [40px]  Figma image border-radius
+ *   [19px]  Frosted panel border-radius (Figma spec)
+ *   [20px]  Frosted panel backdrop blur (Figma spec)
  * ─────────────────────────────────────────────────────────────────
  */
 import { Image } from "astro:assets";
 import { resolveImage } from "../../lib/resolve-image";
+import BaseCard from "./BaseCard.astro";
 import Label from "./Label.astro";
 
 interface Props {
@@ -27,6 +33,8 @@ interface Props {
   imageAlt?: string;
   labels?: string[];
   projectSlug?: string;
+  align?: "left" | "right";
+  alignRight?: boolean;
 }
 
 const {
@@ -36,7 +44,13 @@ const {
   imageAlt = "Highlighted Project",
   labels = ["Design", "Design", "Design"],
   projectSlug,
+  align: alignProp,
+  alignRight,
 } = Astro.props;
+
+/* Resolve align: explicit align prop wins, then alignRight boolean, then default "left" */
+const align: "left" | "right" = alignProp ?? (alignRight ? "right" : "left");
+const isRight = align === "right";
 
 const resolvedImage = resolveImage(imageSrc);
 
@@ -45,19 +59,82 @@ const normalizedProjectSlug =
 const overlayId = normalizedProjectSlug
   ? `project-overlay-${normalizedProjectSlug}`
   : undefined;
+
+/* Padding direction flips with alignment */
+const textPanelPadding = isRight
+  ? "p-6 md:pr-15 md:pl-10 md:py-8"
+  : "p-6 md:pl-15 md:pr-10 md:py-8";
 ---
 
-<article
-  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden flex flex-col md:flex-row items-stretch justify-between"
-  aria-label="Highlighted project card"
+<BaseCard
+  align={align}
+  class="max-w-[1100px] md:w-[63%] min-h-[278px] overflow-hidden flex flex-col md:flex-row items-stretch justify-between"
+  ariaLabel={isRight
+    ? "Highlighted project card (right mirrored)"
+    : "Highlighted project card"}
 >
-  <!-- 
-    Left Side: Text & Labels
-    Frosted panel wrapper similar to TextBlock matching the reference visual.
-  -->
-  <div
-    class="relative z-10 flex-1 p-6 md:pl-15 md:pr-10 md:py-8 flex flex-col justify-center"
-  >
+  {/* ── Image Panel ── */}
+  {
+    isRight && (
+      <div class="w-full md:w-auto p-6 flex items-center justify-center shrink-0">
+        {overlayId ? (
+          <button
+            type="button"
+            data-project-overlay-trigger={normalizedProjectSlug}
+            aria-controls={overlayId}
+            aria-haspopup="dialog"
+            aria-label={`Open project details for ${title}`}
+            class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+          >
+            {resolvedImage ? (
+              <Image
+                src={resolvedImage}
+                alt={imageAlt}
+                width={240}
+                height={240}
+                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                width="240"
+                height="240"
+                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </button>
+        ) : resolvedImage ? (
+          <Image
+            src={resolvedImage}
+            alt={imageAlt}
+            width={240}
+            height={240}
+            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            width="240"
+            height="240"
+            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+      </div>
+    )
+  }
+
+  {/* ── Text & Labels Panel ── */}
+  <div class:list={["flex-1 flex flex-col justify-center", textPanelPadding]}>
     <div class="relative">
       <div
         class="absolute inset-0 rounded-[19px] bg-white/60 backdrop-blur-[20px]"
@@ -85,66 +162,63 @@ const overlayId = normalizedProjectSlug
     </div>
   </div>
 
-  <!-- 
-  Right Side: Image
-  Matches the prompt requested "just image not the card"
-  -->
-  <div
-    class="relative z-10 w-full md:w-auto p-6 flex items-center justify-center shrink-0"
-  >
-    {
-      overlayId ? (
-        <button
-          type="button"
-          data-project-overlay-trigger={normalizedProjectSlug}
-          aria-controls={overlayId}
-          aria-haspopup="dialog"
-          aria-label={`Open project details for ${title}`}
-          class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
-        >
-          {resolvedImage ? (
-            <Image
-              src={resolvedImage}
-              alt={imageAlt}
-              width={240}
-              height={240}
-              class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <img
-              src={imageSrc}
-              alt={imageAlt}
-              width="240"
-              height="240"
-              class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-        </button>
-      ) : resolvedImage ? (
-        <Image
-          src={resolvedImage}
-          alt={imageAlt}
-          width={240}
-          height={240}
-          class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          width="240"
-          height="240"
-          class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-          loading="lazy"
-          decoding="async"
-        />
-      )
-    }
-  </div>
-</article>
+  {/* ── Image Panel (left-aligned variant: image on right) ── */}
+  {
+    !isRight && (
+      <div class="w-full md:w-auto p-6 flex items-center justify-center shrink-0">
+        {overlayId ? (
+          <button
+            type="button"
+            data-project-overlay-trigger={normalizedProjectSlug}
+            aria-controls={overlayId}
+            aria-haspopup="dialog"
+            aria-label={`Open project details for ${title}`}
+            class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+          >
+            {resolvedImage ? (
+              <Image
+                src={resolvedImage}
+                alt={imageAlt}
+                width={240}
+                height={240}
+                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                width="240"
+                height="240"
+                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </button>
+        ) : resolvedImage ? (
+          <Image
+            src={resolvedImage}
+            alt={imageAlt}
+            width={240}
+            height={240}
+            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            width="240"
+            height="240"
+            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+      </div>
+    )
+  }
+</BaseCard>

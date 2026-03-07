@@ -1,122 +1,148 @@
 ---
 /**
  * Dynamic block resolver designed to render the correct HTML wrapper and
- * inner components for the Figma Sandbox page based on Markdown sections.
+ * inner components for the index page based on Markdown sections.
  */
-import HeaderCard from './HeaderCard.astro';
-import AboutMeCard from './AboutMeCard.astro';
-import AboutImageBlock from './AboutImageBlock.astro';
-import HighlightedProjCard from './HighlightedProjCard.astro';
-import HighlightedProjCardRight from './HighlightedProjCardRight.astro';
-import MoreProjectsCard from './MoreProjectsCard.astro';
-import WorkExpCard from './WorkExpCard.astro';
-import AllSkillsCard from './AllSkillsCard.astro';
-import EduLangCard from './EduLangCard.astro';
-import CTATextCard from './CTATextCard.astro';
-import ContactCard from './ContactCard.astro';
-import BaseCard from './BaseCard.astro';
-import HeroCard from './HeroCard.astro';
-import FilterButtons from './FilterButtons.astro';
-import TextBlock from './TextBlock.astro';
-import TextBlockVariant2 from './TextBlockVariant2.astro';
-import ButtonPrimary from './ButtonPrimary.astro';
-import ButtonSecondary from './ButtonSecondary.astro';
-import Label from './Label.astro';
-import ImageBlock from './ImageBlock.astro';
-import ImageBlockLeft from './ImageBlockLeft.astro';
+import HeaderCard from "./HeaderCard.astro";
+import AboutMeCard from "./AboutMeCard.astro";
+import AboutImageBlock from "./AboutImageBlock.astro";
+import HighlightedProjCard from "./HighlightedProjCard.astro";
+import MoreProjectsCard from "./MoreProjectsCard.astro";
+import WorkExpCard from "./WorkExpCard.astro";
+import AllSkillsCard from "./AllSkillsCard.astro";
+import EduLangCard from "./EduLangCard.astro";
+import CTATextCard from "./CTATextCard.astro";
+import ContactCard from "./ContactCard.astro";
+import BaseCard from "./BaseCard.astro";
+import HeroCard from "./HeroCard.astro";
+import FilterButtons from "./FilterButtons.astro";
+import TextBlock from "./TextBlock.astro";
+import TextBlockVariant2 from "./TextBlockVariant2.astro";
+import ButtonPrimary from "./ButtonPrimary.astro";
+import ButtonSecondary from "./ButtonSecondary.astro";
+import Label from "./Label.astro";
+import ImageBlock from "./ImageBlock.astro";
 
 const { block } = Astro.props;
 const { component, props = {} } = block;
 ---
 
-{component === 'HeaderSection' && (
-  <section class="pt-32" aria-label="ORGANISM: Header Card">
-    <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-15 leading-tight tracking-tight">
-      {props.heading}
-    </h1>
-    <HeaderCard {...props.cardProps} />
-  </section>
-)}
+{
+  component === "HeaderSection" && (
+    <section class="pt-32" aria-label="ORGANISM: Header Card">
+      <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-15 leading-tight tracking-tight">
+        {props.heading}
+      </h1>
+      <HeaderCard {...props.cardProps} />
+    </section>
+  )
+}
 
-{component === 'AboutSection' && (
-  <section class="pt-24 flex flex-col md:flex-row gap-8 items-start justify-between w-full" aria-label="ORGANISM: About Me Card">
-    <div class="w-full">
+{
+  component === "AboutSection" && (
+    <section
+      class="pt-24 flex flex-col md:flex-row gap-8 items-start justify-between w-full"
+      aria-label="ORGANISM: About Me Card"
+    >
+      <div class="w-full">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+          {props.heading}
+        </h2>
+        <AboutMeCard {...props.cardProps} />
+      </div>
+      <div class="flex items-center justify-end mt-22">
+        <AboutImageBlock {...props.imageBlockProps} />
+      </div>
+    </section>
+  )
+}
+
+{
+  component === "HighlightedProjectsSection" && (
+    <section
+      id="highlighted-projects"
+      class="pt-24 pb-20 w-full flex flex-col gap-16"
+      aria-label="ORGANISM: Highlighted Projects"
+    >
+      <h2 class="font-heading font-bold text-4xl text-black pl-15 leading-tight tracking-tight">
+        {props.heading}
+      </h2>
+      {props.projectList &&
+        props.projectList.map((project: any) => (
+          <HighlightedProjCard {...project} />
+        ))}
+    </section>
+  )
+}
+
+{
+  component === "MoreProjectsSection" && (
+    <section class="pt-24 pb-20 w-full" aria-label="ORGANISM: More Projects">
       <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
         {props.heading}
       </h2>
-      <AboutMeCard {...props.cardProps} />
-    </div>
-    <div class="flex items-center justify-end mt-[88px]">
-       <AboutImageBlock {...props.imageBlockProps} />
-    </div>
-  </section>
-)}
+      <MoreProjectsCard {...props.cardProps} />
+    </section>
+  )
+}
 
-{component === 'HighlightedProjectsSection' && (
-  <section id="highlighted-projects" class="pt-24 pb-20 w-full flex flex-col gap-16" aria-label="ORGANISM: Highlighted Projects">
-    <h2 class="font-heading font-bold text-4xl text-black pl-15 leading-tight tracking-tight">
-      {props.heading}
-    </h2>
-    {props.projectList && props.projectList.map((project: any) => {
-      if (project.alignRight) {
-        return <HighlightedProjCardRight {...project} />
-      } else {
-        return <HighlightedProjCard {...project} />
-      }
-    })}
-  </section>
-)}
-
-{component === 'MoreProjectsSection' && (
-  <section class="pt-24 pb-20 w-full" aria-label="ORGANISM: More Projects">
-    <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
-      {props.heading}
-    </h2>
-    <MoreProjectsCard {...props.cardProps} />
-  </section>
-)}
-
-{component === 'WorkSkillsSection' && (
-  <section class="pt-24 pb-20 w-full flex flex-col xl:flex-row gap-8 items-start justify-between" aria-label="ORGANISM: Work Experience & All Skills">
-    <div class="w-full xl:w-[63%]">
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
-        {props.workHeading}
-      </h2>
-      <div class="[&>article]:w-full [&>article]:md:w-full">
-        <WorkExpCard {...props.workProps} />
+{
+  component === "WorkSkillsSection" && (
+    <section
+      class="pt-24 pb-20 w-full flex flex-col xl:flex-row gap-8 items-start justify-between"
+      aria-label="ORGANISM: Work Experience & All Skills"
+    >
+      <div class="w-full xl:w-[63%]">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+          {props.workHeading}
+        </h2>
+        <div class="[&>article]:w-full [&>article]:md:w-full">
+          <WorkExpCard {...props.workProps} />
+        </div>
       </div>
-    </div>
-    <div class="w-full xl:w-[35%] flex flex-col justify-start mt-[88px]">
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-12 leading-tight tracking-tight">
-        {props.skillsHeading}
+      <div class="w-full xl:w-[35%] flex flex-col justify-start mt-22">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-12 leading-tight tracking-tight">
+          {props.skillsHeading}
+        </h2>
+        <AllSkillsCard {...props.skillsProps} />
+      </div>
+    </section>
+  )
+}
+
+{
+  component === "EducationLangSection" && (
+    <section
+      class="pt-12 pb-20 w-full"
+      aria-label="ORGANISM: Education and Languages"
+    >
+      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+        {props.heading}
       </h2>
-      <AllSkillsCard {...props.skillsProps} />
-    </div>
-  </section>
-)}
+      <EduLangCard {...props.cardProps} />
+    </section>
+  )
+}
 
-{component === 'EducationLangSection' && (
-  <section class="pt-12 pb-20 w-full" aria-label="ORGANISM: Education and Languages">
-    <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
-      {props.heading}
-    </h2>
-    <EduLangCard {...props.cardProps} />
-  </section>
-)}
+{
+  component === "CTASection" && (
+    <section class="pt-8 pb-12 w-full" aria-label="ORGANISM: CTA Text">
+      <CTATextCard {...props.cardProps} />
+    </section>
+  )
+}
 
-{component === 'CTASection' && (
-  <section class="pt-8 pb-12 w-full" aria-label="ORGANISM: CTA Text">
-    <CTATextCard {...props.cardProps} />
-  </section>
-)}
-
-{component === 'ContactSection' && (
-  <section id="contact" class="pt-12 pb-20 w-full" aria-label="ORGANISM: Contact">
-    <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[35vw] leading-tight tracking-tight">
-      {props.heading}
-    </h2>
-    <ContactCard {...props.cardProps} />
-  </section>
-)}
-
-
+{
+  component === "ContactSection" && (
+    <section
+      id="contact"
+      class="pt-12 pb-20 w-full"
+      aria-label="ORGANISM: Contact"
+    >
+      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[35vw] leading-tight tracking-tight">
+        {props.heading}
+      </h2>
+      <ContactCard {...props.cardProps} />
+    </section>
+  )
+}

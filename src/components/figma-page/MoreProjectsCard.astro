@@ -3,20 +3,16 @@
  * MoreProjectsCard.astro
  * ─────────────────────────────────────────────────────────────────
  * ORGANISM — Contains filter buttons and a grid of project thumbnails.
- * Duplicates the HeaderCard shell per user request.
  *
- * Visual spec (Figma reference):
- *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
- *             ring-[5px] ring-grey, rounded-r-[2rem] md:rounded-r-[2.5rem], rounded-l-none.
- *             Width max-w-[1100px] w-full md:w-[63%] (matching Header).
- *   Content → Flex col container.
- *     Top   → FilterButtons block, centered horizontally.
- *     Grid  → 3 columns x 2 rows (md:grid-cols-3).
- *     Item  → Square rounded image + descriptive text below it.
+ * Props:
+ *   filters      — Array of filter label strings
+ *   activeFilter — Index of the currently active filter
+ *   projects     — Array of { src, alt, caption, projectSlug? }
  * ─────────────────────────────────────────────────────────────────
  */
 import { Image } from "astro:assets";
 import { resolveImage } from "../../lib/resolve-image";
+import BaseCard from "./BaseCard.astro";
 import FilterButtons from "./FilterButtons.astro";
 
 interface ProjectThumbnail {
@@ -39,23 +35,17 @@ const {
 } = Astro.props;
 ---
 
-<article
-  class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[278px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
-  aria-label="More projects card"
+<BaseCard
+  class="max-w-[1100px] md:w-[63%] min-h-[278px] overflow-hidden"
+  ariaLabel="More projects card"
 >
-  <div
-    class="relative z-10 w-full h-full p-8 md:p-12 flex flex-col items-center"
-  >
+  <div class="w-full h-full p-8 md:p-12 flex flex-col items-center">
     <!-- Top Center: Filter Buttons -->
     <div class="mb-6 md:mb-12">
       <FilterButtons filters={filters} active={activeFilter} />
     </div>
 
     <!-- Grid of Thumbnails -->
-    <!-- 
-      gap-x-8 spaces the columns horizontally 
-      gap-y-12 spaces the rows vertically
-    -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10 w-full">
       {
         projects.map((project: ProjectThumbnail, index: number) => {
@@ -136,4 +126,4 @@ const {
       }
     </div>
   </div>
-</article>
+</BaseCard>

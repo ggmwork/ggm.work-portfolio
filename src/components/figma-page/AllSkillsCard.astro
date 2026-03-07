@@ -3,16 +3,13 @@
  * AllSkillsCard.astro
  * ─────────────────────────────────────────────────────────────────
  * ORGANISM — Contains categories of skills, each with a grid of labels.
- * Designed to sit flush on the right side of the canvas (like HighlightedProjCardRight).
+ * Flush-right card.
  *
- * Visual spec (Figma reference):
- *   Card    → bg-white, base-card-shadow, base-card-blur, base-card-grid,
- *             ring-[5px] ring-grey, rounded-l-[2rem] md:rounded-l-[2.5rem], rounded-r-none.
- *             Width matches the available flex space or an explicit percentage.
- *   Content → Flex col container holding categories.
- *     Item  → A category title string above a flexible grid of labels.
+ * Props:
+ *   categories — Array of { title, labels[] }
  * ─────────────────────────────────────────────────────────────────
  */
+import BaseCard from "./BaseCard.astro";
 import Label from './Label.astro';
 
 interface SkillCategory {
@@ -27,12 +24,12 @@ interface Props {
 const { categories = [] } = Astro.props;
 ---
 
-<article
-  class="ml-auto bg-white ring-[5px] ring-grey rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none w-full base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
-  aria-label="All Skills card"
+<BaseCard
+  align="right"
+  class="overflow-hidden"
+  ariaLabel="All Skills card"
 >
-  <!-- Content wrapper inside the card grid -->
-  <div class="relative z-10 w-full p-8 md:px-12 md:py-12 flex flex-col gap-10">
+  <div class="w-full p-8 md:px-12 md:py-12 flex flex-col gap-10">
     
     {categories.map((category: any) => (
       <div class="flex flex-col gap-4">
@@ -51,4 +48,4 @@ const { categories = [] } = Astro.props;
     ))}
 
   </div>
-</article>
+</BaseCard>

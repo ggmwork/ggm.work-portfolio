@@ -4,8 +4,6 @@
  * Overlay text card variants driven by markdown.
  *
  * Arbitrary class justifications (same values used in existing Figma-sandbox cards):
- * - ring-[5px]: card stroke value
- * - rounded-[2rem]/md:rounded-[2.5rem]: card corner radius value
  * - rounded-[40px]: image radius value
  * - min-h-[350px]: About text card minimum height from existing About section
  * - rounded-[19px]: inner frosted panel radius from existing text blocks
@@ -14,6 +12,7 @@
 import { Image } from "astro:assets";
 import { resolveImage } from "../../lib/resolve-image";
 import { marked } from "marked";
+import BaseCard from "./BaseCard.astro";
 
 interface Props {
   headingId?: string;
@@ -54,13 +53,11 @@ const paragraph2Html = hasParagraph2
   ? await marked.parseInline(paragraph2)
   : "";
 
-const textCardShellClass = isRight
-  ? "ml-auto bg-white ring-[5px] ring-grey rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none max-w-[1100px] w-full md:w-[63%] min-h-[350px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden flex flex-col justify-center"
-  : "bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] min-h-[350px] base-card-shadow base-card-blur base-card-grid relative overflow-hidden flex flex-col justify-center";
+const textCardAlign: "left" | "right" = isRight ? "right" : "left";
 
 const textCardContentClass = isRight
-  ? "relative z-10 p-6 md:pr-15 md:py-10 md:pl-10 flex-1 flex flex-col gap-5"
-  : "relative z-10 p-6 md:pl-15 md:py-10 md:pr-10 flex-1 flex flex-col gap-5";
+  ? "p-6 md:pr-15 md:py-10 md:pl-10 flex-1 flex flex-col gap-5"
+  : "p-6 md:pl-15 md:py-10 md:pr-10 flex-1 flex flex-col gap-5";
 ---
 
 <section
@@ -79,7 +76,11 @@ const textCardContentClass = isRight
       )
     }
 
-    <article class={textCardShellClass} aria-label="Overlay text card">
+    <BaseCard
+      align={textCardAlign}
+      class="max-w-[1100px] md:w-[63%] min-h-[350px] overflow-hidden flex flex-col justify-center"
+      ariaLabel="Overlay text card"
+    >
       <div class={textCardContentClass}>
         <div class="relative">
           <div
@@ -107,16 +108,16 @@ const textCardContentClass = isRight
           </div>
         </div>
       </div>
-    </article>
+    </BaseCard>
   </div>
 
   {
     isWideImageEnd && (
-      <article
-        class="bg-white ring-[5px] ring-grey rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none max-w-[1100px] w-full md:w-[63%] base-card-shadow base-card-blur base-card-grid relative overflow-hidden"
-        aria-label="Overlay trailing 16:9 image block"
+      <BaseCard
+        class="max-w-[1100px] md:w-[63%] overflow-hidden"
+        ariaLabel="Overlay trailing 16:9 image block"
       >
-        <div class="relative z-10 p-4 md:p-6">
+        <div class="p-4 md:p-6">
           {resolvedTrailingImage ? (
             <Image
               src={resolvedTrailingImage}
@@ -139,7 +140,7 @@ const textCardContentClass = isRight
             />
           )}
         </div>
-      </article>
+      </BaseCard>
     )
   }
 </section>
