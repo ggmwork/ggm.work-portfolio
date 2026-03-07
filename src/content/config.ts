@@ -11,22 +11,10 @@ const ImageOrString = z.union([
   })
 ]);
 
-const legacyProjectSectionSchema = z.object({
-  layout: z.enum(['text-left', 'text-right', 'full-width']),
-  title: z.string().optional(),
-  text: z.string().optional(),
-  media: ImageOrString.optional()
-});
-
-const projectBlockSectionSchema = z.object({
+const projectSectionSchema = z.object({
   component: z.string(),
   props: z.record(z.any()).optional(),
 });
-
-const projectSectionSchema = z.union([
-  legacyProjectSectionSchema,
-  projectBlockSectionSchema,
-]);
 
 const projectSchema = z.object({
   title: z.string(),

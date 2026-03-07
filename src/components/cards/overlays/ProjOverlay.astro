@@ -3,8 +3,7 @@
  * proj_overlay.astro
  * About-only project overlay for the homepage.
  */
-import MainCanvas from "./MainCanvas.astro";
-import ProjTextCard from "./Proj_Text_Card.astro";
+import ProjTextCard from "./ProjTextCard.astro";
 
 interface OverlayBlockData {
   component: string;
@@ -72,32 +71,79 @@ const resolvedOverlayBlocks = overlayBlocks
       />
 
       <div class="relative z-10 pb-16">
-        <MainCanvas>
-          <div class="w-full flex justify-end pt-8 px-6 md:px-15">
-            <button
-              type="button"
-              data-project-overlay-close
-              data-project-overlay-close-button
-              class="btn-effects btn-blur inline-flex items-center justify-center bg-white ring-1 ring-grey rounded-lg px-6 py-3 font-body font-semibold text-base text-black"
+        {/* SVG noise filter for the overlay canvas */}
+        <svg
+          width="0"
+          height="0"
+          class="absolute overflow-hidden"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            <filter
+              id={`overlay-noise-filter-${normalizedProjectSlug}`}
+              x="0%"
+              y="0%"
+              width="100%"
+              height="100%"
+              color-interpolation-filters="sRGB"
             >
-              Close Project
-            </button>
-          </div>
-
-          <div class="flex flex-col gap-10">
-            {resolvedOverlayBlocks.map((block, index) => (
-              <ProjTextCard
-                headingId={
-                  index === 0 && block.variant !== "right"
-                    ? `${overlayId}-title`
-                    : undefined
-                }
-                variant={block.variant}
-                {...block.props}
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.65"
+                numOctaves="1"
+                stitchTiles="stitch"
+                result="noiseOut"
               />
-            ))}
+              <feColorMatrix
+                in="noiseOut"
+                type="saturate"
+                values="0"
+                result="monoNoise"
+              />
+            </filter>
+          </defs>
+        </svg>
+
+        {/* Old-style canvas: gutters, rounded corners, border, shadow */}
+        <main
+          class="mx-canvas mt-canvas rounded-canvas canvas-gradient border-2 border-grey canvas-shadow canvas-backdrop-blur min-h-canvas relative overflow-hidden"
+          aria-label="Project overlay canvas"
+        >
+          {/* Noise overlay — uses per-overlay filter ID to avoid conflicts */}
+          <div
+            class="absolute inset-0 pointer-events-none bg-white opacity-30 mix-blend-overlay z-0"
+            style={`filter: url(#overlay-noise-filter-${normalizedProjectSlug}); border-radius: inherit; isolation: isolate;`}
+            aria-hidden="true"
+          />
+
+          <div class="relative z-10">
+            <div class="w-full flex justify-end pt-8 px-6 md:px-15">
+              <button
+                type="button"
+                data-project-overlay-close
+                data-project-overlay-close-button
+                class="btn-effects btn-blur inline-flex items-center justify-center bg-white ring-1 ring-grey rounded-lg px-6 py-3 font-body font-semibold text-base text-black"
+              >
+                Close Project
+              </button>
+            </div>
+
+            <div class="flex flex-col gap-10">
+              {resolvedOverlayBlocks.map((block, index) => (
+                <ProjTextCard
+                  headingId={
+                    index === 0 && block.variant !== "right"
+                      ? `${overlayId}-title`
+                      : undefined
+                  }
+                  variant={block.variant}
+                  {...block.props}
+                />
+              ))}
+            </div>
           </div>
-        </MainCanvas>
+        </main>
       </div>
     </div>
   )

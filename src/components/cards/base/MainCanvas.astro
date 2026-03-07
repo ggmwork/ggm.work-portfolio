@@ -1,0 +1,77 @@
+---
+/**
+ * MainCanvas.astro
+ * ─────────────────────────────────────────────────────────────────
+ * Full-page gradient background with noise texture overlay.
+ *
+ * The gradient + noise fills the entire viewport edge-to-edge.
+ * All card content is slotted inside and sits above the noise (z-10).
+ *
+ * Figma effects (bottom → top):
+ *   1. Gaussian Blur 0.9                → canvas-backdrop-blur
+ *   2. Noise  size:1  density:30%       → SVG filter + canvas-noise-overlay
+ *   3. Gradient                         → canvas-gradient
+ * ─────────────────────────────────────────────────────────────────
+ */
+---
+
+<!--
+  Hidden SVG filter definitions.
+  • width/height = 0 → takes up no layout space
+  • feTurbulence fractalNoise → organic film-grain quality
+  • baseFrequency 0.65 → fine grain (maps to Figma "size: 1")
+  • numOctaves 1 → single layer of noise (matches Figma default)
+  • stitchTiles stitch → seamless tiling across the canvas
+  • feColorMatrix saturate=0 → force monochromatic output
+-->
+<svg
+  width="0"
+  height="0"
+  class="absolute overflow-hidden"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <filter
+      id="canvas-noise-filter"
+      x="0%"
+      y="0%"
+      width="100%"
+      height="100%"
+      color-interpolation-filters="sRGB"
+    >
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="1"
+        stitchTiles="stitch"
+        result="noiseOut"></feTurbulence>
+      <feColorMatrix in="noiseOut" type="saturate" values="0" result="monoNoise"
+      ></feColorMatrix>
+    </filter>
+  </defs>
+</svg>
+
+<!--
+  MainCanvas — full-page gradient background
+  No gutters, no border, no rounding, no shadow.
+  Gradient + noise fill the entire viewport.
+-->
+<main
+  id="figma-canvas"
+  class="canvas-gradient canvas-backdrop-blur min-h-screen w-full relative overflow-hidden"
+  role="main"
+  aria-label="Portfolio canvas"
+>
+  <!--
+    Noise texture overlay
+    ─── Absolutely fills the canvas (inset-0)
+    ─── z-0: above bg colour, below all slot content
+  -->
+  <div class="canvas-noise-overlay" aria-hidden="true"></div>
+
+  <!-- All content slots here — sits above the noise (z-10) -->
+  <div class="relative z-10">
+    <slot />
+  </div>
+</main>

@@ -6,9 +6,9 @@
  * Route: /
  * ─────────────────────────────────────────────────────────────────
  */
-import MainCanvas from "../components/figma-page/MainCanvas.astro";
-import SandboxBlock from "../components/figma-page/Test-Block.astro";
-import ProjOverlay from "../components/figma-page/proj_overlay.astro";
+import MainCanvas from "../components/cards/base/MainCanvas.astro";
+import SandboxBlock from "../components/cards/pipeline/TestBlock.astro";
+import ProjOverlay from "../components/cards/overlays/ProjOverlay.astro";
 import "../styles/global.css";
 
 import { getEntry } from "astro:content";
@@ -112,9 +112,6 @@ const overlayProjects = (
   </head>
 
   <body class="bg-white font-body text-black">
-    <!-- Grid background — fixed behind all content, aria-hidden so screen readers skip it -->
-    <div class="sandbox-grid-bg" aria-hidden="true"></div>
-
     <MainCanvas>
       {sections.map((block: any) => <SandboxBlock block={block} />)}
     </MainCanvas>

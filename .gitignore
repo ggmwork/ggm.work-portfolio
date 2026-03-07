@@ -30,3 +30,7 @@ Thumbs.db
 
 # Misc
 *.swp
+*.resolved
+
+# AI artifacts
+.gemini/

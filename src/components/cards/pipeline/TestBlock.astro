@@ -3,25 +3,25 @@
  * Dynamic block resolver designed to render the correct HTML wrapper and
  * inner components for the index page based on Markdown sections.
  */
-import HeaderCard from "./HeaderCard.astro";
-import AboutMeCard from "./AboutMeCard.astro";
-import AboutImageBlock from "./AboutImageBlock.astro";
-import HighlightedProjCard from "./HighlightedProjCard.astro";
-import MoreProjectsCard from "./MoreProjectsCard.astro";
-import WorkExpCard from "./WorkExpCard.astro";
-import AllSkillsCard from "./AllSkillsCard.astro";
-import EduLangCard from "./EduLangCard.astro";
-import CTATextCard from "./CTATextCard.astro";
-import ContactCard from "./ContactCard.astro";
-import BaseCard from "./BaseCard.astro";
-import HeroCard from "./HeroCard.astro";
-import FilterButtons from "./FilterButtons.astro";
-import TextBlock from "./TextBlock.astro";
-import TextBlockVariant2 from "./TextBlockVariant2.astro";
-import ButtonPrimary from "./ButtonPrimary.astro";
-import ButtonSecondary from "./ButtonSecondary.astro";
-import Label from "./Label.astro";
-import ImageBlock from "./ImageBlock.astro";
+import HeaderCard from "../cards/HeaderCard.astro";
+import AboutMeCard from "../cards/AboutMeCard.astro";
+import AboutImageBlock from "../cards/AboutImageBlock.astro";
+import HighlightedProjCard from "../cards/HighlightedProjCard.astro";
+import MoreProjectsCard from "../cards/MoreProjectsCard.astro";
+import WorkExpCard from "../cards/WorkExpCard.astro";
+import AllSkillsCard from "../cards/AllSkillsCard.astro";
+import EduLangCard from "../cards/EduLangCard.astro";
+import CTATextCard from "../cards/CTATextCard.astro";
+import ContactCard from "../cards/ContactCard.astro";
+import BaseCard from "../base/BaseCard.astro";
+import HeroCard from "../cards/HeroCard.astro";
+import FilterButtons from "../atoms/FilterButtons.astro";
+import TextBlock from "../atoms/TextBlock.astro";
+import TextBlockVariant2 from "../atoms/TextBlockVariant2.astro";
+import ButtonPrimary from "../atoms/ButtonPrimary.astro";
+import ButtonSecondary from "../atoms/ButtonSecondary.astro";
+import Label from "../atoms/Label.astro";
+import ImageBlock from "../cards/ImageBlock.astro";
 
 const { block } = Astro.props;
 const { component, props = {} } = block;

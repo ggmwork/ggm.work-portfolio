@@ -319,5 +319,3 @@
     @apply border-black/10 my-8;
   }
 }
-
-@import "./partials/behaviors.css";
