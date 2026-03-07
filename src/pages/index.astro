@@ -9,6 +9,7 @@
 import MainCanvas from "../components/cards/base/MainCanvas.astro";
 import SandboxBlock from "../components/cards/pipeline/TestBlock.astro";
 import ProjOverlay from "../components/cards/overlays/ProjOverlay.astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 import "../styles/global.css";
 
 import { getEntry } from "astro:content";
@@ -124,5 +125,6 @@ const overlayProjects = (
         />
       ))
     }
+    <SpeedInsights />
   </body>
 </html>
