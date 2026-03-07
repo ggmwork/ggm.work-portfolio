@@ -16,7 +16,9 @@
  *     Right → 280x280 (or similar) image, rounded-[40px], img-drop-shadow.
  * ─────────────────────────────────────────────────────────────────
  */
-import Label from './Label.astro';
+import { Image } from "astro:assets";
+import { resolveImage } from "../../lib/resolve-image";
+import Label from "./Label.astro";
 
 interface Props {
   title?: string;
@@ -28,16 +30,21 @@ interface Props {
 }
 
 const {
-  title = 'Rebranding Nexled + UI Components',
-  description = 'I work across web and digital design, taking direct ownership of UI/UX, e-commerce, and visual execution to deliver cohesive and reliable solutions. My role combines hands-on design with system thinking, structured workflows, and cross-platform consistency.',
-  imageSrc = '/images/projects/project-six/storm_shots/storm_shots%20(1).webp',
-  imageAlt = 'Highlighted Project',
-  labels = ['Design', 'Design', 'Design'],
+  title = "Rebranding Nexled + UI Components",
+  description = "I work across web and digital design, taking direct ownership of UI/UX, e-commerce, and visual execution to deliver cohesive and reliable solutions. My role combines hands-on design with system thinking, structured workflows, and cross-platform consistency.",
+  imageSrc = "/images/projects/project-six/storm_shots/storm_shots%20(1).webp",
+  imageAlt = "Highlighted Project",
+  labels = ["Design", "Design", "Design"],
   projectSlug,
 } = Astro.props;
 
-const normalizedProjectSlug = typeof projectSlug === 'string' ? projectSlug.trim() : '';
-const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSlug}` : undefined;
+const resolvedImage = resolveImage(imageSrc);
+
+const normalizedProjectSlug =
+  typeof projectSlug === "string" ? projectSlug.trim() : "";
+const overlayId = normalizedProjectSlug
+  ? `project-overlay-${normalizedProjectSlug}`
+  : undefined;
 ---
 
 <article
@@ -48,27 +55,30 @@ const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSl
     Left Side: Text & Labels
     Frosted panel wrapper similar to TextBlock matching the reference visual.
   -->
-  <div class="relative z-10 flex-1 p-6 md:pl-15 md:pr-10 md:py-8 flex flex-col justify-center">
+  <div
+    class="relative z-10 flex-1 p-6 md:pl-15 md:pr-10 md:py-8 flex flex-col justify-center"
+  >
     <div class="relative">
       <div
         class="absolute inset-0 rounded-[19px] bg-white/85 blur-[20px]"
         aria-hidden="true"
-      ></div>
+      >
+      </div>
       <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
         <!-- Title -->
         <h3 class="font-body font-medium text-lg text-black leading-snug">
           {title}
         </h3>
-        
+
         <!-- Labels Row -->
         <div class="flex flex-row flex-wrap gap-2">
-          {labels.map((label: string) => (
-            <Label label={label} />
-          ))}
+          {labels.map((label: string) => <Label label={label} />)}
         </div>
-        
+
         <!-- Description -->
-        <p class="font-body font-medium text-base md:text-lg text-black leading-relaxed">
+        <p
+          class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+        >
           {description}
         </p>
       </div>
@@ -79,16 +89,52 @@ const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSl
   Right Side: Image
   Matches the prompt requested "just image not the card"
   -->
-  <div class="relative z-10 w-full md:w-auto p-6 flex items-center justify-center shrink-0">
-    {overlayId ? (
-      <button
-        type="button"
-        data-project-overlay-trigger={normalizedProjectSlug}
-        aria-controls={overlayId}
-        aria-haspopup="dialog"
-        aria-label={`Open project details for ${title}`}
-        class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
-      >
+  <div
+    class="relative z-10 w-full md:w-auto p-6 flex items-center justify-center shrink-0"
+  >
+    {
+      overlayId ? (
+        <button
+          type="button"
+          data-project-overlay-trigger={normalizedProjectSlug}
+          aria-controls={overlayId}
+          aria-haspopup="dialog"
+          aria-label={`Open project details for ${title}`}
+          class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+        >
+          {resolvedImage ? (
+            <Image
+              src={resolvedImage}
+              alt={imageAlt}
+              width={240}
+              height={240}
+              class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              width="240"
+              height="240"
+              class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </button>
+      ) : resolvedImage ? (
+        <Image
+          src={resolvedImage}
+          alt={imageAlt}
+          width={240}
+          height={240}
+          class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
         <img
           src={imageSrc}
           alt={imageAlt}
@@ -98,17 +144,7 @@ const overlayId = normalizedProjectSlug ? `project-overlay-${normalizedProjectSl
           loading="lazy"
           decoding="async"
         />
-      </button>
-    ) : (
-      <img
-        src={imageSrc}
-        alt={imageAlt}
-        width="240"
-        height="240"
-        class="img-drop-shadow w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-[40px] object-cover block ring-2 ring-grey"
-        loading="lazy"
-        decoding="async"
-      />
-    )}
+      )
+    }
   </div>
 </article>

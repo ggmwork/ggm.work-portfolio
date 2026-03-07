@@ -11,6 +11,8 @@
  * - rounded-[19px]: inner frosted panel radius from existing text blocks
  * - blur-[20px]: frosted panel blur intensity from existing text blocks
  */
+import { Image } from "astro:assets";
+import { resolveImage } from "../../lib/resolve-image";
 import { marked } from "marked";
 
 interface Props {
@@ -41,6 +43,7 @@ const isRight = variant === "right";
 const isWideImageEnd = variant === "wide-image-end";
 const trailingImageSrc = wideImageSrc ?? imageSrc;
 const trailingImageAlt = wideImageAlt ?? imageAlt;
+const resolvedTrailingImage = resolveImage(trailingImageSrc);
 const hasHeading = !isRight && heading.trim().length > 0;
 const hasParagraph1 = paragraph1.trim().length > 0;
 const hasParagraph2 = paragraph2.trim().length > 0;
@@ -114,15 +117,27 @@ const textCardContentClass = isRight
         aria-label="Overlay trailing 16:9 image block"
       >
         <div class="relative z-10 p-4 md:p-6">
-          <img
-            src={trailingImageSrc}
-            alt={trailingImageAlt}
-            width="1100"
-            height="619"
-            class="img-drop-shadow w-full aspect-video rounded-[40px] object-cover block ring-2 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
+          {resolvedTrailingImage ? (
+            <Image
+              src={resolvedTrailingImage}
+              alt={trailingImageAlt}
+              width={1100}
+              height={619}
+              class="img-drop-shadow w-full aspect-video rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={trailingImageSrc}
+              alt={trailingImageAlt}
+              width="1100"
+              height="619"
+              class="img-drop-shadow w-full aspect-video rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
         </div>
       </article>
     )

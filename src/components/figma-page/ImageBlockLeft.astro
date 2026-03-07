@@ -27,15 +27,19 @@
  *   [2rem]/[2.5rem]  Card rounded-left spec (mirror of right)
  * ─────────────────────────────────────────────────────────────────
  */
+import { Image } from "astro:assets";
+import { resolveImage } from "../../lib/resolve-image";
 interface Props {
   src?: string;
   alt?: string;
 }
 
 const {
-  src = '/images/projects/project-six/storm_shots/storm_shots%20(1).webp',
-  alt = 'Image block',
+  src = "/images/projects/project-six/storm_shots/storm_shots%20(1).webp",
+  alt = "Image block",
 } = Astro.props;
+
+const resolvedImage = resolveImage(src);
 ---
 
 <article
@@ -44,14 +48,28 @@ const {
 >
   <!-- Content layer above the inner grid pseudo-element — image flush left, pr-6 only -->
   <div class="relative z-10 flex justify-start pr-6">
-    <img
-      src={src}
-      alt={alt}
-      width="500"
-      height="500"
-      class="img-drop-shadow w-[500px] h-[500px] rounded-[40px] object-cover block ring-2 ring-grey"
-      loading="lazy"
-      decoding="async"
-    />
+    {
+      resolvedImage ? (
+        <Image
+          src={resolvedImage}
+          alt={alt}
+          width={500}
+          height={500}
+          class="img-drop-shadow w-[500px] h-[500px] rounded-[40px] object-cover block ring-2 ring-grey"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <img
+          src={src}
+          alt={alt}
+          width="500"
+          height="500"
+          class="img-drop-shadow w-[500px] h-[500px] rounded-[40px] object-cover block ring-2 ring-grey"
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
   </div>
 </article>
