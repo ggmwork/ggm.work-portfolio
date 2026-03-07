@@ -3,7 +3,7 @@ title: "NexLed Store: Design & Implementation"
 description: "I redesigned NexLed's online store from scratch and built the design system that makes it ready to grow into a full e-commerce experience."
 category: "E-Commerce"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "NexLed Store highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

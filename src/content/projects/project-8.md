@@ -3,7 +3,7 @@ title: "Reset The Sun"
 description: "A seven-month university game project focused on cross-disciplinary ownership across character animation, environment art, material systems, and trailer production."
 category: "3D Art"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Reset The Sun highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

@@ -3,7 +3,7 @@ title: "Better Call Saul"
 description: "A four-week academic project reinterpreting a Better Call Saul scene through kinetic typography, using animated text as the emotional language of the edit."
 category: "Design"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Better Call Saul highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

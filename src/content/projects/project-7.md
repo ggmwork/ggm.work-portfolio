@@ -3,7 +3,7 @@ title: "Visual Content"
 description: "A collection of visual production work for NexLed spanning 3D product animation, large-format graphics, vehicle wraps, and supporting brand imagery."
 category: "Design"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Visual Content & 3D Production highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

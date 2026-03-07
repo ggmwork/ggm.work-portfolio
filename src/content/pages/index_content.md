@@ -20,7 +20,7 @@ sections:
       cardProps:
         paragraph1: "I’m a designer driven by curiosity and intention. I’m naturally drawn to understanding how things work and how they can improved. I’m constantly exploring, learning and refining the way I think and create, always aiming to elevate the quality of what I put into the world."
         paragraph2: "I don’t approach projects passively. I need to understand the bigger picture. why something exists, what problem it solves, where it fits and what it’s meant to achieve. Whether the goal is growth, clarity or simply adding value, I believe every decision should have a reason behind it. I bring focus, critical thinking and a collaborative mindset, questioning ideas when needed to make sure the work is thoughtful, purposeful and meaningful."
-        imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+        imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
         imageAlt: "Gonçalo Mendonça Profile Picture"
       imageBlockProps:
         src: "/public/images/headshot.png"
@@ -32,45 +32,45 @@ sections:
       projectList:
         - title: "Rebranding Nexled + UI System"
           description: "I redesigned NexLed's visual identity from scratch and built the UI system that puts it into practice across web and digital."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project"
           labels: ["Design", "UX/UI", "Design"]
-          projectSlug: "rebranding-nexled-ui-system"
+          projectSlug: "project-1"
           alignRight: false
         - title: "Amazon Store: Creation, Design & Management"
           description: "I built NexLed's Amazon store from the ground up and designed the full content system that presents the brand and converts the buyer."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["E-Commerce", "Content Design", "Brand Compliance"]
-          projectSlug: "amazon-store-creation-design-management"
+          projectSlug: "project-2"
           alignRight: true
         - title: "NexLed Store: Design & Implementation"
           description: "I redesigned NexLed's online store from scratch and built the design system that makes it ready to grow into a full e-commerce experience."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Left"
           labels: ["E-Commerce", "UX/UI", "Frontend"]
-          projectSlug: "nexled-store-design-implementation"
+          projectSlug: "project-3"
           alignRight: false
         - title: "NexLed Support Platform"
           description: "I designed and built a dedicated support platform for NexLed, solving an EU compliance requirement while creating a better experience for every customer that needs help."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["Design", "Design", "Design"]
-          projectSlug: "support"
+          projectSlug: "project-4"
           alignRight: true
         - title: "EPREL Internal Tool"
           description: "I designed and built an internal tool that automates EU compliance uploads, replacing a slow manual process with something the whole team can use."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Left"
           labels: ["Internal Tooling", "UX/UI", "Frontend"]
-          projectSlug: "eprel"
+          projectSlug: "project-5"
           alignRight: false
         - title: "Project Storm"
           description: "I led the artistic direction of Project Storm, producing 3D models, textures, and in-game visual effects while keeping the entire team's output visually consistent."
-          imageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
           imageAlt: "Highlighted Project Right"
           labels: ["3D Art", "VFX", "Art Direction"]
-          projectSlug: "project-storm"
+          projectSlug: "project-6"
           alignRight: true
 
   - component: "MoreProjectsSection"
@@ -80,26 +80,26 @@ sections:
         filters: ["Design", "UX/UI", "3D", "Motion", "Design", "Design"]
         activeFilter: 0
         projects:
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Visual & 3D Production "
-            projectSlug: "visual_content"
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+            projectSlug: "project-7"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Reset The Sun"
-            projectSlug: "reset_the_sun"
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+            projectSlug: "project-8"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Better Call Saul"
-            projectSlug: "better_call_saul"
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+            projectSlug: "project-9"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Gravity Generator"
-            projectSlug: "gravity"
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+            projectSlug: "project-10"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Complience tool for Lorem Inpluns"
-          - src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Complience tool for Lorem Inpluns"
 
@@ -168,15 +168,4 @@ sections:
         btn1Href: "mailto:ggm.work22@gmail.com"
         btn2Label: "LinkedIn"
         btn2Href: "https://www.linkedin.com/in/ggmwork/"
-  - component: "HeadingCardSection"
-    props:
-      heading: "Heading Card"
-  - component: "HeroInteractiveSection"
-    props:
-      heading: "Hero Card"
-  - component: "HeroTextV2Section"
-    props:
-      heading: "Text Block V2"
-  - component: "ImageBlockSection"
-  - component: "ImageBlockLeftSection"
 ---

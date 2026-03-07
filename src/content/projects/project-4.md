@@ -3,7 +3,7 @@ title: "NexLed Support Platform"
 description: "I designed and built a dedicated support platform for NexLed, solving an EU compliance requirement while creating a better experience for every customer that needs help."
 category: "Design"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "NexLed Support Platform highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

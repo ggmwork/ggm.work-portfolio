@@ -3,7 +3,7 @@ title: "Gravity Generator"
 description: "A job application technical assessment focused on designing, modeling, texturing, and presenting a production-ready sci-fi prop with game-ready discipline."
 category: "3D Art"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Gravity Generator highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"

@@ -3,7 +3,7 @@ title: "EPREL Internal Tool"
 description: "I designed and built an internal tool that automates EU compliance uploads, replacing a slow manual process with something the whole team can use."
 category: "Internal Tooling"
 cover:
-  src: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+  src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "EPREL Internal Tool highlighted project preview"
 sections:
   - component: "ProjTextCardLeft"
@@ -86,7 +86,7 @@ sections:
         centered on the page, and a secondary card on the right for quick
         contextual actions. The idea was that wherever you are in the tool,
         your next move is never more than one click away.
-      wideImageSrc: "/images/projects/project-six/storm_shots/storm_shots (1).webp"
+      wideImageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
       wideImageAlt: "EPREL tool wide preview"
   - component: "ProjTextCardRight"
     props:
