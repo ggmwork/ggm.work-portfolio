@@ -32,42 +32,42 @@ sections:
       projectList:
         - title: "Rebranding Nexled + UI System"
           description: "I redesigned NexLed's visual identity from scratch and built the UI system that puts it into practice across web and digital."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-1/project_1.webp"
           imageAlt: "Highlighted Project"
           labels: ["Design", "UX/UI", "Design"]
           projectSlug: "project-1"
           alignRight: false
         - title: "Amazon Store: Creation, Design & Management"
           description: "I built NexLed's Amazon store from the ground up and designed the full content system that presents the brand and converts the buyer."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-2/project_2.webp"
           imageAlt: "Highlighted Project Right"
           labels: ["E-Commerce", "Content Design", "Brand Compliance"]
           projectSlug: "project-2"
           alignRight: true
         - title: "NexLed Store: Design & Implementation"
           description: "I redesigned NexLed's online store from scratch and built the design system that makes it ready to grow into a full e-commerce experience."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-3/project_3.webp"
           imageAlt: "Highlighted Project Left"
           labels: ["E-Commerce", "UX/UI", "Frontend"]
           projectSlug: "project-3"
           alignRight: false
         - title: "NexLed Support Platform"
           description: "I designed and built a dedicated support platform for NexLed, solving an EU compliance requirement while creating a better experience for every customer that needs help."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-4/project_4.webp"
           imageAlt: "Highlighted Project Right"
           labels: ["Design", "Design", "Design"]
           projectSlug: "project-4"
           alignRight: true
         - title: "EPREL Internal Tool"
           description: "I designed and built an internal tool that automates EU compliance uploads, replacing a slow manual process with something the whole team can use."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-5/project_5.webp"
           imageAlt: "Highlighted Project Left"
           labels: ["Internal Tooling", "UX/UI", "Frontend"]
           projectSlug: "project-5"
           alignRight: false
         - title: "Project Storm"
           description: "I led the artistic direction of Project Storm, producing 3D models, textures, and in-game visual effects while keeping the entire team's output visually consistent."
-          imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+          imageSrc: "/images/projects/project-6/project_6.webp"
           imageAlt: "Highlighted Project Right"
           labels: ["3D Art", "VFX", "Art Direction"]
           projectSlug: "project-6"

@@ -27,10 +27,10 @@ const { experiences = [] } = Astro.props;
 ---
 
 <BaseCard
-  class="max-w-[1100px] md:w-[63%] min-h-[278px] overflow-hidden"
+  class="max-w-[1100px] w-full min-h-[278px] overflow-hidden"
   ariaLabel="Work experience card"
 >
-  <div class="w-full p-8 md:px-15 md:py-12 flex flex-col gap-12">
+  <div class="w-full p-8 md:pl-32 md:pr-20 md:py-12 flex flex-col gap-12">
     
     {experiences.map((exp: any) => (
       <div class="flex flex-col gap-5">

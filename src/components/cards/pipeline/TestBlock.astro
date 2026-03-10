@@ -30,7 +30,7 @@ const { component, props = {} } = block;
 {
   component === "HeaderSection" && (
     <section class="pt-32" aria-label="ORGANISM: Header Card">
-      <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-15 leading-tight tracking-tight">
+      <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
         {props.heading}
       </h1>
       <HeaderCard {...props.cardProps} />
@@ -45,7 +45,7 @@ const { component, props = {} } = block;
       aria-label="ORGANISM: About Me Card"
     >
       <div class="w-full">
-        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
           {props.heading}
         </h2>
         <AboutMeCard {...props.cardProps} />
@@ -64,7 +64,7 @@ const { component, props = {} } = block;
       class="pt-24 pb-20 w-full flex flex-col gap-16"
       aria-label="ORGANISM: Highlighted Projects"
     >
-      <h2 class="font-heading font-bold text-4xl text-black pl-15 leading-tight tracking-tight">
+      <h2 class="font-heading font-bold text-4xl text-black pl-6 md:pl-32 leading-tight tracking-tight">
         {props.heading}
       </h2>
       {props.projectList &&
@@ -78,7 +78,7 @@ const { component, props = {} } = block;
 {
   component === "MoreProjectsSection" && (
     <section class="pt-24 pb-20 w-full" aria-label="ORGANISM: More Projects">
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-8 md:pl-32 leading-tight tracking-tight">
         {props.heading}
       </h2>
       <MoreProjectsCard {...props.cardProps} />
@@ -92,16 +92,17 @@ const { component, props = {} } = block;
       class="pt-24 pb-20 w-full flex flex-col xl:flex-row gap-8 items-start justify-between"
       aria-label="ORGANISM: Work Experience & All Skills"
     >
-      <div class="w-full xl:w-[63%]">
-        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+      <div class="w-full xl:w-[68%]">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-8 md:pl-32 leading-tight tracking-tight">
           {props.workHeading}
         </h2>
         <div class="[&>article]:w-full [&>article]:md:w-full">
           <WorkExpCard {...props.workProps} />
         </div>
       </div>
-      <div class="w-full xl:w-[35%] flex flex-col justify-start mt-22">
-        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-12 leading-tight tracking-tight">
+      <div class="w-full xl:w-[30%] flex flex-col justify-start mt-22">
+        <!-- Kept original pl-12 for skills heading since the card itself is flush-right -->
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-8 md:pl-16 leading-tight tracking-tight">
           {props.skillsHeading}
         </h2>
         <AllSkillsCard {...props.skillsProps} />
@@ -116,7 +117,7 @@ const { component, props = {} } = block;
       class="pt-12 pb-20 w-full"
       aria-label="ORGANISM: Education and Languages"
     >
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-15 leading-tight tracking-tight">
+      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-8 md:pl-36 leading-tight tracking-tight">
         {props.heading}
       </h2>
       <EduLangCard {...props.cardProps} />
@@ -139,7 +140,7 @@ const { component, props = {} } = block;
       class="pt-12 pb-20 w-full"
       aria-label="ORGANISM: Contact"
     >
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[35vw] leading-tight tracking-tight">
+      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[37vw] leading-tight tracking-tight">
         {props.heading}
       </h2>
       <ContactCard {...props.cardProps} />
