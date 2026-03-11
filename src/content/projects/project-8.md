@@ -9,7 +9,11 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Reset The Sun  Game Development"
-      paragraph1: "*3D Art · Animation · Environment Design · Trailer Production*"
+      labels:
+        - "3D Art"
+        - "Animation"
+        - "Environment Design"
+        - "Trailer Production"
       paragraph2: >-
         Reset The Sun was a seven-month university project built to simulate a
         real indie production pipeline  a 2.5D narrative puzzle game centered

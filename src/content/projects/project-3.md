@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "NexLed Store  Design & Implementation"
-      paragraph1: "*UI/UX Design · Frontend Development · E-Commerce*"
+      labels:
+        - "UI/UX Design"
+        - "Frontend Development"
+        - "E-Commerce"
       paragraph2: >-
         NexLed had an existing online store, but by the time the rebranding and
         Amazon projects were underway, it was clear the store wasn't keeping

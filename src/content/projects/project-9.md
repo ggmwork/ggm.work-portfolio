@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Better Call Saul  Kinetic Typography"
-      paragraph1: "*Motion Design · Compositing · Video Editing*"
+      labels:
+        - "Motion Design"
+        - "Compositing"
+        - "Video Editing"
       paragraph2: >-
         This was a four-week academic project: take a three-minute scene from
         *Better Call Saul* and reinterpret it entirely through kinetic

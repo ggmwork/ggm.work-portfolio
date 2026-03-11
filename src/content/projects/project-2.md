@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Amazon Store  Creation, Design & Management"
-      paragraph1: "*E-Commerce · Content Design · Brand Compliance*"
+      labels:
+        - "E-Commerce"
+        - "Content Design"
+        - "Brand Compliance"
       paragraph2: >-
         My role at Tec IT was web designer. But when NexLed decided to expand
         into B2C markets, my superior asked if I could take on the Amazon

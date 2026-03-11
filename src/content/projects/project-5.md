@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "NexLed EPREL Internal Tool"
-      paragraph1: "*UI/UX Design · Web Development · Internal Tooling*"
+      labels:
+        - "UI/UX Design"
+        - "Web Development"
+        - "Internal Tooling"
       paragraph2: >-
         When NexLed decided to expand into B2C markets  through Amazon and their
         own online store  a compliance requirement surfaced that nobody had a

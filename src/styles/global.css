@@ -16,6 +16,8 @@
   --spacing-canvas-x: clamp(1rem, 0.25rem + 3vw, 2.8125rem);
   /* Fluid: 20px @ 375px → 48px @ 1280px */
   --spacing-canvas-top: clamp(1.25rem, 0.5rem + 3vw, 3rem);
+  /* Fluid overlay gutters: 40px @ 375px → 100px @ 1280px */
+  --spacing-canvas-overlay-x: clamp(2.5rem, 1rem + 6vw, 6.25rem);
 }
 
 @layer base {
@@ -192,6 +194,11 @@
 @utility mx-canvas {
   margin-left: var(--spacing-canvas-x);
   margin-right: var(--spacing-canvas-x);
+}
+
+@utility mx-canvas-overlay {
+  margin-left: var(--spacing-canvas-overlay-x);
+  margin-right: var(--spacing-canvas-overlay-x);
 }
 
 @utility mt-canvas {

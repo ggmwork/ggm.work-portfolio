@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Visual Content & 3D Production"
-      paragraph1: "*3D Animation · Graphic Design · Visual Production*"
+      labels:
+        - "3D Animation"
+        - "Graphic Design"
+        - "Visual Production"
       paragraph2: >-
         Alongside the larger projects, I produced a range of visual assets for
         NexLed some planned, some urgent, all with their own constraints.

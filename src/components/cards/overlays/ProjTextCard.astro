@@ -13,10 +13,21 @@ import { Image } from "astro:assets";
 import { resolveImage } from "../../../lib/resolve-image";
 import { marked } from "marked";
 import BaseCard from "../base/BaseCard.astro";
+import Label from "../atoms/Label.astro";
+
+interface CardImage {
+  src: string;
+  alt?: string;
+  position?: "above" | "below";
+  aspectRatio?: string;
+  rounded?: boolean;
+  maxWidth?: string;
+}
 
 interface Props {
   headingId?: string;
   heading?: string;
+  labels?: string[];
   paragraph1?: string;
   paragraph2?: string;
   imageSrc?: string;
@@ -27,11 +38,13 @@ interface Props {
   isFirstCard?: boolean;
   paddingLeft?: string;
   paddingRight?: string;
+  cardImage?: CardImage;
 }
 
 const {
   headingId,
   heading = "",
+  labels,
   paragraph1 = "",
   paragraph2 = "",
   imageSrc = "/images/headshot.png",
@@ -42,7 +55,10 @@ const {
   isFirstCard = false,
   paddingLeft,
   paddingRight,
+  cardImage,
 } = Astro.props;
+
+const hasLabels = Array.isArray(labels) && labels.length > 0;
 
 const isRight = variant === "right";
 const isWideImageEnd = variant === "wide-image-end";
@@ -69,10 +85,23 @@ const effectivePr = paddingRight ?? defaultPr;
 
 const textCardContentClass = `p-6 ${effectivePl} md:py-10 ${effectivePr} flex-1 flex flex-col gap-5`;
 
-/* ── Section top padding: tighter for the first card ── */
+/* ── Section top padding: first card gets slight top padding, others none ── */
 const sectionPadding = isFirstCard
-  ? "pt-4 pb-10 md:pt-6 md:pb-20"
-  : "pt-10 pb-10 md:pt-20 md:pb-20";
+  ? "pt-4 md:pt-6"
+  : "";
+
+/* ── In-card image ── */
+const hasCardImage = cardImage && cardImage.src;
+const resolvedCardImage = hasCardImage ? resolveImage(cardImage.src) : undefined;
+const cardImageAlt = cardImage?.alt ?? "";
+const cardImagePosition = cardImage?.position ?? "below";
+const cardImageRounded = cardImage?.rounded !== false;
+const cardImageMaxWidth = cardImage?.maxWidth ?? "100%";
+const cardImageAspectRatio = cardImage?.aspectRatio ?? "auto";
+const cardImageRoundedClass = cardImageRounded ? "rounded-[19px]" : "";
+const cardImageStyle = cardImageAspectRatio !== "auto"
+  ? `aspect-ratio: ${cardImageAspectRatio}; max-width: ${cardImageMaxWidth};`
+  : `max-width: ${cardImageMaxWidth};`;
 ---
 
 <section
@@ -105,7 +134,45 @@ const sectionPadding = isFirstCard
           </div>
           <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
             {
-              hasParagraph1 && (
+              hasCardImage && cardImagePosition === "above" && (
+                <div class="w-full">
+                  {resolvedCardImage ? (
+                    <Image
+                      src={resolvedCardImage}
+                      alt={cardImageAlt}
+                      width={1100}
+                      height={619}
+                      class={`img-drop-shadow w-full object-contain block ring-2 ring-grey ${cardImageRoundedClass}`}
+                      style={cardImageStyle}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <img
+                      src={cardImage!.src}
+                      alt={cardImageAlt}
+                      width="1100"
+                      height="619"
+                      class={`img-drop-shadow w-full object-contain block ring-2 ring-grey ${cardImageRoundedClass}`}
+                      style={cardImageStyle}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </div>
+              )
+            }
+            {
+              hasLabels && (
+                <div class="flex flex-wrap gap-2">
+                  {labels!.map((lbl: string) => (
+                    <Label label={lbl} />
+                  ))}
+                </div>
+              )
+            }
+            {
+              !hasLabels && hasParagraph1 && (
                 <p
                   class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
                   set:html={paragraph1Html}
@@ -118,6 +185,35 @@ const sectionPadding = isFirstCard
                   class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
                   set:html={paragraph2Html}
                 />
+              )
+            }
+            {
+              hasCardImage && cardImagePosition === "below" && (
+                <div class="w-full">
+                  {resolvedCardImage ? (
+                    <Image
+                      src={resolvedCardImage}
+                      alt={cardImageAlt}
+                      width={1100}
+                      height={619}
+                      class={`img-drop-shadow w-full object-contain block ring-2 ring-grey ${cardImageRoundedClass}`}
+                      style={cardImageStyle}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <img
+                      src={cardImage!.src}
+                      alt={cardImageAlt}
+                      width="1100"
+                      height="619"
+                      class={`img-drop-shadow w-full object-contain block ring-2 ring-grey ${cardImageRoundedClass}`}
+                      style={cardImageStyle}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </div>
               )
             }
           </div>

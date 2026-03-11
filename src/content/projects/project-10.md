@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Gravity Generator  3D Prop"
-      paragraph1: "*3D Modeling · Texturing · Real-Time Rendering*"
+      labels:
+        - "3D Modeling"
+        - "Texturing"
+        - "Real-Time Rendering"
       paragraph2: >-
         Gravity Generator was created as part of a job application technical
         assessment  a brief to design, model, texture, and present a

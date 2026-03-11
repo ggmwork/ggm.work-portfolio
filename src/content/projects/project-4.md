@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "NexLed Support Platform"
-      paragraph1: "*UI/UX Design · Frontend Development · Compliance*"
+      labels:
+        - "UI/UX Design"
+        - "Frontend Development"
+        - "Compliance"
       paragraph2: >-
         EU regulations coming into effect at the end of 2024 require companies
         selling consumer products to publicly provide repair instructions 

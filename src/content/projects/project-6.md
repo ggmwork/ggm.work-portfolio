@@ -9,7 +9,10 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "Project Storm  Art Lead & 3D Artist"
-      paragraph1: "*Art Direction · 3D Modeling · Real-Time VFX*"
+      labels:
+        - "Art Direction"
+        - "3D Modeling"
+        - "Real-Time VFX"
       paragraph2: "In 2023, during the final year of my degree in Videogames and Multimedia Design, I did a mandatory curricular internship at Optimizer  a small independent studio developing a puzzle and escape-room experience in Unreal Engine. The demo existed, the mechanics worked, but visually it was bare. Primitive shapes, no art direction, no atmosphere. It wasn't ready to be shown to publishers or pitched for funding, and that's what the internship was there to fix."
       wideImageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
       wideImageAlt: "Project Storm wide preview"

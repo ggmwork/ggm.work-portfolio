@@ -9,8 +9,11 @@ sections:
   - component: "ProjTextCardLeft"
     props:
       heading: "NexLed Rebranding & UI Component System"
-      paddingLeft: "md:pl-45"
-      paragraph1: "*Brand Identity · UI Design · Design Systems*"
+      labels:
+        - "Brand Identity"
+        - "UI Design"
+        - "Design System"
+        - "Design System"
       paragraph2: >-
         When I joined Tec IT, the gap between what the brands *were* and how
         they *appeared* was hard to ignore. Tec IT owns several brands 
@@ -36,6 +39,11 @@ sections:
         create distinct personas and a unifying system  the smarter long-term
         play. But focusing on one meant moving faster, and faster mattered at
         that moment. So NexLed it was.
+      cardImage:
+        src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+        alt: "Brand analysis report overview"
+        position: "below"
+        aspectRatio: "16/9"
   - component: "ProjTextCardLeft"
     props:
       heading: ""

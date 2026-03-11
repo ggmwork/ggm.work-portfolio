@@ -107,7 +107,7 @@ const resolvedOverlayBlocks = overlayBlocks
 
         {/* Old-style canvas: gutters, rounded corners, border, shadow */}
         <main
-          class="mx-canvas mt-canvas rounded-canvas canvas-gradient border-2 border-grey canvas-shadow canvas-backdrop-blur min-h-canvas relative overflow-hidden"
+          class="mx-canvas-overlay mt-canvas rounded-canvas canvas-gradient border-2 border-grey canvas-shadow canvas-backdrop-blur min-h-canvas relative overflow-hidden"
           aria-label="Project overlay canvas"
         >
           {/* Noise overlay  uses per-overlay filter ID to avoid conflicts */}
@@ -129,7 +129,7 @@ const resolvedOverlayBlocks = overlayBlocks
               </button>
             </div>
 
-            <div class="flex flex-col gap-10">
+            <div class="flex flex-col gap-4">
               {resolvedOverlayBlocks.map((block, index) => (
                 <ProjTextCard
                   headingId={
