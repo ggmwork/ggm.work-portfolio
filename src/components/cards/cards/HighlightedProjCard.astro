@@ -2,18 +2,18 @@
 /**
  * HighlightedProjCard.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM — Highlighted Project Card.
+ * ORGANISM  Highlighted Project Card.
  * Supports both left (image right) and right (image left) alignment.
  *
  * Props:
- *   title       — Project title
- *   description — Project description paragraph
- *   imageSrc    — Project image path
- *   imageAlt    — Project image alt text
- *   labels      — Array of label strings
- *   projectSlug — Slug for overlay trigger (optional)
- *   align       — "left" (default, image right) or "right" (image left)
- *   alignRight  — Legacy alias for align="right" (from markdown pipeline)
+ *   title        Project title
+ *   description  Project description paragraph
+ *   imageSrc     Project image path
+ *   imageAlt     Project image alt text
+ *   labels       Array of label strings
+ *   projectSlug  Slug for overlay trigger (optional)
+ *   align        "left" (default, image right) or "right" (image left)
+ *   alignRight   Legacy alias for align="right" (from markdown pipeline)
  *
  * Arbitrary value justifications:
  *   [40px]  Figma image border-radius
@@ -74,154 +74,158 @@ const textPanelPadding = isRight
     : "Highlighted project card"}
 >
   {/* ── Inner Flex Container ── */}
-  <div class="flex flex-col md:flex-row md:items-stretch justify-between w-full h-full items-center">
+  <div
+    class="flex flex-col md:flex-row md:items-stretch justify-between w-full h-full items-center"
+  >
     {/* ── Image Panel (Renders First on Desktop if Right-Aligned) ── */}
-  {
-    isRight && (
-      <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
-        {overlayId ? (
-          <button
-            type="button"
-            data-project-overlay-trigger={normalizedProjectSlug}
-            aria-controls={overlayId}
-            aria-haspopup="dialog"
-            aria-label={`Open project details for ${title}`}
-            class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
-          >
-            {resolvedImage ? (
-              <Image
-                src={resolvedImage}
-                alt={imageAlt}
-                width={280}
-                height={280}
-                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <img
-                src={imageSrc}
-                alt={imageAlt}
-                width="280"
-                height="280"
-                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
-          </button>
-        ) : resolvedImage ? (
-          <Image
-            src={resolvedImage}
-            alt={imageAlt}
-            width={280}
-            height={280}
-            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            width="280"
-            height="280"
-            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
-        )}
-      </div>
-    )
-  }
-
-  {/* ── Text & Labels Panel ── */}
-  <div class:list={["flex-1 flex flex-col justify-center", textPanelPadding]}>
-    <div class="relative">
-      <div
-        class="absolute inset-0 rounded-[19px] bg-white/60 backdrop-blur-[20px]"
-        aria-hidden="true"
-      >
-      </div>
-      <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
-        <!-- Title -->
-        <h3 class="font-body font-medium text-lg text-black leading-snug">
-          {title}
-        </h3>
-
-        <!-- Labels Row -->
-        <div class="flex flex-row flex-wrap gap-2">
-          {labels.map((label: string) => <Label label={label} />)}
+    {
+      isRight && (
+        <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
+          {overlayId ? (
+            <button
+              type="button"
+              data-project-overlay-trigger={normalizedProjectSlug}
+              aria-controls={overlayId}
+              aria-haspopup="dialog"
+              aria-label={`Open project details for ${title}`}
+              class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+            >
+              {resolvedImage ? (
+                <Image
+                  src={resolvedImage}
+                  alt={imageAlt}
+                  width={280}
+                  height={280}
+                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  width="280"
+                  height="280"
+                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </button>
+          ) : resolvedImage ? (
+            <Image
+              src={resolvedImage}
+              alt={imageAlt}
+              width={280}
+              height={280}
+              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              width="280"
+              height="280"
+              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
         </div>
+      )
+    }
 
-        <!-- Description -->
-        <p
-          class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+    {/* ── Text & Labels Panel ── */}
+    <div class:list={["flex-1 flex flex-col justify-center", textPanelPadding]}>
+      <div class="relative">
+        <div
+          class="absolute inset-0 rounded-[19px] bg-white/60 backdrop-blur-[20px]"
+          aria-hidden="true"
         >
-          {description}
-        </p>
+        </div>
+        <div class="relative z-10 px-5 py-4 flex flex-col gap-4">
+          <!-- Title -->
+          <h3 class="font-body font-medium text-lg text-black leading-snug">
+            {title}
+          </h3>
+
+          <!-- Labels Row -->
+          <div class="flex flex-row flex-wrap gap-2">
+            {labels.map((label: string) => <Label label={label} />)}
+          </div>
+
+          <!-- Description -->
+          <p
+            class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+          >
+            {description}
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  {/* ── Image Panel (Renders Last on Desktop if Left-Aligned / Default) ── */}
-  {
-    !isRight && (
-      <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
-        {overlayId ? (
-          <button
-            type="button"
-            data-project-overlay-trigger={normalizedProjectSlug}
-            aria-controls={overlayId}
-            aria-haspopup="dialog"
-            aria-label={`Open project details for ${title}`}
-            class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
-          >
-            {resolvedImage ? (
-              <Image
-                src={resolvedImage}
-                alt={imageAlt}
-                width={280}
-                height={280}
-                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <img
-                src={imageSrc}
-                alt={imageAlt}
-                width="280"
-                height="280"
-                class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
-          </button>
-        ) : resolvedImage ? (
-          <Image
-            src={resolvedImage}
-            alt={imageAlt}
-            width={280}
-            height={280}
-            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            width="280"
-            height="280"
-            class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
-            loading="lazy"
-            decoding="async"
-          />
-        )}
-      </div>
-    )
-  }
+    {
+      /* ── Image Panel (Renders Last on Desktop if Left-Aligned / Default) ── */
+    }
+    {
+      !isRight && (
+        <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
+          {overlayId ? (
+            <button
+              type="button"
+              data-project-overlay-trigger={normalizedProjectSlug}
+              aria-controls={overlayId}
+              aria-haspopup="dialog"
+              aria-label={`Open project details for ${title}`}
+              class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+            >
+              {resolvedImage ? (
+                <Image
+                  src={resolvedImage}
+                  alt={imageAlt}
+                  width={280}
+                  height={280}
+                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  width="280"
+                  height="280"
+                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+            </button>
+          ) : resolvedImage ? (
+            <Image
+              src={resolvedImage}
+              alt={imageAlt}
+              width={280}
+              height={280}
+              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              width="280"
+              height="280"
+              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </div>
+      )
+    }
   </div>
 </BaseCard>

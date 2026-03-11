@@ -110,7 +110,7 @@ const resolvedOverlayBlocks = overlayBlocks
           class="mx-canvas mt-canvas rounded-canvas canvas-gradient border-2 border-grey canvas-shadow canvas-backdrop-blur min-h-canvas relative overflow-hidden"
           aria-label="Project overlay canvas"
         >
-          {/* Noise overlay — uses per-overlay filter ID to avoid conflicts */}
+          {/* Noise overlay  uses per-overlay filter ID to avoid conflicts */}
           <div
             class="absolute inset-0 pointer-events-none bg-white opacity-30 mix-blend-overlay z-0"
             style={`filter: url(#overlay-noise-filter-${normalizedProjectSlug}); border-radius: inherit; isolation: isolate;`}
@@ -118,7 +118,7 @@ const resolvedOverlayBlocks = overlayBlocks
           />
 
           <div class="relative z-10">
-            <div class="w-full flex justify-end pt-8 px-6 md:px-15">
+            <div class="w-full flex justify-end pt-5 px-6 md:px-15">
               <button
                 type="button"
                 data-project-overlay-close
@@ -137,6 +137,7 @@ const resolvedOverlayBlocks = overlayBlocks
                       ? `${overlayId}-title`
                       : undefined
                   }
+                  isFirstCard={index === 0}
                   variant={block.variant}
                   {...block.props}
                 />
@@ -259,6 +260,6 @@ const resolvedOverlayBlocks = overlayBlocks
     });
   }
 
-  // Module scripts are deferred — DOM is ready when this runs
+  // Module scripts are deferred  DOM is ready when this runs
   initProjectOverlays();
 </script>

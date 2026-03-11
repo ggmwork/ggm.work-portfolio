@@ -108,7 +108,7 @@ export default defineConfig({
 | `/` | `src/pages/index.astro` | Single-page portfolio |
 | `/robots.txt` | `src/pages/robots.txt.ts` | Dynamic robots.txt |
 
-### `index.astro` — how it works
+### `index.astro`  how it works
 
 1. **Fetches content**: `getEntry("pages", "index_content")` → reads `index_content.md`
 2. **Renders sections**: Maps each section through `TestBlock` (the pipeline component)
@@ -219,7 +219,7 @@ ProjOverlay (modal dialog per project)
   └─ ProjTextCard (uses BaseCard, Image, marked)
 ```
 
-### `BaseCard.astro` — the foundation
+### `BaseCard.astro`  the foundation
 
 Single source of truth for card shells. All cards wrap their content in `BaseCard`.
 
@@ -248,7 +248,7 @@ Full-viewport gradient background with noise texture overlay.
 3. `canvas-noise-overlay`: SVG `feTurbulence` filter (monochromatic noise at 30% opacity, overlay blend)
 4. Slot content at `z-10`
 
-### `TestBlock.astro` — the pipeline
+### `TestBlock.astro`  the pipeline
 
 Maps `component` strings from markdown to actual Astro components. Acts as a switch/router:
 
@@ -312,8 +312,8 @@ Each handler wraps its component(s) in a `<section>` with proper heading, spacin
 ### Fonts
 
 Loaded via Google Fonts CDN (async, non-blocking):
-- **Space Mono** (400, 700) — headings
-- **Plus Jakarta Sans** (300–700) — body
+- **Space Mono** (400, 700)  headings
+- **Plus Jakarta Sans** (300–700)  body
 
 ---
 
@@ -400,7 +400,7 @@ pnpm preview      # Preview production build
 - **Lockfile**: Must be in sync (`pnpm install` before pushing if dependencies change)
 
 ### Important: after changing `package.json`
-Always run `pnpm install` locally and commit the updated `pnpm-lock.yaml`. Vercel uses `--frozen-lockfile` by default — a stale lockfile will fail the build.
+Always run `pnpm install` locally and commit the updated `pnpm-lock.yaml`. Vercel uses `--frozen-lockfile` by default  a stale lockfile will fail the build.
 
 ---
 
@@ -412,7 +412,7 @@ Always run `pnpm install` locally and commit the updated `pnpm-lock.yaml`. Verce
 
 ### Projects
 - Numbered scheme: `project-1`, `project-2`, … `project-10`
-- Numbers are **permanent** — never reused
+- Numbers are **permanent**  never reused
 - Next available: **11**
 - Registry: `src/content/PROJECT_REGISTRY.md`
 

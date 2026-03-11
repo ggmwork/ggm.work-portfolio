@@ -49,7 +49,7 @@ That will allow the build to proceed, but it may result in nondeterministic buil
 ---
 
 ## Best practices / tradeoffs
-- Preferred: keep lockfile in repo and update it exactly when `package.json` changes — deterministic, reproducible builds.
+- Preferred: keep lockfile in repo and update it exactly when `package.json` changes  deterministic, reproducible builds.
 - Workaround: disabling frozen-lockfile is quick but reduces reproducibility and can hide dependency mismatches.
 
 ---

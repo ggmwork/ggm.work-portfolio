@@ -2,7 +2,7 @@
 /**
  * FilterButtons.astro
  * ─────────────────────────────────────────────────────────────────
- * MOLECULE — Horizontal filter button strip.
+ * MOLECULE  Horizontal filter button strip.
  *
  * Visual spec (Figma):
  *   Container → bg-white rounded-[8px] ring-1 ring-grey
@@ -19,8 +19,8 @@
  *               Rendered between every pair of buttons.
  *
  * Props:
- *   filters  — array of label strings
- *   active   — index of the currently active button (default 0)
+ *   filters   array of label strings
+ *   active    index of the currently active button (default 0)
  *
  * Arbitrary value justifications:
  *   [8px]  Figma border-radius spec for container and buttons
@@ -39,7 +39,7 @@ const {
 
 <div class="relative inline-flex">
   <!--
-    White container — sits behind all buttons.
+    White container  sits behind all buttons.
     absolute inset-0 so it stretches exactly to the outer button edges.
     rounded-[8px] matches button radius so corners appear flush.
   -->
@@ -62,7 +62,7 @@ const {
     {
       filters.map((filter, i) => (
         <Fragment>
-          {/* Dot separator — rendered before every button except the first */}
+          {/* Dot separator  rendered before every button except the first */}
           {i > 0 && (
             <span
               class="w-1.5 h-1.5 rounded-full bg-brand-light shrink-0"
@@ -73,7 +73,7 @@ const {
           <button
             type="button"
             class:list={[
-              /* Base — same effects as ButtonSecondary, slightly smaller padding */
+              /* Base  same effects as ButtonSecondary, slightly smaller padding */
               "btn-effects btn-blur inline-flex items-center justify-center",
               "rounded-[8px] px-4 py-2.5 ring-1 ring-grey",
               "font-body font-semibold text-sm whitespace-nowrap",

@@ -2,18 +2,18 @@
 /**
  * HeaderCard.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM — Header section card.
+ * ORGANISM  Header section card.
  * Wraps BaseCard with header-specific content layout.
  *
  * Props:
- *   primary    — TextBlock primary line
- *   secondary  — TextBlock secondary line
- *   btn1Label  — First secondary button label
- *   btn2Label  — Second secondary button label
- *   btn3Label  — Primary button label
- *   btn1Href   — Optional href for first secondary button
- *   btn2Href   — Optional href for second secondary button
- *   btn3Href   — Optional href for primary button
+ *   primary     TextBlock primary line
+ *   secondary   TextBlock secondary line
+ *   btn1Label   First secondary button label
+ *   btn2Label   Second secondary button label
+ *   btn3Label   Primary button label
+ *   btn1Href    Optional href for first secondary button
+ *   btn2Href    Optional href for second secondary button
+ *   btn3Href    Optional href for primary button
  * ─────────────────────────────────────────────────────────────────
  */
 interface Props {
@@ -49,10 +49,10 @@ const {
   ariaLabel="Header card"
 >
   <div class="pt-6 pr-6 pb-6 pl-6 md:pl-32 flex flex-col justify-start gap-6">
-    <!-- TOP: TextBlock — primary headline + secondary sub-line -->
+    <!-- TOP: TextBlock  primary headline + secondary sub-line -->
     <TextBlock primary={primary} secondary={secondary} />
 
-    <!-- BOTTOM: Button row — 2 × secondary, 1 × primary -->
+    <!-- BOTTOM: Button row  2 × secondary, 1 × primary -->
     <div
       class="flex flex-row flex-wrap gap-4 md:gap-14 pl-0 md:pl-28 pr-0 md:pr-10"
     >

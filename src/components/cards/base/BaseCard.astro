@@ -10,7 +10,7 @@
  *   stacking context (relative + inner z-10 wrapper)
  *
  * Each instance controls its own dimensions by passing Tailwind
- * classes via the `class` prop — e.g. max-w-[1100px] md:w-[63%].
+ * classes via the `class` prop  e.g. max-w-[1100px] md:w-[63%].
  *
  * Props:
  *   align     → "left" (flush-left, rounded-right) or
@@ -59,7 +59,7 @@ const shellClasses = [
 ---
 
 <article class={shellClasses} aria-label={ariaLabel}>
-  <!-- Content layer — above the base-card-grid ::before (z-0) -->
+  <!-- Content layer  above the base-card-grid ::before (z-0) -->
   <div class="relative z-10 h-full">
     <slot />
   </div>

@@ -55,7 +55,7 @@
   /*
     Fixed full-viewport layer that sits behind all page content.
     The ::before pseudo holds the actual grid so we can apply
-    transform: skewX(-20deg) to it independently — the parent
+    transform: skewX(-20deg) to it independently  the parent
     clips the overflowing pseudo back to the viewport.
   */
   position: fixed;
@@ -86,12 +86,12 @@
         var(--color-grey) 82px,
         var(--color-grey) 84px);
     filter:
-      /* Gaussian blur 3px — softens the grid lines */
+      /* Gaussian blur 3px  softens the grid lines */
       blur(3px)
       /* Outer glow shadow: offset 4.7px, radius 0.3px, brand-light @ 73% */
       drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
     transform: skewX(-25deg);
-    /* GPU: promote to own compositing layer — rasterise once, reuse texture */
+    /* GPU: promote to own compositing layer  rasterise once, reuse texture */
     will-change: transform;
   }
 }
@@ -110,22 +110,22 @@
 }
 
 /*
-  base-card-blur: Originally filter: blur(0.5px) — removed because 0.5px is
+  base-card-blur: Originally filter: blur(0.5px)  removed because 0.5px is
   below the aliasing threshold, yet forced 15 cards into GPU-rasterised layers.
   The class is still referenced by components, so we keep it as a no-op.
 */
 @utility base-card-blur {
-  /* no-op — intentionally empty, kept for class reference compatibility */
+  /* no-op  intentionally empty, kept for class reference compatibility */
   --_noop: ;
 }
 
 /* ─── Button effect utilities ─── */
-/* btn-effects and btn-blur removed — no component references either utility */
+/* btn-effects and btn-blur removed  no component references either utility */
 
 /* ─── Image shadow utility ─── */
 @utility img-drop-shadow {
   /*
-    Drop shadow only (no inset) — matches the card's Figma drop shadow spec:
+    Drop shadow only (no inset)  matches the card's Figma drop shadow spec:
     x:10  y:10  blur:25  spread:2  #0E0E0E @25%
     Applied as box-shadow so it respects the image's border-radius.
   */
@@ -140,7 +140,7 @@
     Button: inset -3/-3/6/0  →  Label: inset -2/-2/4/0
     Button: 3/3/6/1          →  Label: 2/2/4/1
     Opacity reduced to 15% (vs button's 20%) for subtlety.
-    filter: blur(0.5px) removed — imperceptible, saves GPU rasterisation.
+    filter: blur(0.5px) removed  imperceptible, saves GPU rasterisation.
   */
   box-shadow:
     inset -2px -2px 4px 0px color-mix(in srgb, var(--color-black) 15%, transparent),
@@ -150,7 +150,7 @@
 @utility base-card-grid {
   /*
     Replicates the sandbox background grid inside the card.
-    Performance strategy: pure CSS ::before pseudo-element — zero extra
+    Performance strategy: pure CSS ::before pseudo-element  zero extra
     DOM nodes, zero HTTP requests, GPU-accelerated paint. The same
     repeating-linear-gradient + skewX formula is reused so the browser
     can optimise both surfaces from the same paint primitive.
@@ -183,7 +183,7 @@
     filter:
       blur(3px) drop-shadow(4.7px 4.7px 0.3px color-mix(in srgb, var(--color-brand-light) 73%, transparent));
     transform: skewX(-25deg);
-    /* GPU: promote to own compositing layer — rasterise once, reuse texture */
+    /* GPU: promote to own compositing layer  rasterise once, reuse texture */
     will-change: transform;
   }
 }
@@ -209,7 +209,7 @@
 }
 
 @utility canvas-backdrop-blur {
-  /* Figma: Gaussian Blur 0.9 — applied as backdrop so slot children stay sharp */
+  /* Figma: Gaussian Blur 0.9  applied as backdrop so slot children stay sharp */
   backdrop-filter: blur(0.9px);
 }
 
@@ -231,7 +231,7 @@
 }
 
 @utility canvas-noise-overlay {
-  /* Figma: Noise — monochromatic, density 30%, overlay blend */
+  /* Figma: Noise  monochromatic, density 30%, overlay blend */
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -241,12 +241,12 @@
   opacity: 0.3;
   mix-blend-mode: overlay;
   z-index: 0;
-  /* GPU: contain the blend to this element only — prevents the parent
+  /* GPU: contain the blend to this element only  prevents the parent
      from compositing all child cards through the blend mode */
   isolation: isolate;
 }
 
-/* Card grid background — applies a brand-secondary square grid behind card content */
+/* Card grid background  applies a brand-secondary square grid behind card content */
 @utility card-grid {
   position: relative;
 
