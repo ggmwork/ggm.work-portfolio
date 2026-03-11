@@ -65,6 +65,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Blender · Photoshop · Affinity · Figma"
       paragraph2: "**Type:** 3D Animation · Graphic Design · Visual Production"
 ---

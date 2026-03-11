@@ -101,6 +101,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · PHP · HTML · CSS · JavaScript · Generative AI (code assistance)"
       paragraph2: "**Type:** Internal Tool · UI/UX Design · Frontend Development"
 ---

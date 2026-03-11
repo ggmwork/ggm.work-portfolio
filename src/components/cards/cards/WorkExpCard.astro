@@ -39,10 +39,10 @@ const { experiences = [] } = Astro.props;
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <!-- Left: Title, Company, Date -->
           <div class="flex flex-col gap-3">
-            <h3 class="font-body font-semibold text-xl text-black leading-snug">
+            <h3 class="font-body font-medium text-xl text-black leading-snug">
               {exp.title}
             </h3>
-            <div class="flex items-center gap-6 font-body font-medium text-base text-grey-dark">
+            <div class="flex items-center gap-6 font-body font-light text-base text-grey-dark">
               <span>{exp.company}</span>
               <span>{exp.date}</span>
             </div>
@@ -57,7 +57,7 @@ const { experiences = [] } = Astro.props;
         </div>
         
         <!-- Job Description -->
-        <p class="font-body font-medium text-base md:text-lg text-black leading-relaxed">
+        <p class="font-body font-normal text-base md:text-lg text-black leading-relaxed">
           {exp.description}
         </p>
       </div>

@@ -46,6 +46,7 @@ sections:
       wideImageAlt: "Project Storm wide preview"
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       heading: ""
       paragraph1: "**Tools:** Blender · Unreal Engine · Substance Painter"
       paragraph2: "**Type:** Art Direction · 3D Modeling · Texture Art · Real-Time VFX"

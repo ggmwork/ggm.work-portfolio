@@ -39,6 +39,7 @@ interface Props {
   paddingLeft?: string;
   paddingRight?: string;
   cardImage?: CardImage;
+  textStyle?: "paragraph" | "subtitle";
 }
 
 const {
@@ -56,7 +57,11 @@ const {
   paddingLeft,
   paddingRight,
   cardImage,
+  textStyle = "paragraph",
 } = Astro.props;
+
+/* ── Typography: paragraph = font-normal (regular), subtitle = font-medium ── */
+const textWeightClass = textStyle === "subtitle" ? "font-medium" : "font-normal";
 
 const hasLabels = Array.isArray(labels) && labels.length > 0;
 
@@ -174,7 +179,7 @@ const cardImageStyle = cardImageAspectRatio !== "auto"
             {
               !hasLabels && hasParagraph1 && (
                 <p
-                  class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+                  class={`font-body ${textWeightClass} text-base md:text-lg text-black leading-relaxed`}
                   set:html={paragraph1Html}
                 />
               )
@@ -182,7 +187,7 @@ const cardImageStyle = cardImageAspectRatio !== "auto"
             {
               hasParagraph2 && (
                 <p
-                  class="font-body font-medium text-base md:text-lg text-black leading-relaxed"
+                  class={`font-body ${textWeightClass} text-base md:text-lg text-black leading-relaxed`}
                   set:html={paragraph2Html}
                 />
               )

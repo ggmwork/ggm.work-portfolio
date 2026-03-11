@@ -143,6 +143,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: >-
         **Tools:** Figma · Photopea · Google AI image generation Nano Banana ·
         Amazon Seller Central · Affinity

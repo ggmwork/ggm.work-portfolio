@@ -40,7 +40,7 @@ const { rows = [] } = Astro.props;
           <h3 class="font-body font-medium text-lg text-black leading-snug">
             {row.leftTitle}
           </h3>
-          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 font-body font-medium text-base text-grey-dark">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 font-body font-light text-base text-grey-dark">
             <span>{row.leftSubtitle}</span>
             <span>{row.leftDate}</span>
           </div>
@@ -51,7 +51,7 @@ const { rows = [] } = Astro.props;
           <h3 class="font-body font-medium text-lg text-black leading-snug">
             {row.rightTitle}
           </h3>
-          <span class="font-body font-medium text-base text-grey-dark">
+          <span class="font-body font-light text-base text-grey-dark">
             {row.rightSubtitle}
           </span>
         </div>

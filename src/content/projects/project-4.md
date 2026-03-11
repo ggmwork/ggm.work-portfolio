@@ -90,6 +90,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · HTML · CSS · JavaScript · PHP · Photoshop · Google Nano Banana"
       paragraph2: "**Type:** UI/UX Design · Frontend Development · Regulatory Compliance"
 ---

@@ -69,6 +69,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Unreal Engine 5 · Blender · After Effects · Premiere Pro · Stable Diffusion"
       paragraph2: "**Type:** 3D Art · Character Animation · Environment Design · Trailer Production"
 ---

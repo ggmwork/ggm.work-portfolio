@@ -37,6 +37,7 @@ sections:
       paragraph2: "It was a compact, focused exercise  but focused is sometimes exactly what a project needs to be. One asset, done properly, end to end."
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Blender · Substance Painter · Unreal Engine · Photoshop"
       paragraph2: "**Type:** 3D Modeling · PBR Texturing · Real-Time Rendering"
 ---

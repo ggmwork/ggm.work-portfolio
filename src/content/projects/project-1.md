@@ -43,7 +43,7 @@ sections:
         src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
         alt: "Brand analysis report overview"
         position: "below"
-        aspectRatio: "16/9"
+        aspectRatio: "4/3"
   - component: "ProjTextCardLeft"
     props:
       heading: ""
@@ -178,6 +178,7 @@ sections:
         progress.
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · HTML · CSS"
       paragraph2: "**Type:** Brand Identity · Design Systems · UI Design"
 ---

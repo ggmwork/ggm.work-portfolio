@@ -124,6 +124,7 @@ sections:
       paragraph2: ""
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · HTML · CSS · JavaScript · Tailwind · PHP"
       paragraph2: "**Type:** UI/UX Design · Frontend Development · E-Commerce"
 ---

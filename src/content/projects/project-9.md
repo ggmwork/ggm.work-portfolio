@@ -42,6 +42,7 @@ sections:
         natural tension rather than fighting it.
   - component: "ProjTextCardRight"
     props:
+      textStyle: "subtitle"
       paragraph1: "**Tools:** After Effects · Premiere Pro · Media Encoder"
       paragraph2: "**Type:** Motion Design · Compositing · Kinetic Typography"
 ---
