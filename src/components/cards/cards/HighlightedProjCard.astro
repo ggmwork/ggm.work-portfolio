@@ -60,10 +60,9 @@ const overlayId = normalizedProjectSlug
   ? `project-overlay-${normalizedProjectSlug}`
   : undefined;
 
-/* Padding direction flips with alignment */
 const textPanelPadding = isRight
-  ? "p-6 md:pr-32 md:pl-10 md:py-8"
-  : "p-6 md:pl-32 md:pr-10 md:py-8";
+  ? "p-5 md:pr-8 md:pl-16 md:py-8"
+  : "p-5 md:pl-16 md:pr-8 md:py-8";
 ---
 
 <BaseCard
@@ -80,7 +79,7 @@ const textPanelPadding = isRight
     {/* ── Image Panel (Renders First on Desktop if Right-Aligned) ── */}
     {
       isRight && (
-        <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
+        <div class=" flex items-center justify-center shrink-0">
           {overlayId ? (
             <button
               type="button"
@@ -88,15 +87,15 @@ const textPanelPadding = isRight
               aria-controls={overlayId}
               aria-haspopup="dialog"
               aria-label={`Open project details for ${title}`}
-              class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+              class="rounded-[2rem] md:rounded-[2.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
             >
               {resolvedImage ? (
                 <Image
                   src={resolvedImage}
                   alt={imageAlt}
-                  width={280}
-                  height={280}
-                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  width={384}
+                  height={384}
+                  class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
                   loading="lazy"
                   decoding="async"
                 />
@@ -104,9 +103,9 @@ const textPanelPadding = isRight
                 <img
                   src={imageSrc}
                   alt={imageAlt}
-                  width="280"
-                  height="280"
-                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  width="384"
+                  height="384"
+                  class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
                   loading="lazy"
                   decoding="async"
                 />
@@ -116,9 +115,9 @@ const textPanelPadding = isRight
             <Image
               src={resolvedImage}
               alt={imageAlt}
-              width={280}
-              height={280}
-              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              width={384}
+              height={384}
+              class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading="lazy"
               decoding="async"
             />
@@ -126,9 +125,9 @@ const textPanelPadding = isRight
             <img
               src={imageSrc}
               alt={imageAlt}
-              width="280"
-              height="280"
-              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              width="384"
+              height="384"
+              class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading="lazy"
               decoding="async"
             />
@@ -171,7 +170,7 @@ const textPanelPadding = isRight
     }
     {
       !isRight && (
-        <div class="w-full md:w-auto p-6 md:p-8 flex items-center justify-center shrink-0">
+        <div class="p-4 md:p-6 flex items-center justify-center shrink-0">
           {overlayId ? (
             <button
               type="button"
@@ -179,15 +178,15 @@ const textPanelPadding = isRight
               aria-controls={overlayId}
               aria-haspopup="dialog"
               aria-label={`Open project details for ${title}`}
-              class="rounded-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+              class="rounded-[2rem] md:rounded-[2.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
             >
               {resolvedImage ? (
                 <Image
                   src={resolvedImage}
                   alt={imageAlt}
-                  width={280}
-                  height={280}
-                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  width={384}
+                  height={384}
+                  class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
                   loading="lazy"
                   decoding="async"
                 />
@@ -195,9 +194,9 @@ const textPanelPadding = isRight
                 <img
                   src={imageSrc}
                   alt={imageAlt}
-                  width="280"
-                  height="280"
-                  class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+                  width="384"
+                  height="384"
+                  class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
                   loading="lazy"
                   decoding="async"
                 />
@@ -207,9 +206,9 @@ const textPanelPadding = isRight
             <Image
               src={resolvedImage}
               alt={imageAlt}
-              width={280}
-              height={280}
-              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              width={384}
+              height={384}
+              class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading="lazy"
               decoding="async"
             />
@@ -217,9 +216,9 @@ const textPanelPadding = isRight
             <img
               src={imageSrc}
               alt={imageAlt}
-              width="280"
-              height="280"
-              class="img-drop-shadow w-60 h-60 md:w-70 md:h-70 rounded-[40px] object-cover block ring-2 ring-grey"
+              width="384"
+              height="384"
+              class="img-drop-shadow w-96 h-96 md:w-96 md:h-96 rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading="lazy"
               decoding="async"
             />
