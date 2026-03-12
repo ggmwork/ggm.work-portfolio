@@ -1,9 +1,11 @@
 ---
 /**
- * AboutImageBlock.astro
+ * HeaderImageBlock.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM  Image card sitting on the right side of the canvas (About section).
- * Sized to 600x600. Flush-right, fit-content width.
+ * ORGANISM  Headshot image card for the Header section.
+ * Duplicated from AboutImageBlock, styled with zero padding
+ * following the HighlightedProjCard full-bleed approach.
+ * Flush-right, fit-content width.
  *
  * Props:
  *   src  Image source path
@@ -30,14 +32,13 @@ const resolvedImage = resolveImage(src);
 <BaseCard
   align="right"
   class="overflow-hidden shrink-0 w-full max-w-[600px] !max-w-none md:!w-auto"
-  ariaLabel="About Image block"
+  ariaLabel="Header Image block"
 >
   <!-- 
-    justify-start: Image pushed left against the rounded corner.
-    pr-3: Reduced padding on the right (from pr-6).
-    py-4: Vertical padding to frame the 300x300 image.
+    No padding wrapper — full-bleed style matching HighlightedProjCard.
+    flex + items-center + justify-center keeps the image centered inside BaseCard.
   -->
-  <div class="flex justify-start pr-15">
+  <div class="flex items-center justify-center shrink-0">
     {
       resolvedImage ? (
         <Image
@@ -45,8 +46,8 @@ const resolvedImage = resolveImage(src);
           alt={alt}
           width={600}
           height={600}
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[40px] object-cover block ring-2 ring-grey"
-          loading="lazy"
+          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
+          loading="eager"
           decoding="async"
         />
       ) : (
@@ -55,8 +56,8 @@ const resolvedImage = resolveImage(src);
           alt={alt}
           width="600"
           height="600"
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[40px] object-cover block ring-2 ring-grey"
-          loading="lazy"
+          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
+          loading="eager"
           decoding="async"
         />
       )

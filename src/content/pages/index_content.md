@@ -13,6 +13,9 @@ sections:
         btn2Href: "#contact"
         btn3Label: "Explore My Work"
         btn3Href: "#highlighted-projects"
+      imageBlockProps:
+        src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+        alt: "Portrait of Gonçalo"
 
   - component: "AboutSection"
     props:
@@ -23,8 +26,8 @@ sections:
         imageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
         imageAlt: "Gonçalo Mendonça Profile Picture"
       imageBlockProps:
-        src: "/public/images/headshot.png"
-        alt: "Image block"
+        src: "/images/Photo.png"
+        alt: "Portrait of Gonçalo"
 
   - component: "HighlightedProjectsSection"
     props:

@@ -4,6 +4,7 @@
  * inner components for the index page based on Markdown sections.
  */
 import HeaderCard from "../cards/HeaderCard.astro";
+import HeaderImageBlock from "../cards/HeaderImageBlock.astro";
 import AboutMeCard from "../cards/AboutMeCard.astro";
 import AboutImageBlock from "../cards/AboutImageBlock.astro";
 import HighlightedProjCard from "../cards/HighlightedProjCard.astro";
@@ -29,11 +30,19 @@ const { component, props = {} } = block;
 
 {
   component === "HeaderSection" && (
-    <section class="pt-32" aria-label="ORGANISM: Header Card">
-      <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
-        {props.heading}
-      </h1>
-      <HeaderCard {...props.cardProps} />
+    <section
+      class="pt-32 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-8 items-center w-full relative"
+      aria-label="ORGANISM: Header Card"
+    >
+      <div class="w-full flex flex-col justify-center">
+        <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
+          {props.heading}
+        </h1>
+        <HeaderCard {...props.cardProps} />
+      </div>
+      <div class="flex items-center justify-end">
+        <HeaderImageBlock {...props.imageBlockProps} />
+      </div>
     </section>
   )
 }
@@ -41,16 +50,16 @@ const { component, props = {} } = block;
 {
   component === "AboutSection" && (
     <section
-      class="pt-24 flex flex-col md:flex-row gap-8 items-start justify-between w-full"
+      class="pt-24 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-8 items-center w-full relative"
       aria-label="ORGANISM: About Me Card"
     >
-      <div class="w-full">
+      <div class="w-full flex flex-col justify-center">
         <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
           {props.heading}
         </h2>
         <AboutMeCard {...props.cardProps} />
       </div>
-      <div class="flex items-center justify-end mt-22">
+      <div class="flex items-center justify-end">
         <AboutImageBlock {...props.imageBlockProps} />
       </div>
     </section>
