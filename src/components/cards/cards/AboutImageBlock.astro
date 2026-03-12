@@ -29,7 +29,7 @@ const resolvedImage = resolveImage(src);
 
 <BaseCard
   align="right"
-  class="overflow-hidden shrink-0 w-full max-w-[600px] !max-w-none md:!w-auto"
+  class="overflow-hidden shrink-0 w-full max-w-[400px] !max-w-none md:!w-auto"
   ariaLabel="About Image block"
 >
   <!-- 
@@ -43,9 +43,9 @@ const resolvedImage = resolveImage(src);
         <Image
           src={resolvedImage}
           alt={alt}
-          width={600}
-          height={600}
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[40px] object-cover block ring-2 ring-grey"
+          width={400}
+          height={400}
+          class="img-drop-shadow w-full h-auto aspect-square md:w-[400px] md:h-[400px] rounded-[40px] object-cover block ring-2 ring-grey"
           loading="lazy"
           decoding="async"
         />
@@ -53,9 +53,9 @@ const resolvedImage = resolveImage(src);
         <img
           src={src}
           alt={alt}
-          width="600"
-          height="600"
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[40px] object-cover block ring-2 ring-grey"
+          width="400"
+          height="400"
+          class="img-drop-shadow w-full h-auto aspect-square md:w-[400px] md:h-[400px] rounded-[40px] object-cover block ring-2 ring-grey"
           loading="lazy"
           decoding="async"
         />
