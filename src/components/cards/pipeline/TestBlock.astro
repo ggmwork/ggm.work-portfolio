@@ -144,13 +144,15 @@ const { component, props = {} } = block;
   component === "ContactSection" && (
     <section
       id="contact"
-      class="pt-12 pb-20 w-full"
+      class="pt-12 pb-20 w-full flex flex-col items-end"
       aria-label="ORGANISM: Contact"
     >
-      <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-[37vw] leading-tight tracking-tight">
-        {props.heading}
-      </h2>
-      <ContactCard {...props.cardProps} />
+      <div class="w-full md:w-[73%] flex flex-col justify-start">
+        <h2 class="font-heading font-bold text-4xl text-black mb-6 pl-8 md:pl-28 leading-tight tracking-tight">
+          {props.heading}
+        </h2>
+        <ContactCard {...props.cardProps} />
+      </div>
     </section>
   )
 }

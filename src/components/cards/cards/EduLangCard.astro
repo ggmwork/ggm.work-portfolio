@@ -33,10 +33,10 @@ const { rows = [] } = Astro.props;
   <div class="w-full p-8 md:pl-36 md:pr-28 md:py-16 flex flex-col gap-12">
     
     {rows.map((row: any) => (
-      <div class="flex flex-col md:flex-row md:items-start justify-start gap-8 md:gap-32">
+      <div class="flex flex-col md:flex-row md:items-start justify-start gap-8 md:gap-16">
         
         <!-- Left: Degree Information -->
-        <div class="flex flex-col gap-3 flex-1">
+        <div class="flex flex-col gap-3 w-full md:w-[55%]">
           <h3 class="font-body font-medium text-lg text-black leading-snug">
             {row.leftTitle}
           </h3>
@@ -47,7 +47,7 @@ const { rows = [] } = Astro.props;
         </div>
         
         <!-- Right: Language Information -->
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 flex-1">
           <h3 class="font-body font-medium text-lg text-black leading-snug">
             {row.rightTitle}
           </h3>
