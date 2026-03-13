@@ -80,31 +80,37 @@ sections:
     props:
       heading: "More Projects"
       cardProps:
-        filters: ["Design", "UX/UI", "3D", "Motion", "Design", "Design"]
+        filters: ["All", "Design", "UX/UI", "3D", "Motion"]
         activeFilter: 0
         projects:
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Visual & 3D Production "
+            category: "3D"
             projectSlug: "project-7"
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Reset The Sun"
+            category: "Design"
             projectSlug: "project-8"
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Better Call Saul"
+            category: "Motion"
             projectSlug: "project-9"
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Gravity Generator"
+            category: "UX/UI"
             projectSlug: "project-10"
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Complience tool for Lorem Inpluns"
+            category: "Design"
           - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
             alt: "Project thumbnail"
             caption: "Complience tool for Lorem Inpluns"
+            category: "UX/UI"
 
   - component: "WorkSkillsSection"
     props:

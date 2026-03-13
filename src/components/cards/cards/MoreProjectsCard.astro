@@ -2,12 +2,17 @@
 /**
  * MoreProjectsCard.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM  Contains filter buttons and a grid of project thumbnails.
+ * ORGANISM  Contains filter buttons and a filterable grid of project thumbnails.
  *
  * Props:
  *   filters       Array of filter label strings
  *   activeFilter  Index of the currently active filter
- *   projects      Array of { src, alt, caption, projectSlug? }
+ *   projects      Array of { src, alt, caption, category?, projectSlug? }
+ *
+ * Client-side behaviour:
+ *   Listens for "filter-change" events bubbling from FilterButtons.
+ *   Shows/hides project items based on their data-category attribute.
+ *   "All" shows every item.
  * ─────────────────────────────────────────────────────────────────
  */
 import { Image } from "astro:assets";
@@ -19,6 +24,7 @@ interface ProjectThumbnail {
   src: string;
   alt: string;
   caption: string;
+  category?: string;
   projectSlug?: string;
 }
 
@@ -29,7 +35,7 @@ interface Props {
 }
 
 const {
-  filters = ["Design", "UX/UI", "3D", "Motion", "Design", "Design"],
+  filters = ["All", "Design", "UX/UI", "3D", "Motion"],
   activeFilter = 0,
   projects = [],
 } = Astro.props;
@@ -45,8 +51,11 @@ const {
       <FilterButtons filters={filters} active={activeFilter} />
     </div>
 
-    <!-- Grid of Thumbnails -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10 w-full">
+    <!-- Grid of Thumbnails (filterable) -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10 w-full"
+      data-filter-grid
+    >
       {
         projects.map((project: ProjectThumbnail, index: number) => {
           const normalizedProjectSlug =
@@ -59,15 +68,17 @@ const {
           const imageAlt = `${project.alt} ${index + 1}`;
           const caption = project.caption;
           const resolved = resolveImage(project.src);
+          const category = project.category || "Design";
 
           return normalizedProjectSlug ? (
             <button
               type="button"
               data-project-overlay-trigger={normalizedProjectSlug}
+              data-category={category}
               aria-controls={overlayId}
               aria-haspopup="dialog"
               aria-label={`Open project details for ${caption.trim()}`}
-              class="flex flex-col items-center gap-4 w-full rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50"
+              class="flex flex-col items-center gap-4 w-full rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/50 transition-all duration-200 ease-out"
             >
               {resolved ? (
                 <Image
@@ -95,7 +106,10 @@ const {
               </p>
             </button>
           ) : (
-            <div class="flex flex-col items-center gap-4 w-full">
+            <div
+              class="flex flex-col items-center gap-4 w-full transition-all duration-200 ease-out"
+              data-category={category}
+            >
               {resolved ? (
                 <Image
                   src={resolved}
@@ -127,3 +141,39 @@ const {
     </div>
   </div>
 </BaseCard>
+
+<script>
+  /**
+   * MoreProjectsCard — Filter grid items based on FilterButtons selection.
+   *
+   * Listens for "filter-change" events bubbling from FilterButtons.
+   * Shows/hides [data-category] items inside [data-filter-grid].
+   * "All" reveals every item.
+   */
+  document.addEventListener("filter-change", ((e: CustomEvent) => {
+    const category = e.detail?.category;
+    if (!category) return;
+
+    document.querySelectorAll<HTMLElement>("[data-filter-grid]").forEach((grid) => {
+      const items = grid.querySelectorAll<HTMLElement>("[data-category]");
+
+      items.forEach((item) => {
+        const itemCategory = item.getAttribute("data-category") || "";
+        const shouldShow = category === "All" || itemCategory === category;
+
+        if (shouldShow) {
+          item.classList.remove("opacity-0", "pointer-events-none", "hidden");
+          item.classList.add("opacity-100");
+        } else {
+          item.classList.add("opacity-0", "pointer-events-none");
+          // Delay hiding to let opacity transition complete
+          setTimeout(() => {
+            if (item.classList.contains("opacity-0")) {
+              item.classList.add("hidden");
+            }
+          }, 200);
+        }
+      });
+    });
+  }) as EventListener);
+</script>

@@ -122,7 +122,21 @@
 }
 
 /* ─── Button effect utilities ─── */
-/* btn-effects and btn-blur removed  no component references either utility */
+@utility btn-effects {
+  /*
+    Scaled-down version of base-card-shadow for button-sized elements.
+    Inner shadow: x:-3 y:-3 blur:6 spread:0 — 20% black
+    Drop shadow:  x: 3 y: 3 blur:6 spread:1 — 20% black
+  */
+  box-shadow:
+    inset -3px -3px 6px 0px color-mix(in srgb, var(--color-black) 20%, transparent),
+    3px 3px 6px 1px color-mix(in srgb, var(--color-black) 20%, transparent);
+}
+
+@utility btn-blur {
+  /* No-op — 0.5px blur is below aliasing threshold, kept for class reference compatibility */
+  --_noop: ;
+}
 
 /* ─── Image shadow utility ─── */
 @utility img-drop-shadow {

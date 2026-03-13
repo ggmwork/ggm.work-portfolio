@@ -2,28 +2,36 @@
 /**
  * FilterButtons.astro
  * ─────────────────────────────────────────────────────────────────
- * MOLECULE  Horizontal filter button strip.
+ * MOLECULE  Horizontal filter button strip with client-side toggle.
  *
  * Visual spec (Figma):
  *   Container → bg-white rounded-[8px] ring-1 ring-grey
- *               Corners align with the outer edge of first/last button.
  *
  *   Button (default) → bg-white ring-1 ring-grey rounded-[8px]
  *                      font-body font-semibold text-sm text-black
- *                      px-4 py-2  (slightly narrower than ButtonSecondary)
- *                      btn-effects btn-blur
+ *                      px-4 py-2.5  btn-effects btn-blur
  *
  *   Button (active)  → bg-grey text-brand  (same ring & radius)
  *
  *   Separator → w-1.5 h-1.5 rounded-full bg-brand-light
- *               Rendered between every pair of buttons.
+ *
+ * States (shared with ButtonSecondary):
+ *   Hover    → lift -2px, shadow-lg
+ *   Active   → press down scale(0.97), translate-y-px, shadow-sm
+ *   Focus    → 2px brand ring with 2px offset (accessibility)
+ *
+ * Client-side behaviour:
+ *   Clicking a filter button toggles aria-pressed and swaps
+ *   active/default classes. Dispatches a "filter-change" CustomEvent
+ *   on the button group with { detail: { category } }.
  *
  * Props:
- *   filters   array of label strings
+ *   filters   array of label strings (first should be "All")
  *   active    index of the currently active button (default 0)
  *
  * Arbitrary value justifications:
- *   [8px]  Figma border-radius spec for container and buttons
+ *   [8px]   Figma border-radius spec for container and buttons
+ *   [0.97]  Tactile click feedback scale
  * ─────────────────────────────────────────────────────────────────
  */
 interface Props {
@@ -32,14 +40,28 @@ interface Props {
 }
 
 const {
-  filters = ["Design", "UX/UI", "3D", "Motion", "Design", "Design"],
+  filters = ["All", "Design", "UX/UI", "3D", "Motion"],
   active = 0,
 } = Astro.props;
+
+/* ── Shared class tokens ── */
+const baseClasses = [
+  "btn-effects btn-blur inline-flex items-center justify-center",
+  "rounded-[8px] px-4 py-2.5 ring-1 ring-grey",
+  "font-body font-semibold text-sm whitespace-nowrap",
+  "transition-all duration-200 ease-out",
+  "hover:-translate-y-0.5 hover:shadow-lg",
+  "active:scale-[0.97] active:translate-y-px active:shadow-sm",
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2",
+].join(" ");
+
+const activeClasses = "bg-grey text-brand hover:bg-grey/80";
+const defaultClasses = "bg-white text-black hover:bg-grey/30";
 ---
 
 <div class="relative inline-flex">
   <!--
-    White container  sits behind all buttons.
+    White container — sits behind all buttons.
     absolute inset-0 so it stretches exactly to the outer button edges.
     rounded-[8px] matches button radius so corners appear flush.
   -->
@@ -51,18 +73,18 @@ const {
 
   <!--
     Button row with brand-light dot separators.
-    p-1 gives a tight margin between the container edge and buttons.
-    gap-2 adds consistent spacing between each button+dot pair.
+    gap-2 provides consistent spacing between each button+dot pair.
   -->
   <div
     class="relative z-10 inline-flex flex-wrap items-center gap-2"
     role="group"
     aria-label="Filter buttons"
+    data-filter-group-controls
   >
     {
       filters.map((filter, i) => (
         <Fragment>
-          {/* Dot separator  rendered before every button except the first */}
+          {/* Dot separator — rendered before every button except the first */}
           {i > 0 && (
             <span
               class="w-1.5 h-1.5 rounded-full bg-brand-light shrink-0"
@@ -73,16 +95,12 @@ const {
           <button
             type="button"
             class:list={[
-              /* Base  same effects as ButtonSecondary, slightly smaller padding */
-              "btn-effects btn-blur inline-flex items-center justify-center",
-              "rounded-[8px] px-4 py-2.5 ring-1 ring-grey",
-              "font-body font-semibold text-sm whitespace-nowrap",
-              /* State */
-              i === active
-                ? "bg-grey text-brand" /* Active: grey bg + brand purple text */
-                : "bg-white text-black" /* Default: white bg + black text       */,
+              baseClasses,
+              i === active ? activeClasses : defaultClasses,
             ]}
             aria-pressed={i === active ? "true" : "false"}
+            data-filter-btn
+            data-filter-category={filter}
           >
             {filter}
           </button>
@@ -91,3 +109,48 @@ const {
     }
   </div>
 </div>
+
+<script>
+  /**
+   * FilterButtons — Client-side toggle + event dispatch.
+   *
+   * 1. Listens for clicks on [data-filter-btn] elements within [data-filter-group-controls].
+   * 2. Swaps aria-pressed and active/default Tailwind classes on the clicked button.
+   * 3. Dispatches a "filter-change" CustomEvent on the group element with the
+   *    selected category string, so the parent (MoreProjectsCard) can filter items.
+   */
+  const ACTIVE_CLASSES = ["bg-grey", "text-brand", "hover:bg-grey/80"];
+  const DEFAULT_CLASSES = ["bg-white", "text-black", "hover:bg-grey/30"];
+
+  document.querySelectorAll<HTMLElement>("[data-filter-group-controls]").forEach((group) => {
+    const buttons = group.querySelectorAll<HTMLButtonElement>("[data-filter-btn]");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Skip if already active
+        if (btn.getAttribute("aria-pressed") === "true") return;
+
+        // Deactivate all
+        buttons.forEach((b) => {
+          b.setAttribute("aria-pressed", "false");
+          b.classList.remove(...ACTIVE_CLASSES);
+          b.classList.add(...DEFAULT_CLASSES);
+        });
+
+        // Activate clicked
+        btn.setAttribute("aria-pressed", "true");
+        btn.classList.remove(...DEFAULT_CLASSES);
+        btn.classList.add(...ACTIVE_CLASSES);
+
+        // Dispatch event for parent component to handle filtering
+        const category = btn.getAttribute("data-filter-category") || "All";
+        group.dispatchEvent(
+          new CustomEvent("filter-change", {
+            bubbles: true,
+            detail: { category },
+          })
+        );
+      });
+    });
+  });
+</script>
