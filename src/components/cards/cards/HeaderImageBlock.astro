@@ -2,65 +2,153 @@
 /**
  * HeaderImageBlock.astro
  * ─────────────────────────────────────────────────────────────────
- * ORGANISM  Headshot image card for the Header section.
- * Duplicated from AboutImageBlock, styled with zero padding
- * following the HighlightedProjCard full-bleed approach.
- * Flush-right, fit-content width.
+ * ORGANISM  Auto-playing image carousel for the Header section.
+ * GSAP crossfade, no controls, no indicators, time-based.
+ *
+ * Built on BaseCard (align="right", full-bleed approach).
  *
  * Props:
- *   src  Image source path
- *   alt  Image alt text
+ *   images    Array of { src, alt } objects (min 1)
+ *   interval  Seconds between slides (default 4)
+ *
+ * Animation (GSAP):
+ *   Crossfade — current image fades out (opacity 1→0) while
+ *   next image fades in (opacity 0→1) over 0.8s ease.
+ *   Loops infinitely.
+ *
+ * Arbitrary value justifications:
+ *   [600px]  Figma image dimension spec
+ *   [2rem] / [2.5rem]  Figma border-radius spec
  * ─────────────────────────────────────────────────────────────────
  */
 import { Image } from "astro:assets";
 import { resolveImage } from "../../../lib/resolve-image";
 import BaseCard from "../base/BaseCard.astro";
 
+interface CarouselImage {
+  src: string;
+  alt: string;
+}
+
 interface Props {
+  images?: CarouselImage[];
+  interval?: number;
+  /* Legacy single-image fallback */
   src?: string;
   alt?: string;
 }
 
 const {
-  src = "/images/headshot.webp",
-  alt = "Portrait of Gonçalo",
+  images: imagesProp,
+  interval = 4,
+  src: legacySrc = "/images/headshot.webp",
+  alt: legacyAlt = "Portrait of Gonçalo",
 } = Astro.props;
 
-const resolvedImage = resolveImage(src);
+/* Support both new images array and legacy single src/alt */
+const images: CarouselImage[] =
+  imagesProp && imagesProp.length > 0
+    ? imagesProp
+    : [{ src: legacySrc, alt: legacyAlt }];
+
+const resolvedImages = images.map((img) => ({
+  resolved: resolveImage(img.src),
+  src: img.src,
+  alt: img.alt,
+}));
+
+const isCarousel = resolvedImages.length > 1;
 ---
 
 <BaseCard
   align="right"
   class="overflow-hidden shrink-0 w-full max-w-[600px] !max-w-none md:!w-auto"
-  ariaLabel="Header Image block"
+  ariaLabel="Header Image carousel"
 >
-  <!-- 
-    No padding wrapper — full-bleed style matching HighlightedProjCard.
-    flex + items-center + justify-center keeps the image centered inside BaseCard.
-  -->
-  <div class="flex items-center justify-center shrink-0">
+  <div
+    class="relative aspect-square w-full md:w-[600px] md:h-[600px]"
+    data-header-carousel
+    data-carousel-interval={String(interval)}
+  >
     {
-      resolvedImage ? (
-        <Image
-          src={resolvedImage}
-          alt={alt}
-          width={600}
-          height={600}
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
-          loading="eager"
-          decoding="async"
-        />
-      ) : (
-        <img
-          src={src}
-          alt={alt}
-          width="600"
-          height="600"
-          class="img-drop-shadow w-full h-auto aspect-square md:w-[600px] md:h-[600px] rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
-          loading="eager"
-          decoding="async"
-        />
-      )
+      resolvedImages.map((img, i) => (
+        <div
+          class:list={[
+            "absolute inset-0",
+            i === 0 ? "opacity-100 z-10" : "opacity-0 z-0",
+          ]}
+          data-carousel-slide
+        >
+          {img.resolved ? (
+            <Image
+              src={img.resolved}
+              alt={img.alt}
+              width={600}
+              height={600}
+              class="img-drop-shadow w-full h-full rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={img.src}
+              alt={img.alt}
+              width="600"
+              height="600"
+              class="img-drop-shadow w-full h-full rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          )}
+        </div>
+      ))
     }
   </div>
 </BaseCard>
+
+{isCarousel && (
+  <script>
+    import gsap from "gsap";
+
+    /**
+     * HeaderImageBlock — GSAP crossfade carousel.
+     *
+     * Stacks all slides absolutely. Crossfades from current → next
+     * on a timed interval. Loops infinitely, no user controls.
+     */
+    document.querySelectorAll<HTMLElement>("[data-header-carousel]").forEach((container) => {
+      const slides = container.querySelectorAll<HTMLElement>("[data-carousel-slide]");
+      if (slides.length < 2) return;
+
+      const interval = Number(container.dataset.carouselInterval) || 4;
+      let current = 0;
+
+      const crossfade = () => {
+        const currentSlide = slides[current];
+        const next = (current + 1) % slides.length;
+        const nextSlide = slides[next];
+
+        /* Bring next slide to just below current */
+        gsap.set(nextSlide, { zIndex: 5, opacity: 0 });
+        gsap.set(currentSlide, { zIndex: 10 });
+
+        /* Crossfade: fade in next while fading out current */
+        gsap.to(nextSlide, {
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.inOut",
+          onComplete: () => {
+            /* After transition: promote next, demote current */
+            gsap.set(nextSlide, { zIndex: 10 });
+            gsap.set(currentSlide, { zIndex: 0, opacity: 0 });
+            current = next;
+          },
+        });
+      };
+
+      /* Start the loop after the initial interval */
+      setInterval(crossfade, interval * 1000);
+    });
+  </script>
+)}
+

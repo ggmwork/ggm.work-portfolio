@@ -31,11 +31,11 @@ const { component, props = {} } = block;
 {
   component === "HeaderSection" && (
     <section class="pt-32 w-full relative" aria-label="ORGANISM: Header Card">
-      <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
-        {props.heading}
-      </h1>
       <div class="grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-8 items-center w-full">
         <div class="w-full flex flex-col justify-center">
+          <h1 class="font-heading font-bold text-5xl md:text-6xl text-black mb-6 pl-6 md:pl-32 leading-tight tracking-tight">
+            {props.heading}
+          </h1>
           <HeaderCard {...props.cardProps} />
         </div>
         <div class="flex items-center justify-end">

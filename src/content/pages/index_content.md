@@ -14,8 +14,16 @@ sections:
         btn3Label: "Explore My Work"
         btn3Href: "#highlighted-projects"
       imageBlockProps:
-        src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
-        alt: "Portrait of Gonçalo"
+        interval: 4
+        images:
+          - src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
+            alt: "Project Storm 3D character"
+          - src: "/images/projects/project-1/project_1.webp"
+            alt: "NexLed Rebranding"
+          - src: "/images/projects/project-2/project_2.webp"
+            alt: "Amazon Store"
+          - src: "/images/projects/project-3/project_3.webp"
+            alt: "NexLed Store"
 
   - component: "AboutSection"
     props:
