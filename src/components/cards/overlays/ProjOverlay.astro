@@ -23,8 +23,9 @@ const overlayId = normalizedProjectSlug
   ? `project-overlay-${normalizedProjectSlug}`
   : "project-overlay";
 
-const variantByComponent: Record<string, "left" | "right" | "wide-image-end"> =
+const variantByComponent: Record<string, "full" | "left" | "right" | "wide-image-end"> =
   {
+    ProjTextCard: "full",
     ProjTextCardLeft: "left",
     ProjTextCardRight: "right",
     ProjTextCardWideImage: "wide-image-end",
@@ -44,7 +45,7 @@ const resolvedOverlayBlocks = overlayBlocks
     (
       block,
     ): block is {
-      variant: "left" | "right" | "wide-image-end";
+      variant: "full" | "left" | "right" | "wide-image-end";
       props: Record<string, any>;
     } => Boolean(block),
   );

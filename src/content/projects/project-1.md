@@ -6,7 +6,7 @@ cover:
   src: "/images/headshot.png"
   alt: "Goncalo Mendonca profile image"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "NexLed Rebranding & UI Component System"
       labels:
@@ -19,7 +19,7 @@ sections:
       paragraph2: >-
         BUTTONS/ACTIONS SPACE
       
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       heading: "Context"
       paragraphs:
@@ -49,7 +49,7 @@ sections:
           play. But focusing on one meant moving faster, and faster mattered at
           that moment.
       
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Analysis & Strategy"
       paragraphs:
@@ -79,7 +79,7 @@ sections:
         alt: "Brand analysis report overview"
         position: "below"
         aspectRatio: "4/3"
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       heading: "Brand Pillars"
       paragraphs: 
@@ -98,7 +98,7 @@ sections:
           **Values** - Quality · Innovation · Efficiency · Customization · Sustainability 
         - >-
           **Slogan** - *Light for Every Need*
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Creative Direction"
       paragraphs: 
@@ -126,7 +126,7 @@ sections:
           needs to stand out or feel more alive.
           <!-- METER AQUI A IMAGEM COM A PALETA DE CORES -->
         
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       heading: "Typography & Visual Identity"
       paragraphs: 
@@ -161,7 +161,7 @@ sections:
           <!-- METER AQUI A IMAGEM COM OS ICONS -->
   
 
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Documentation"
       paragraphs:   
@@ -172,7 +172,7 @@ sections:
           
 
         
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "UI Component System"
       paragraphs: 

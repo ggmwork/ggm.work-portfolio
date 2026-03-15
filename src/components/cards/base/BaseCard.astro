@@ -24,7 +24,7 @@
  * ─────────────────────────────────────────────────────────────────
  */
 interface Props {
-  align?: "left" | "right";
+  align?: "left" | "right" | "full";
   class?: string;
   ariaLabel?: string;
 }
@@ -36,14 +36,17 @@ const {
 } = Astro.props;
 
 const isRight = align === "right";
+const isFull = align === "full";
 
 /* ── Rounding ── */
-const roundingClasses = isRight
-  ? "rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none"
-  : "rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none";
+const roundingClasses = isFull
+  ? "rounded-none"
+  : isRight
+    ? "rounded-l-[2rem] md:rounded-l-[2.5rem] rounded-r-none"
+    : "rounded-r-[2rem] md:rounded-r-[2.5rem] rounded-l-none";
 
 /* ── Positioning ── */
-const positionClass = isRight ? "ml-auto" : "";
+const positionClass = isFull ? "" : isRight ? "ml-auto" : "";
 
 /* ── Assemble ── */
 const shellClasses = [

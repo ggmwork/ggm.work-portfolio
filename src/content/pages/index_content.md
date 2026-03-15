@@ -52,7 +52,7 @@ sections:
           description: "I built NexLed's Amazon store from the ground up and designed the full content system that presents the brand and converts the buyer."
           imageSrc: "/images/projects/project-2/project_2.webp"
           imageAlt: "Highlighted Project Right"
-          labels: ["E-Commerce", "Content Design", "Brand Compliance"]
+          labels: ["E-Commerce", "Content Design", "Packaging", "Brand Compliance"]
           projectSlug: "project-2"
           alignRight: true
         - title: "NexLed Store: Design & Implementation"
