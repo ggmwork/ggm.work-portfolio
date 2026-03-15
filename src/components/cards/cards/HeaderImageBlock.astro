@@ -111,15 +111,13 @@ const isCarousel = resolvedImages.length > 1;
 {isCarousel && (
   <script>
     /**
-     * HeaderImageBlock — GSAP crossfade carousel.
+     * HeaderImageBlock — Vanilla JS crossfade carousel.
      *
-     * Deferred: waits until browser is idle before importing GSAP
-     * and starting the carousel, so the ~29 KiB bundle doesn't
-     * block FCP / LCP.
+     * Zero-dependency replacement for GSAP. Uses CSS transitions
+     * for the opacity animation (declared via [data-carousel-slide]).
+     * Deferred via requestIdleCallback so it never blocks FCP / LCP.
      */
-    const initCarousel = async () => {
-      const { default: gsap } = await import("gsap");
-
+    const initCarousel = () => {
       document.querySelectorAll<HTMLElement>("[data-header-carousel]").forEach((container) => {
         const slides = container.querySelectorAll<HTMLElement>("[data-carousel-slide]");
         if (slides.length < 2) return;
@@ -127,31 +125,19 @@ const isCarousel = resolvedImages.length > 1;
         const interval = Number(container.dataset.carouselInterval) || 4;
         let current = 0;
 
-        const crossfade = () => {
-          const currentSlide = slides[current];
+        setInterval(() => {
+          const prev = slides[current];
           const next = (current + 1) % slides.length;
           const nextSlide = slides[next];
 
-          /* Bring next slide to just below current */
-          gsap.set(nextSlide, { zIndex: 5, opacity: 0 });
-          gsap.set(currentSlide, { zIndex: 10 });
+          /* Crossfade: CSS transition handles the easing */
+          nextSlide.style.opacity = "1";
+          nextSlide.style.zIndex = "10";
+          prev.style.opacity = "0";
+          prev.style.zIndex = "0";
 
-          /* Crossfade: fade in next while fading out current */
-          gsap.to(nextSlide, {
-            opacity: 1,
-            duration: 0.8,
-            ease: "power2.inOut",
-            onComplete: () => {
-              /* After transition: promote next, demote current */
-              gsap.set(nextSlide, { zIndex: 10 });
-              gsap.set(currentSlide, { zIndex: 0, opacity: 0 });
-              current = next;
-            },
-          });
-        };
-
-        /* Start the loop after the initial interval */
-        setInterval(crossfade, interval * 1000);
+          current = next;
+        }, interval * 1000);
       });
     };
 
@@ -159,9 +145,15 @@ const isCarousel = resolvedImages.length > 1;
     if ("requestIdleCallback" in window) {
       requestIdleCallback(() => initCarousel());
     } else {
-      /* Safari fallback — run after next frame */
       requestAnimationFrame(() => setTimeout(initCarousel, 0));
     }
   </script>
 )}
+
+<style>
+  /* Crossfade transition for carousel slides — replaces GSAP tweening */
+  [data-carousel-slide] {
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
 

@@ -9,11 +9,21 @@
 import MainCanvas from "../components/cards/base/MainCanvas.astro";
 import SandboxBlock from "../components/cards/pipeline/TestBlock.astro";
 import ProjOverlay from "../components/cards/overlays/ProjOverlay.astro";
+import SEO from "../components/SEO.astro";
 import "../styles/global.css";
+import { site } from "../content/site";
+import { getImage } from "astro:assets";
+import { resolveImage } from "../lib/resolve-image";
 
 import { getEntry } from "astro:content";
 const sandboxEntry = await getEntry("pages", "index_content");
 const sections = sandboxEntry?.data.sections || [];
+
+/* ── Resolve LCP hero image URL for <link rel="preload"> ── */
+const heroSrc = resolveImage("/images/projects/project-6/storm_shots/storm_shots (1).webp");
+const heroPreload = heroSrc
+  ? await getImage({ src: heroSrc, width: 600, height: 600, format: "webp" })
+  : null;
 
 const highlightedSection = sections.find(
   (section: any) => section.component === "HighlightedProjectsSection",
@@ -93,20 +103,37 @@ const overlayProjects = (
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gonçalo Mendonça - Portfolio</title>
 
-    <!-- Fonts: non-blocking async load -->
+    <SEO
+      title={`${site.name} — Portfolio`}
+      description={site.description}
+      canonical={site.url}
+      ogImage={site.seo.ogImage}
+    />
+
+    <!-- Preload LCP hero image -->
+    {heroPreload && (
+      <link
+        rel="preload"
+        as="image"
+        type="image/webp"
+        href={heroPreload.src}
+        fetchpriority="high"
+      />
+    )}
+
+    <!-- Fonts: non-blocking async load (trimmed: dropped unused weight 700 from Plus Jakarta Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet"
       />
     </noscript>
