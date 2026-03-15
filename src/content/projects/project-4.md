@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "NexLed Support Platform highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "NexLed Support Platform"
       labels:
@@ -19,7 +19,7 @@ sections:
         both for professional servicing and end-user self-repair  with clear,
         accessible step-by-step guidance. With NexLed's B2C expansion underway,
         compliance wasn't optional.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         I researched what form that compliance needed to take. The EU is
@@ -39,7 +39,7 @@ sections:
         wasn't sustainable  and mixing support content into store or product
         pages creates an SEO mess where users land in the wrong place entirely.
         A dedicated support platform fixes both. The proposal was approved.
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -57,7 +57,7 @@ sections:
         design or the structure  particularly useful for a compliance page
         where the content will need to change as regulations develop and
         products are added.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         With the content and images in place, I moved to design. The support
@@ -79,7 +79,7 @@ sections:
         have to navigate somewhere else for common questions. The repair guides
         and document download pages share the same list and card structure,
         keeping the experience consistent and the component library lean.
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -88,7 +88,7 @@ sections:
         foundation used across the other NexLed projects keeping everything
         consistent as it moves to code.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · HTML · CSS · JavaScript · PHP · Photoshop · Google Nano Banana"

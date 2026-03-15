@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Gravity Generator highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Gravity Generator  3D Prop"
       labels:
@@ -18,7 +18,7 @@ sections:
         assessment  a brief to design, model, texture, and present a
         production-ready sci-fi prop that demonstrated both artistic
         sensibility and technical discipline within a professional pipeline.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The creative direction I set for myself was simple: it had to look
@@ -35,7 +35,7 @@ sections:
         setup, where the material response under dynamic light is what either
         proves or breaks that kind of work.
       paragraph2: "It was a compact, focused exercise  but focused is sometimes exactly what a project needs to be. One asset, done properly, end to end."
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Blender · Substance Painter · Unreal Engine · Photoshop"

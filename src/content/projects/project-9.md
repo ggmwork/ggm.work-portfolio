@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Better Call Saul highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Better Call Saul  Kinetic Typography"
       labels:
@@ -18,7 +18,7 @@ sections:
         *Better Call Saul* and reinterpret it entirely through kinetic
         typography. Not subtitles, not captions  animated text as a visual
         language that carries the emotional weight of the dialogue on its own.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The first decision that shaped everything else was how the text would
@@ -40,7 +40,7 @@ sections:
         segmentation in Premiere Pro gave me precise timing control over every
         cut, which meant the animation rhythm could track the dialogue's
         natural tension rather than fighting it.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** After Effects · Premiere Pro · Media Encoder"

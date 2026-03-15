@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "EPREL Internal Tool highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "NexLed EPREL Internal Tool"
       labels:
@@ -20,7 +20,7 @@ sections:
         needs to be registered in the EPREL database and carry an official
         Energy Label. Without it, the product simply can't be sold legally. I
         was tasked with figuring out how to handle this at scale.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The EPREL system does offer an upload method beyond its slow,
@@ -42,7 +42,7 @@ sections:
         they pushed back on it. They came around to it later, and that
         restructuring is now underway  but it meant the automatic approach had
         to wait.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         So I adapted. Instead of pulling data automatically, I built a manual
@@ -54,7 +54,7 @@ sections:
         built-in viewer for the EPREL database  so users can check existing
         product specs, labels, and fiches without leaving the tool.
       paragraph2: ""
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "A decision I want to explain: why I coded before I designed."
       paragraph1: >-
@@ -91,7 +91,7 @@ sections:
         your next move is never more than one click away.
       wideImageSrc: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
       wideImageAlt: "EPREL tool wide preview"
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The implementation is currently underway. The design is translated and
@@ -99,7 +99,7 @@ sections:
         live codebase. This one took longer than expected to get back to  but
         it's also become a much more considered piece of work for it.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · PHP · HTML · CSS · JavaScript · Generative AI (code assistance)"

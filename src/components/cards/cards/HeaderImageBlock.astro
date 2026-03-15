@@ -87,6 +87,7 @@ const isCarousel = resolvedImages.length > 1;
               height={600}
               class="img-drop-shadow w-full h-full rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading={i === 0 ? "eager" : "lazy"}
+              fetchpriority={i === 0 ? "high" : "auto"}
               decoding="async"
             />
           ) : (
@@ -97,6 +98,7 @@ const isCarousel = resolvedImages.length > 1;
               height="600"
               class="img-drop-shadow w-full h-full rounded-[2rem] md:rounded-[2.5rem] object-cover block ring-2 ring-grey"
               loading={i === 0 ? "eager" : "lazy"}
+              fetchpriority={i === 0 ? "high" : "auto"}
               decoding="async"
             />
           )}

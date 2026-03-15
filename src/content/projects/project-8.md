@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Reset The Sun highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Reset The Sun  Game Development"
       labels:
@@ -23,7 +23,7 @@ sections:
         that point, and my contributions stretched across most of it:
         character modeling and animation, environment art, material systems,
         trailer production, and parts of the marketing effort.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The game's core mechanic was deliberately minimal  time reversal, one
@@ -42,7 +42,7 @@ sections:
         attention to the locomotion cycles, which in a puzzle game with
         deliberate pacing need to feel weighted and intentional rather than
         generic.
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -60,14 +60,14 @@ sections:
         elements, edited and sound-designed in Premiere Pro. The goal was to
         make someone who'd never heard of the game understand its identity in
         under a minute.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         Seven months, a small team, a lot of hats. Reset The Sun was where I
         learned what cross-functional ownership actually means in practice 
         not just contributing to a project, but caring about the whole thing.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Unreal Engine 5 · Blender · After Effects · Premiere Pro · Stable Diffusion"

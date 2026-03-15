@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "NexLed Store highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "NexLed Store  Design & Implementation"
       labels:
@@ -20,7 +20,7 @@ sections:
         it still carried the Tec IT name rather than NexLed  a problem not
         just visually but for SEO and search discoverability. I proposed a full
         redesign and rebuild, and it was approved.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The first decision came early and wasn't entirely mine to make. I had
@@ -41,7 +41,7 @@ sections:
         on the frontend  what I do best  and leave backend improvements for a
         later phase rather than trying to rebuild everything at once. A clearer
         focus meant a faster, better result.
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -57,7 +57,7 @@ sections:
         is eventually added, the experience is already there waiting for it.
         The backend changes; the design doesn't have to.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         Before wireframing anything, I researched stores both inside and
@@ -80,7 +80,7 @@ sections:
         High fidelity applied the UI component library and surfaced a handful
         of cases where new components were needed that hadn't been anticipated
         in the original system.
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -104,14 +104,14 @@ sections:
         reinforcing that sense of having made a precise, informed decision.
         Recommended products sit at the bottom, giving the user a natural next
         step even if the current product isn't quite right.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The result is a store that finally matches the brand it represents 
         clean, structured, and designed to grow into what the company needs it
         to become.
       paragraph2: ""
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -122,7 +122,7 @@ sections:
         The same system running across the other NexLed projects carries
         through here, keeping everything coherent as design becomes code.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Figma · HTML · CSS · JavaScript · Tailwind · PHP"

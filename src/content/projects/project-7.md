@@ -6,7 +6,7 @@ cover:
   src: "/images/projects/project-6/storm_shots/storm_shots (1).webp"
   alt: "Visual Content & 3D Production highlighted project preview"
 sections:
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: "Visual Content & 3D Production"
       labels:
@@ -16,7 +16,7 @@ sections:
       paragraph2: >-
         Alongside the larger projects, I produced a range of visual assets for
         NexLed some planned, some urgent, all with their own constraints.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         The most technically involved was a 3D product render for NexLed's
@@ -34,7 +34,7 @@ sections:
         It's also serving as the foundation for a series  I'm currently
         producing the same treatment for the LED bar.
       paragraph2: ""
-  - component: "ProjTextCardLeft"
+  - component: "ProjTextCard"
     props:
       heading: ""
       paragraph1: >-
@@ -54,7 +54,7 @@ sections:
         both vehicles, I put together the formal design document required for
         approval by the Câmara de Matosinhos a step that's legally necessary
         in Portugal before vehicle graphics can be applied.
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       paragraph1: >-
         Beyond these, I produced a range of supporting visuals throughout the
@@ -63,7 +63,7 @@ sections:
         refinement. The kind of work that doesn't headline a portfolio but
         keeps everything else looking coherent.
       paragraph2: ""
-  - component: "ProjTextCardRight"
+  - component: "ProjTextCard"
     props:
       textStyle: "subtitle"
       paragraph1: "**Tools:** Blender · Photoshop · Affinity · Figma"
