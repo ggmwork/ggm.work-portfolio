@@ -1,0 +1,323 @@
+
+<style>
+  .wrap { padding: 1rem 0; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .card-header { padding: 14px 18px; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; gap: 4px; }
+  .header-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .header-sub { font-size: 12px; color: var(--color-text-secondary); }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 3px 9px; border-radius: var(--border-radius-md); font-weight: 500; }
+  .badge-opus { background: var(--color-background-info); color: var(--color-text-info); }
+  .badge-deep { background: var(--color-background-success); color: var(--color-text-success); }
+  .toc { padding: 12px 18px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc-item { font-size: 11px; padding: 3px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s; }
+  .toc-item:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .toc-item.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-secondary); }
+  .prompt-body { padding: 18px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.75; color: var(--color-text-primary); white-space: pre-wrap; word-break: break-word; max-height: 520px; overflow-y: auto; }
+  .prompt-body::-webkit-scrollbar { width: 4px; }
+  .prompt-body::-webkit-scrollbar-track { background: transparent; }
+  .prompt-body::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 4px; }
+  .card-footer { padding: 12px 18px; border-top: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .char-count { font-size: 12px; color: var(--color-text-secondary); }
+  .copy-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; padding: 8px 16px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-primary); cursor: pointer; transition: background 0.15s; }
+  .copy-btn:hover { background: var(--color-background-secondary); }
+  .copy-btn:active { transform: scale(0.98); }
+  .icon { width: 14px; height: 14px; flex-shrink: 0; }
+  textarea { position: absolute; opacity: 0; pointer-events: none; }
+</style>
+
+<div class="wrap">
+  <div class="card">
+    <div class="card-header">
+      <div class="header-left">
+        <span class="header-title">Astro portfolio — deep performance audit prompt</span>
+        <span class="header-sub">Designed for Claude Opus · paste alongside your full codebase</span>
+      </div>
+      <div class="badges">
+        <span class="badge badge-opus">Opus</span>
+        <span class="badge badge-deep">Deep audit</span>
+      </div>
+    </div>
+    <div class="toc">
+      <span class="toc-item active" onclick="scrollTo('s1',this)">Context</span>
+      <span class="toc-item" onclick="scrollTo('s2',this)">Phase 1 — Code audit</span>
+      <span class="toc-item" onclick="scrollTo('s3',this)">Phase 2 — Critical path</span>
+      <span class="toc-item" onclick="scrollTo('s4',this)">Phase 3 — Assets</span>
+      <span class="toc-item" onclick="scrollTo('s5',this)">Phase 4 — Rendering</span>
+      <span class="toc-item" onclick="scrollTo('s6',this)">Phase 5 — Architecture</span>
+      <span class="toc-item" onclick="scrollTo('s7',this)">Deliverable</span>
+    </div>
+    <div class="prompt-body" id="prompt-body">
+<span id="s1">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ROLE & MISSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You are a senior frontend performance engineer specialising in Astro, modern
+web vitals, and browser rendering pipelines. Your task is to conduct a deep,
+exhaustive performance audit of my personal portfolio website codebase.
+
+Do not guess. Do not give generic advice. Every finding must be grounded in
+the actual code I am providing. Every recommendation must be specific,
+actionable, and include the exact file, line, and change needed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s2">
+KNOWN CONTEXT (do not re-diagnose these — they are already known)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Site: https://ggmwork.vercel.app (Astro, deployed on Vercel)
+PageSpeed score: 90 (mobile, slow 4G simulation)
+
+Already fixed:
+  - fetchpriority="high" added to hero image ✅
+  - font-display: swap + preconnect for Google Fonts ✅ (CLS is now 0)
+
+Still broken — critical path chain observed across multiple test runs:
+  HTML (27.8 KiB)
+    → /_astro/index.BuZsuZd6.css  (7.2 KiB, render-blocking, 160ms)
+      → /_astro/HeaderImageBlock.astro_ast….js  (~1.5–29 KiB, blocks LCP)
+        → /_astro/index.CMq3EfTn.js  (28.98 KiB, 1742ms into load)
+
+Key metrics still hurting us:
+  - Speed Index:          4.7–4.8s  (target: < 2.5s)
+  - LCP render delay:     2040ms    (target: < 500ms)
+  - Critical path:        1742ms    (target: < 200ms)
+  - FCP:                  2.6s      (target: < 1.8s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s3">
+PHASE 1 — FULL CODEBASE AUDIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Read every file I provide. For each file, identify:
+
+1. ASTRO HYDRATION DIRECTIVES
+   - List every component using client:load, client:idle, client:visible,
+     client:only, or client:media
+   - For each one: is this directive necessary? Could it be client:idle or
+     client:visible instead without breaking functionality?
+   - Flag any client:load on above-the-fold components — these are the most
+     likely cause of the LCP render delay
+
+2. SCRIPT TAGS & JS LOADING
+   - List every <script> tag across all .astro files
+   - Note whether each has defer, async, type="module", or none
+   - Flag any script in <head> without defer/async
+   - Identify any large JS imports that could be code-split or lazy-loaded
+
+3. CSS LOADING STRATEGY
+   - How is index.css being loaded? Is it a global stylesheet imported in
+     the layout, or scoped component styles?
+   - Are there any @import chains inside CSS files? (These are especially
+     damaging — each @import is a sequential network request)
+   - Is there any CSS that is only needed below-the-fold but loaded eagerly?
+   - What is the actual content of the render-blocking CSS — could any of it
+     be inlined as critical CSS in the <head>?
+
+4. IMAGE HANDLING
+   - List every image used on the page (including background images in CSS)
+   - For each: format (webp/png/jpg/avif?), size, has width/height attributes?,
+     loading="lazy" or "eager"?, is it an Astro <Image> component or raw <img>?
+   - Flag any image that is above-the-fold but missing fetchpriority="high"
+   - Flag any image that is below-the-fold but using loading="eager"
+   - Are images sized appropriately for their display size, or are large
+     images being scaled down in CSS?
+
+5. FONT LOADING
+   - List all fonts being loaded (Google Fonts, local, variable fonts)
+   - Is font-display: swap applied to all of them?
+   - Are any font weights or variants being loaded that are not actually
+     used in the CSS?
+   - Could any Google Font be replaced with a system font stack or a
+     self-hosted variable font to eliminate the third-party request entirely?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s4">
+PHASE 2 — CRITICAL RENDER PATH DEEP DIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is the most important phase. Trace the exact reason the LCP image
+(Project Storm 3D character) takes 2040ms to render after TTFB.
+
+6. HEADERIMAGEBLOCK COMPONENT INVESTIGATION
+   - Show me the full component tree from the root layout down to the
+     component that renders the LCP image
+   - Identify exactly why HeaderImageBlock.astro generates a JS file in the
+     critical path — does it use a client: directive? Does it import a
+     client-side library? Does it have a <script> tag with side effects?
+   - Is the LCP image rendered server-side (SSG/SSR) or does it depend on
+     client-side JS to appear? If the latter, this is the root cause.
+
+7. THE INDEX.JS CHAIN
+   - What is /_astro/index.CMq3EfTn.js? What does it contain?
+   - Is it a framework runtime (e.g. React, Vue, Svelte)? A utility library?
+     An animation library?
+   - Is it being loaded because a component has a client: directive, or for
+     another reason?
+   - Could it be eliminated, deferred, or split?
+
+8. DEPENDENCY GRAPH
+   - Draw a plain-text dependency tree showing which components import which
+     JS modules, and which of those end up in the critical path
+   - Mark each node as: [CRITICAL] if it blocks first paint, [DEFERRED] if
+     it loads after, [UNUSED] if it is imported but not needed above the fold
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s5">
+PHASE 3 — ASSET & BUNDLE OPTIMISATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+9. BUNDLE ANALYSIS
+   - Based on imports across the codebase, estimate what is inside the
+     large JS bundles
+   - Are there any heavy libraries (e.g. GSAP, Three.js, Framer Motion,
+     Lottie) being loaded? If so, are they only needed for non-critical
+     animations or interactions?
+   - Are there any polyfills or compatibility shims loaded unnecessarily
+     for modern browsers?
+   - Are there duplicate dependencies — the same utility imported from
+     multiple places and bundled multiple times?
+
+10. THIRD-PARTY SCRIPTS
+    - List every third-party script or resource (analytics, fonts, embeds,
+      widgets, etc.)
+    - For each: is it loaded synchronously? Can it be deferred or loaded
+      only on interaction (e.g. Partytown, facades)?
+    - Estimate the total third-party JS weight and thread time
+
+11. VERCEL-SPECIFIC OPTIMISATIONS
+    - Is the site using Vercel's Edge Network caching headers?
+    - Are static assets being served with long Cache-Control max-age?
+    - Is there a vercel.json config? If so, review it for caching rules.
+    - Could any route benefit from Vercel's ISR or Edge middleware?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s6">
+PHASE 4 — RENDERING STRATEGY & ASTRO CONFIG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+12. ASTRO CONFIG REVIEW
+    - Review astro.config.mjs in full
+    - Are integrations being used that add unnecessary JS overhead?
+      (e.g. @astrojs/react when only 1 component needs it)
+    - Is the output mode 'static', 'server', or 'hybrid'? Is this the
+      right choice for a portfolio site?
+    - Are there any Vite config options that could improve build output?
+      (e.g. rollupOptions for manual chunk splitting, build.target for
+      modern browsers only)
+
+13. LAYOUT & HEAD COMPONENT
+    - Review the root layout file (<head> contents in detail)
+    - Is the <head> ordered optimally? (DNS prefetch → preconnect →
+      preload critical assets → stylesheet → scripts)
+    - Are there any <link rel="preload"> tags? Should there be?
+    - Is the viewport meta tag correct?
+    - Are there any render-blocking <script> tags that could be moved
+      to end of <body> or given defer?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span id="s7">
+PHASE 5 — ARCHITECTURE RECOMMENDATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+14. ISLANDS ARCHITECTURE REVIEW
+    - A portfolio site should ship near-zero JS for static content
+    - Are there any components using client: directives that are actually
+      fully static and could be plain .astro components with zero JS?
+    - Are there any animations or interactions that could be achieved
+      with CSS alone instead of JS?
+
+15. ABOVE-THE-FOLD vs BELOW-THE-FOLD SPLIT
+    - Identify everything that is visible on first load (above the fold
+      on mobile, 360×800 viewport)
+    - Everything above the fold must be: HTML server-rendered, CSS inlined
+      or loaded non-blocking, images eager + high priority
+    - Everything below the fold should be: lazy-loaded images, deferred JS,
+      client:visible for interactive components
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DELIVERABLE FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After completing all 15 analysis points, produce the following:
+
+A. FINDINGS SUMMARY TABLE
+   A table with columns: Issue | Severity (Critical/High/Medium/Low) |
+   File | Estimated impact on LCP/FCP/SI
+
+B. PRIORITISED FIX PLAN
+   Ordered list of fixes from highest to lowest impact. For each fix:
+   - What to change (exact file + line + before/after code diff)
+   - Why it helps (which metric it improves and by how much, estimated)
+   - Risk level (could it break anything?)
+   - Time to implement (< 5 min / 15 min / 1 hour)
+
+C. QUICK WINS (implement in one sitting)
+   Isolate all fixes that are low-risk AND take under 15 minutes each.
+   Present these as a numbered checklist.
+
+D. STRETCH GOALS (architectural changes)
+   List any deeper refactors that could push the score to 95+, with honest
+   assessment of effort vs. reward.
+
+E. EXPECTED SCORES AFTER ALL FIXES
+   Your best estimate of PageSpeed metrics after all fixes are applied:
+   FCP / LCP / Speed Index / CLS / Performance score
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- Ground every finding in the actual code. No generic advice.
+- If you are unsure about something, say so and ask me to provide more
+  context (e.g. the output of `npm ls`, the built /_astro/ directory
+  listing, or a specific file) rather than guessing.
+- Do not apply any changes yet. This phase is analysis only.
+- Think step by step through each phase before writing your response.
+- Be brutally honest — if the architecture needs a larger refactor to
+  hit the performance targets, say so clearly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[PASTE YOUR FULL CODEBASE BELOW THIS LINE]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+    <div class="card-footer">
+      <span class="char-count" id="char-count">Loading...</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+          <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+        </svg>
+        <span id="btn-label">Copy full prompt</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<textarea id="copy-target"></textarea>
+
+<script>
+  const body = document.getElementById('prompt-body');
+  const charCount = document.getElementById('char-count');
+  const text = body.innerText;
+  charCount.textContent = text.length.toLocaleString() + ' characters · 15 analysis points · 5 phases';
+
+  function scrollTo(id, el) {
+    document.querySelectorAll('.toc-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    const target = document.getElementById(id);
+    if (target) body.scrollTo({ top: target.offsetTop - body.offsetTop - 12, behavior: 'smooth' });
+  }
+
+  function copyPrompt(btn) {
+    const ta = document.getElementById('copy-target');
+    ta.value = document.getElementById('prompt-body').innerText;
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    const label = document.getElementById('btn-label');
+    label.textContent = 'Copied!';
+    setTimeout(() => label.textContent = 'Copy full prompt', 2000);
+  }
+</script>
