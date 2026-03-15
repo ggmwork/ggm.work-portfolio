@@ -110,47 +110,58 @@ const isCarousel = resolvedImages.length > 1;
 
 {isCarousel && (
   <script>
-    import gsap from "gsap";
-
     /**
      * HeaderImageBlock — GSAP crossfade carousel.
      *
-     * Stacks all slides absolutely. Crossfades from current → next
-     * on a timed interval. Loops infinitely, no user controls.
+     * Deferred: waits until browser is idle before importing GSAP
+     * and starting the carousel, so the ~29 KiB bundle doesn't
+     * block FCP / LCP.
      */
-    document.querySelectorAll<HTMLElement>("[data-header-carousel]").forEach((container) => {
-      const slides = container.querySelectorAll<HTMLElement>("[data-carousel-slide]");
-      if (slides.length < 2) return;
+    const initCarousel = async () => {
+      const { default: gsap } = await import("gsap");
 
-      const interval = Number(container.dataset.carouselInterval) || 4;
-      let current = 0;
+      document.querySelectorAll<HTMLElement>("[data-header-carousel]").forEach((container) => {
+        const slides = container.querySelectorAll<HTMLElement>("[data-carousel-slide]");
+        if (slides.length < 2) return;
 
-      const crossfade = () => {
-        const currentSlide = slides[current];
-        const next = (current + 1) % slides.length;
-        const nextSlide = slides[next];
+        const interval = Number(container.dataset.carouselInterval) || 4;
+        let current = 0;
 
-        /* Bring next slide to just below current */
-        gsap.set(nextSlide, { zIndex: 5, opacity: 0 });
-        gsap.set(currentSlide, { zIndex: 10 });
+        const crossfade = () => {
+          const currentSlide = slides[current];
+          const next = (current + 1) % slides.length;
+          const nextSlide = slides[next];
 
-        /* Crossfade: fade in next while fading out current */
-        gsap.to(nextSlide, {
-          opacity: 1,
-          duration: 0.8,
-          ease: "power2.inOut",
-          onComplete: () => {
-            /* After transition: promote next, demote current */
-            gsap.set(nextSlide, { zIndex: 10 });
-            gsap.set(currentSlide, { zIndex: 0, opacity: 0 });
-            current = next;
-          },
-        });
-      };
+          /* Bring next slide to just below current */
+          gsap.set(nextSlide, { zIndex: 5, opacity: 0 });
+          gsap.set(currentSlide, { zIndex: 10 });
 
-      /* Start the loop after the initial interval */
-      setInterval(crossfade, interval * 1000);
-    });
+          /* Crossfade: fade in next while fading out current */
+          gsap.to(nextSlide, {
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.inOut",
+            onComplete: () => {
+              /* After transition: promote next, demote current */
+              gsap.set(nextSlide, { zIndex: 10 });
+              gsap.set(currentSlide, { zIndex: 0, opacity: 0 });
+              current = next;
+            },
+          });
+        };
+
+        /* Start the loop after the initial interval */
+        setInterval(crossfade, interval * 1000);
+      });
+    };
+
+    /* Defer carousel init until browser is idle */
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => initCarousel());
+    } else {
+      /* Safari fallback — run after next frame */
+      requestAnimationFrame(() => setTimeout(initCarousel, 0));
+    }
   </script>
 )}
 
