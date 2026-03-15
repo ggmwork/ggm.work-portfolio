@@ -45,7 +45,7 @@ sections:
           description: "I redesigned NexLed's visual identity from scratch and built the UI system that puts it into practice across web and digital."
           imageSrc: "/images/projects/project-1/project_1.webp"
           imageAlt: "Highlighted Project"
-          labels: ["Design", "UX/UI", "Design"]
+          labels: ["Design", "UX/UI", "Brand Identity", "Design Systems"]
           projectSlug: "project-1"
           alignRight: false
         - title: "Amazon Store: Creation, Design & Management"

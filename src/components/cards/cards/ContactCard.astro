@@ -38,23 +38,35 @@ const {
   class="w-full min-h-[278px] overflow-hidden"
   ariaLabel="Contact card"
 >
-  <!-- Note: PR-12 to push button boundaries in, matching visual -->
+  <!-- Outer container for card positioning -->
   <div
-    class="w-full h-full p-8 md:pl-28 md:pr-32 md:py-16 flex flex-col justify-center gap-10 min-h-[278px]"
+    class="w-full h-full p-6 md:pl-28 md:pr-10 md:py-10 flex flex-col justify-center min-h-[278px]"
   >
-    <!-- Text Area -->
-    <p
-      class="font-body font-normal text-base md:text-lg text-black leading-relaxed"
-    >
-      {text}
-    </p>
+    <div class="relative">
+      <!-- Frosted white panel behind text -->
+      <div
+        class="absolute inset-0 rounded-[19px] bg-white/60 backdrop-blur-[20px]"
+        aria-hidden="true"
+      >
+      </div>
+      
+      <!-- Inner text container -->
+      <div class="relative z-10 p-6 md:p-8 flex flex-col justify-center gap-10">
+        <!-- Text Area -->
+        <p
+          class="font-body font-normal text-base md:text-lg text-black leading-relaxed"
+        >
+          {text}
+        </p>
 
-    <!-- Actions Area (Aligned right side of the inner container) -->
-    <div
-      class="flex flex-col sm:flex-row items-center justify-start gap-6 w-full"
-    >
-      <ButtonSecondary label={btn1Label} href={btn1Href} />
-      <ButtonSecondary label={btn2Label} href={btn2Href} />
+        <!-- Actions Area -->
+        <div
+          class="flex flex-col sm:flex-row items-center justify-start gap-6 w-full"
+        >
+          <ButtonSecondary label={btn1Label} href={btn1Href} />
+          <ButtonSecondary label={btn2Label} href={btn2Href} />
+        </div>
+      </div>
     </div>
   </div>
 </BaseCard>
