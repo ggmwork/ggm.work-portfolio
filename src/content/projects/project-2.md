@@ -146,15 +146,11 @@ sections:
   - component: "ProjTextCard"
     props:
       paragraph1: >-
-        The products are live. Pricing templates and shipping rules are in
-        place. I'm currently building out the ads and promotional structure
+        The products are live. I'm currently building out the ads and promotional structure
         with the goal of generating the first real sales. The full process is
         documented, and the next time we add products to Amazon, the
         groundwork is already there.
       paragraph2: ""
-  - component: "ProjTextCard"
-Right"
-eller Central · Affinity
-      paragraph2: "**Type:** E-Commerce · Content Design · Packaging · Brand Compliance"
+
 ---
 
